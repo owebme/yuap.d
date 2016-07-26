@@ -1,0 +1,72 @@
+* {
+    margin:0;
+    padding:0;
+}
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+input,
+button {
+	outline:none;
+}
+body {
+    background:#f0f1f5;
+}
+@font-face {
+    font-family:pragmatica;
+    src:url(fonts/pragmatica-extralight-v3.eot);
+    src:url(fonts/pragmatica-extralight-v3.eot?#iefix) format('embedded-opentype'),
+        url(fonts/pragmatica-extralight-v3.woff) format('woff'),
+        url(fonts/pragmatica-extralight-v3.ttf) format('truetype');
+    font-weight:100;
+    font-style:normal;
+}
+@font-face {
+    font-family:pragmatica;
+    src:url(fonts/pragmatica-light-v3.eot);
+    src:url(fonts/pragmatica-light-v3.eot?#iefix) format('embedded-opentype'),
+        url(fonts/pragmatica-light-v3.woff) format('woff'),
+        url(fonts/pragmatica-light-v3.ttf) format('truetype');
+    font-weight:300;
+    font-style:normal;
+}
+.chat__wrapper {
+    position:fixed;
+    top:65px;
+    left:50%;
+    width:957px;
+    height:618px;
+    margin-left:-448.5px;
+    border:1px solid #dbe0e6;
+    border-radius:6px;
+    background:#fff;
+    font-family:"Roboto", Helvetica, Arial, sans-serif;
+    font-weight:300;
+    font-size:16px;
+    line-height:20px;
+    overflow:hidden;
+    box-shadow:0 5px 12px 0 rgba(0,0,0,.1);
+}
+.chat__container {
+    position:relative;
+    height:calc(100% - 72px);
+    background:#fff;
+}
+.chat__list {
+    position:absolute;
+    top:0;
+    left:0;
+    width:392px;
+    height:100%;
+    background:#fff;
+    border-right:1px solid #e6eaed;
+    user-select:none;
+    -webkit-user-select:none;
+}
+.chat__body {
+    position:relative;
+    margin-left:392px;
+    height:100%;
+}

@@ -1,0 +1,126 @@
+.chat__header {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:52px;
+    // background-image:linear-gradient(to left, #7e79a2, #a09dcd);
+    background:rgba(255,255,255,0.97);
+    border-bottom:1px solid #ebebeb;
+    text-align:center;
+    box-shadow:0 0 5px -3px #7e8188;
+    z-index:2;
+}
+.chat__header__title {
+    display:inline-block;
+    height:52px;
+    color:#524c7e;
+    font-size:19px;
+    line-height:52px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    max-width:calc(100% - 120px);
+    margin:0 auto;
+    vertical-align:middle;
+}
+.chat__header__title--name {
+    color:#158ffe;
+}
+.chat__header__photo {
+    position:absolute;
+    top:4px;
+    right:15px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#f0f1f5;
+    transition:background 0.15s ease;
+}
+.chat__header__avatar__container {
+    position:absolute;
+    top:3%;
+    left:3%;
+    width:94%;
+    height:94%;
+    overflow:hidden;
+    border-radius:50%;
+}
+.chat__header__avatar {
+    position:absolute;
+    top:-2.5%;
+    left:-2.5%;
+    width:105%;
+    height:105%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center top;
+}
+.chat__header__photo:before {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:30px;
+    height:30px;
+    margin:-15px 0 0 -15px;
+    background:url(/images/messages.svg) no-repeat 0 0 / cover;
+}
+.chat__header__status {
+    position:absolute;
+    top:2px;
+    right:-2px;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    border:2px solid #fff;
+}
+.chat__header__status--online {
+    background:#00d8aa;
+}
+.chat__header__status--offline {
+    background:#ff665a;
+}
+.chat__exit {
+    opacity:0;
+    position:absolute;
+    top:10px;
+    left:20px;
+    width:30px;
+    height:30px;
+    background:url(/images/back.svg) no-repeat 0 0 / cover;
+    transition:opacity 0s ease 0.4s, transform 0s ease 0.4s;
+    transform:rotate(-90deg);
+    z-index:1;
+}
+.chat__list .chat__exit,
+.chat__room--active .chat__exit {
+    opacity:1;
+    transform:rotate(0deg);
+    transition:opacity 0.15s ease 0.3s, transform 0.3s ease 0.3s;
+}
+
+@media screen and (max-width:320px){
+    .chat__header {
+        height:48px;
+    }
+    .chat__header__title {
+        height:48px;
+        font-size:18px;
+        line-height:48px;
+    }
+    .chat__header__photo {
+        top:5px;
+        width:38px;
+        height:38px;
+    }
+    .chat__header__photo:before {
+        width:28px;
+        height:28px;
+        margin:-14px 0 0 -14px;
+    }
+    .chat__exit {
+        width:28px;
+        height:28px;
+    }
+}

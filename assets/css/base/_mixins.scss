@@ -1,0 +1,28 @@
+@mixin abs($pos: absolute) {
+    position:$pos;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+@mixin abs_50($width, $height) {
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:#{$width}px;
+    height:#{$height}px;
+    margin:#{-$height/2}px 0 0 #{-$width/2}px;
+}
+@mixin flex($direction, $justify, $align) {
+    display:flex;
+    flex-direction:#{$direction};
+    justify-content:#{$justify};
+    align-items:#{$align};
+}
+@mixin accelerate($transition: false) {
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+    @if $transition {
+        transform:translate3d(0, 0, 0);
+    }
+}

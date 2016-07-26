@@ -1,0 +1,19 @@
+.chat__header {
+    background:#fff;
+    height:72px;
+    border-bottom:1px solid #e2e5ea;
+}
+.chat__search {
+    position:absolute;
+    top:26px;
+    left:34px;
+    width:300px;
+}
+.chat__search__input {
+    margin-left:43px;
+    background:none;
+    border:none;
+    color:#7e8188;
+    font-weight:500;
+    font-size:17px;
+}

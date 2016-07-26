@@ -1,0 +1,437 @@
+<raw>
+  this.root.innerHTML = opts.content;
+</raw>
+
+<chat-admin>
+
+    <div class="chat__wrapper">
+        <div class="chat__list { chat__list--hidden : client_id }">
+            <div class="chat__header">
+                <div class="chat__exit"></div>
+                <div class="chat__header__title chat__header__title--name">iMessenger</div>
+                <div onclick={ openMetrika } class="chat__header__photo">
+                    <div if={ lastClient.avatar } class="chat__header__avatar__container">
+                        <div style="background-image:url({ lastClient.avatar })" class="chat__header__avatar"></div>
+                    </div>
+                    <div if={ lastClient.id } class="chat__header__status { lastClient.online ? 'chat__header__status--online' : 'chat__header__status--offline' }"></div>
+                </div>
+            </div>
+            <div class="chat__list__wrapper">
+                <div class="chat__list__container">
+                    <div each={user in users} no-reorder onclick={ selectUser } class="chat__list__item { chat__list__item--active : user.id == lastClient.id }">
+                        <div class="chat__list__photo { chat__list__photo--avatar : user.avatar }">
+                            <div if={ user.avatar } style="background-image:url({ user.avatar })" class="chat__list__avatar"></div>
+                        </div>
+                        <div class="chat__list__status { user.online ? 'chat__list__status--online' : 'chat__list__status--offline' }"></div>
+                        <div class="chat__list__text">
+                            <div class="chat__list__time">{ user.joinTime }</div>
+                            <div class="chat__list__counts { chat__list__counts--active : user.newMessages }">{ user.newMessages }</div>
+                            <div class="chat__list__title">{ user.name ? user.name : 'Гость'}</div>
+                            <div class="chat__list__message">{ user.lastMessage ? user.lastMessage : 'С вами хотят пообщаться'}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div if={ ready && !users.length } class="chat__list__empty"><span class="chat__list__empty__text">Сейчас нет активных чатов</span></div>
+            <div class="chat__circle__open"></div>
+        </div>
+        <div class="chat__body { chat__body--active : client_id }">
+            <div each={user in users} no-reorder id="chat__room__{ user.id }" class="chat__room { chat__room--active : client_id == user.id }">
+                <div class="chat__header">
+                    <div onclick={ closeRoom } class="chat__exit"></div>
+                    <div class="chat__header__title">{ user.name ? user.name : 'Гость'}</div>
+                    <div onclick={ openMetrika } class="chat__header__photo">
+                        <div if={ user.avatar } class="chat__header__avatar__container">
+                            <div style="background-image:url({ user.avatar })" class="chat__header__avatar"></div>
+                        </div>
+                        <div class="chat__header__status chat__header__status--online"></div>
+                    </div>
+        		</div>
+                <div id="chat__room__container__{ user.id }" class="chat__room__container">
+                    <div class="chat__room__inner">
+                        <div each={message in user.messages} no-reorder class="chat__message { message.me ? 'chat__message__left' : 'chat__message__right'}">
+                            <div class="{ message.me ? 'chat__message__que' : 'chat__message__answer'} { chat__message__noviewed : !activity && !message.viewed } { chat__message__system : message.type !== 'chat' } { chat__message__system--active : message.type == 'auth' && user.auth || message.type == 'phone' && user.phone || message.type == 'email' && user.email } chat__message__inner">
+                                <raw content="{ message.text }">{ message.text }</raw>
+                                <div if={ message.type === 'auth' && !user.auth } class="chat__message__icon--auth"></div>
+                                <div if={ message.type === 'auth' && user.auth } class="chat__message__icon--checked"></div>
+                                <div if={ message.type === 'phone' } class="chat__message__icon--phone"></div>
+                                <div if={ message.type === 'email' } class="chat__message__icon--email"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat__panel">
+                    <div class="chat__panel__info">
+                        <div class="chat__panel__info__typing { chat__panel__info__typing--active : client_id && client_id == typed_id }">Вам печатают сообщение...</div>
+					</div>
+					<div class="chat__panel__effect { chat__panel__effect--active : client_id && client_id == typed_id }">
+						<div class="chat__panel__effect__bar"></div>
+                        <div class="chat__panel__effect__dots { chat__panel__effect__dots--active : client_id && client_id == typed_id }">
+                            <div class="chat__panel__effect__dot chat__panel__effect__dot1"></div>
+                            <div class="chat__panel__effect__dot chat__panel__effect__dot2"></div>
+                            <div class="chat__panel__effect__dot chat__panel__effect__dot3"></div>
+                        </div>
+					</div>
+                    <form onsubmit={ sendMessage } class="chat__panel__form">
+                        <div class="chat__panel__menu">
+                            <i class="chat__panel__menu__circle"></i>
+                            <select onchange={ changeOptions } name="chat__select__options" class="chat__select__options">
+                                <option value="1">Предложить представиться</option>
+                                <option value="2">Предложить оставить телефон</option>
+                                <option value="3">Предложить оставить email</option>
+                                <option value="4">Прикрепить картинку</option>
+                            </select>
+                        </div>
+                        <input onfocus={ focusInput } type="text" name="chat__panel__input" class="chat__panel__input" placeholder="Набрать сообщение..." autocomplete="off">
+                        <div onclick={ sendMessage } class="chat__panel__button"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div each={user in users} no-reorder class="chat__metrika { chat__metrika--active : user.id === openMetrika_id }">
+            <div onclick={ closeMetrika } class="chat__metrika__close"></div>
+            <div id="chat__metrika__wrapper__{ user.id }" class="chat__metrika__wrapper">
+                <div class="chat__metrika__container">
+                    <div class="chat__metrika__header">
+                        <div class="chat__metrika__time">{ user.joinTime }</div>
+                        <div class="chat__metrika__photo { user.online ? 'chat__metrika__photo--online' : 'chat__metrika__photo--offline' }">
+                            <div if={ user.avatar } class="chat__metrika__avatar" style="background-image:url({ user.avatar })"></div>
+                        </div>
+                        <div if={ user.profile.bdate } class="chat__metrika__bdate">{ user.profile.bdate }</div>
+                        <div class="chat__metrika__title">{ user.name ? user.name : 'Гость'}</div>
+                    </div>
+                    <div class="chat__metrika__content">
+                        <div if={ user.phone } class="chat__metrika__tile">
+                            <div class="chat__metrika__tile__title">Телефон: <span class="chat__metrika__text__blue">{ user.phone }</span></div>
+                        </div>
+                        <div class="chat__metrika__tile">
+                            <div class="chat__metrika__tile__subtitle">По данным счетчика</div>
+                            <div class="chat__metrika__tile__text">{ user.metrika.visit }-й раз на сайте, { user.metrika.city }</div>
+                        </div>
+                        <div if={ user.metrika.start } class="chat__metrika__tile">
+                            <div class="chat__metrika__tile__subtitle">Страница входа</div>
+                            <div class="chat__metrika__tile__text"><a class="chat__metrika__link" href="{ user.metrika.start }" target="_blank">{ user.metrika.start }</a></div>
+                        </div>
+                        <div class="chat__metrika__tile">
+                            <div class="chat__metrika__tile__subtitle">На сайт перешли { user.metrika.adv ? 'по рекламе' : 'с' }</div>
+                            <div class="chat__metrika__tile__text">
+                                { "Яндекс.Директ" : user.metrika.adv && user.metrika.referer === "yandex" }
+                                { "Яндекс.Поиск" : !user.metrika.adv && user.metrika.referer === "yandex" }
+                                { "Google.Adwords" : user.metrika.adv && user.metrika.referer === "google" }
+                                { "Google.Поиск" : !user.metrika.adv && user.metrika.referer === "google" }
+                                { "Rambler.Поиск" : user.metrika.referer === "rambler" }
+                                { "Yahoo.Поиск" : user.metrika.referer === "yahoo" }
+                                { "Bing.Поиск" : user.metrika.referer === "bing" }
+                                { "Mail.ru.Поиск" : user.metrika.referer === "mail" }
+                                <virtual if={ user.metrika.referer && user.metrika.referer.match(/http/) }>
+                                    { user.metrika.referer }
+                                </virtual>
+                                <virtual if={ user.metrika.keyword }>, { user.metrika.keyword }</virtual>
+                            </div>
+                        </div>
+                        <div if={ user.metrika.pages } class="chat__metrika__tile">
+                            <div class="chat__metrika__tile__title">Посещено: { user.metrika.pages } страниц(ы)</div>
+                            <div class="chat__metrika__pages__container">
+                                <div each={link in user.metrika.pagesData} no-reorder class="chat__metrika__tile">
+                                    <a class="chat__metrika__link" target="_blank" href="{ link }">{ link }</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+
+    <svg style="position:absolute" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+<script>
+
+    var $ = this;
+
+    $.sid = opts.sid;
+    $.users = [];
+    $.activity = false;
+    $.timeOutActivity = null;
+    $.ready = false;
+    $.socket_id = null;
+    $.user_id = sessionStorage.chat_uid || new Date().getTime() + (Math.round(Math.random() * 10000));
+    $.lastClient = sessionStorage.chat_client && JSON.parse(sessionStorage.chat_client) || {};
+    $.client_id = null;
+    $.openMetrika_id = null;
+    $.openPages_id = null;
+    $.activeOptions = false;
+    $.timeOutTyped = null;
+    $.typed_id = null;
+    $.iScrollList = null;
+    $.iScrollRoom = {};
+    $.iScrollMetrika = {};
+    $.socket = io.connect('http://5.101.124.21:8008');
+    $.notify = new Audio();
+    $.notify.src = "/notify_song3.mp3";
+    $.notify.preload = true;
+    $.notify.volume = 0.5;
+
+    if (!sessionStorage.chat_uid) sessionStorage.chat_uid = $.user_id;
+
+    this.on("mount", function(){
+        document.querySelector(".chat__body").addEventListener("touchmove", $.throttle(function(e){
+            if (!$.activity) $.viewedList();
+            $.activity = true;
+            clearTimeout($.timeOutActivity);
+            $.timeOutActivity = setTimeout(function(){
+                $.activity = false;
+            }, 5000);
+        }, 1000));
+    });
+
+    $.socket.on('connecting', function(){
+        //msg_system('Соединение...');
+    });
+
+    $.socket.on('connect', function(){
+        //msg_system('Соединение установленно!');
+        $.ready = true;
+        $.socket_id = this.id;
+        $.socket.emit("join", {
+            id: $.user_id,
+            sid: $.sid,
+            admin: true
+        });
+    });
+
+    $.socket.on("update_" + $.sid, function(data){
+        if ($.ready) {
+            $.users = data;
+            //console.dir($.users);
+            $.typed_id = null;
+            $.update();
+             if ($.client_id){
+                if (!$.users.length){
+                    $.client_id = null;
+                    $.lastClient = null;
+                    sessionStorage.chat_client = null;
+                    $.update();
+                }
+                else {
+                    $.iScrollRoom[$.client_id].refresh();
+                    $.iScrollRoom[$.client_id].scrollTo(0, $.iScrollRoom[$.client_id].maxScrollY, 400, IScroll.utils.ease.cubicOut);
+                }
+            }
+            // Обновление списка подключений (проверка отключившихся)
+            else if (!$.client_id){
+                if ($.users.length && $.lastClient) {
+                    var avail = false;
+                    $.users.forEach(function(item, i) {
+                        if ($.lastClient.id === item.id) avail = true;
+                    });
+                    if (!avail){
+                        $.lastClient = null;
+                        sessionStorage.chat_client = null;
+                        $.update();
+                    }
+                }
+                else {
+                    $.lastClient = null;
+                    sessionStorage.chat_client = null;
+                    $.update();
+                }
+            }
+            $.scrollContent($.users);
+            clearTimeout($.timeOutTyped);
+        }
+    });
+
+    $.socket.on("notify_" + $.sid, function(id){
+        $.notify.pause();
+        $.notify.currentTime = 0;
+        $.notify.play();
+        if ($.activity && $.client_id === id){
+            $.viewedList();
+        }
+    });
+
+    $.socket.on("update_offer" + $.sid, function(type){
+        $.tags.raw.forEach(function(item, i) {
+            if (item.message.type === type || item.message.type === "auth" && (type === "name" || type === "profile")){
+                var text = item.message.text;
+                item.root.innerHTML = text;
+            }
+        });
+    });
+
+    $.socket.on("typed_" + $.sid, function(id){
+        if ($.ready && $.client_id === id) {
+            clearTimeout($.timeOutTyped);
+            $.typed_id = id;
+            $.update();
+            $.timeOutTyped = setTimeout(function(){
+                $.typed_id = null;
+                $.update();
+            }, 5000);
+        }
+    });
+
+    $.selectUser = function(){
+        $.activity = true;
+        var id = this._item.user.id;
+        if ($.client_id === id) return;
+        $.client_id = id;
+        $.lastClient = this._item.user;
+        sessionStorage.chat_client = JSON.stringify(this._item.user);
+        $.scrollDown();
+        $.viewedList();
+    };
+
+    $.scrollContent = function(users){
+        if (!$.iScrollList){
+            $.iScrollList = new IScroll(document.querySelector(".chat__list__wrapper"), {
+                scrollX: false,
+                scrollY: true,
+                mouseWheel: true
+            });
+        }
+        users.forEach(function(item, i) {
+            if (!$.iScrollRoom[item.id]){
+                $.iScrollRoom[item.id] = new IScroll($["chat__room__container__" + item.id], {
+            		scrollX: false,
+            		scrollY: true,
+                    mouseWheel: true
+            	});
+                $.iScrollRoom[item.id].scrollTo(0, $.iScrollRoom[item.id].maxScrollY);
+
+                $.iScrollMetrika[item.id] = new IScroll($["chat__metrika__wrapper__" + item.id], {
+            		scrollX: false,
+            		scrollY: true,
+                    mouseWheel: true
+            	});
+
+                (function animationLoopRoom(){
+            		window.requestAnimationFrame(animationLoopRoom);
+            		var scroll = $.getScroll($.iScrollRoom[item.id]);
+            		scroll.x;
+            		scroll.y;
+            	})();
+
+                (function animationLoopMetrika(){
+            		window.requestAnimationFrame(animationLoopMetrika);
+            		var scroll = $.getScroll($.iScrollMetrika[item.id]);
+            		scroll.x;
+            		scroll.y;
+            	})();
+
+                $["chat__room__container__" + item.id].addEventListener("touchstart", function(e){
+                    $["chat__room__" + item.id].querySelector(".chat__panel__input").blur();
+                });
+            }
+        });
+    };
+
+    $.scrollDown = function(){
+        if (!$.client_id || !$.iScrollRoom[$.client_id]) return;
+        $.iScrollRoom[$.client_id].refresh();
+        $.iScrollRoom[$.client_id].scrollTo(0, $.iScrollRoom[$.client_id].maxScrollY);
+    };
+
+    $.closeRoom = function(){
+        $.client_id = null;
+    };
+
+    $.getScroll = function(scroll) {
+        var x = scroll.x * -1,
+            y = scroll.y * -1;
+        return {x: x, y: y};
+    };
+
+    $.focusInput = function(){
+        setTimeout(function(){
+            $.scrollDown();
+            $.socket.emit("typed", $.client_id);
+        }, 400);
+    };
+
+    $.sendMessage = function(){
+        var _this = this,
+            text = _this.chat__panel__input.value;
+        if (text.length){
+            setTimeout(function(){
+                _this.chat__panel__input.value = "";
+                _this.chat__panel__input.blur();
+                $.socket.emit("send", {
+                    id: $.client_id,
+                    message: text
+                });
+            }, 400);
+        }
+    };
+
+    $.openMetrika = function(){
+        if ($.lastClient.id) $.openMetrika_id = $.lastClient.id;
+        else $.openMetrika_id = $.client_id;
+    };
+
+    $.closeMetrika = function(){
+        $.openMetrika_id = null;
+    };
+
+    $.changeOptions = function(e){
+        var value = e.target.value;
+        if (value === "1"){
+            $.socket.emit("send", {
+                id: $.client_id,
+                type: "auth",
+                message: "Предложение представиться"
+            });
+        }
+        else if (value === "2"){
+            $.socket.emit("send", {
+                id: $.client_id,
+                type: "phone",
+                message: "Предложение оставить телефон"
+            });
+        }
+        else if (value === "3"){
+            $.socket.emit("send", {
+                id: $.client_id,
+                type: "email",
+                message: "Предложение оставить email"
+            });
+        }
+    };
+
+    $.viewedList = function(){
+        $.users.forEach(function(item, i) {
+            if (item.id === $.client_id && $.users[i].newMessages > 0) {
+                $.users[i].newMessages = 0;
+                $.users[i].messages.forEach(function(message, j) {
+                    message.viewed = true;
+                });
+                $.socket.emit("viewed", i);
+                $.update();
+            }
+        });
+    };
+
+    $.throttle = function(fn, delay) {
+        var allowSample = true;
+
+        return function(e) {
+            if (allowSample) {
+                allowSample = false;
+                setTimeout(function() { allowSample = true; }, delay);
+                fn(e);
+            }
+        };
+    };
+
+</script>
+
+</chat-admin>

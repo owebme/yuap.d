@@ -1,0 +1,7 @@
+.no-scroll {
+    overflow:hidden;
+}
+.disable__hover,
+.disable__hover * {
+	pointer-events:none !important;
+}

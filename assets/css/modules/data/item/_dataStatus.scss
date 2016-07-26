@@ -1,0 +1,21 @@
+.data__item {
+    &[data-status="azure"] {
+        // &:before {
+        //     content:"";
+        //     position:absolute;
+        //     top:-2px;
+        //     left:0;
+        //     width:100%;
+        //     height:2px;
+        //     background-color:rgba($azure,.6);
+        //     border-radius:4px 4px 0 0;
+        // }
+        .data__item__date {
+            color:#fff;
+            background-color:$azure;
+        }
+        .data__item__num {
+            color:$black;
+        }
+    }
+}
