@@ -1,3 +1,6 @@
+.dashboard {
+    padding-left:12.5px;
+}
 .dashboard__item {
     position:relative;
     border-radius:4px;
@@ -40,7 +43,7 @@
             border-right:5px solid transparent;
             border-bottom:none;
             border-left:5px solid transparent;
-            transition:transform 0.15s ease;
+            transition:transform 0.15s linear;
 
             .dropdown.open & {
                 transform:rotate(180deg);

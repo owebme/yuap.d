@@ -9,22 +9,28 @@
 
 // UI elements
 @import 'ui/button';
+@import 'ui/checkbox';
 @import 'ui/tile';
 @import 'ui/dropdownMenu';
+@import 'ui/modal';
 
 // sections
 @import 'sections/nav/nav';
 @import 'sections/content/content';
 @import 'sections/panel/panel';
 
-// data
+// data content
+@import 'modules/data/dataContent';
 @import 'modules/data/dataList';
-@import 'modules/data/item/dataHeader';
-@import 'modules/data/item/dataStatus';
-@import 'modules/data/item/dataEngine';
-@import 'modules/data/item/dataContent';
+@import 'modules/data/items/itemsHeader';
+@import 'modules/data/items/itemsStatus';
+@import 'modules/data/items/itemsEngine';
+@import 'modules/data/items/itemsContent';
 
-// dashboard
+// data sidebar
+@import 'modules/data/sidebar/dataSidebar';
+
+// data dashboard
 @import 'modules/data/dashboard/dashboard';
 
 // states

@@ -239,14 +239,25 @@
         position:absolute;
         top:0;
         right:0;
-        padding:6px 7px 6px 11px;
+        padding:6px 0 6px 3px;
         border-radius:3px 4px 3px 13px;
         font-size:12px;
         line-height:12px;
+        width:52px;
+        white-space:nowrap;
+        text-align:center;
         color:$gray_lighten;
         background-clip:border-box;
         border-left:1px dashed rgba($gray_lighten,.85);
         border-bottom:1px dashed rgba($gray_lighten,.85);
+        cursor:pointer;
+        transition:color 0.2s $cubic215, border-color 0.2s $cubic215;
+        z-index:5;
+
+        &:hover {
+            color:$blue;
+            border-color:rgba($blue,.85);
+        }
     }
     &__time {
         color:$gray_light;

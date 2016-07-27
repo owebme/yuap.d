@@ -1,0 +1,21 @@
+.modal {
+    @include abs(fixed);
+    @include flex("row", "center", "flex-start");
+    background-color:rgba(#fff,.95);
+    padding-top:30px;
+    overflow-y:scroll;
+    z-index:100;
+
+    &__wrapper {
+        min-height:1080px;
+        background-color:#fff;
+        box-shadow:0 30px 30px #fff;
+    }
+    &__container {
+        padding:32px 40px 40px;
+    }
+    &__title {
+        font-family:$roboto;
+        font-weight:300;
+    }
+}

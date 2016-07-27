@@ -1,6 +1,6 @@
 (function(){
 
-    app.$dom.body.on("click", ".dropdown__button", function(){
+    app.$dom.body.on("click.dropdown", ".dropdown__button", function(){
         var $button = $(this),
             $dropdown = $button.closest(".dropdown");
 
@@ -30,5 +30,39 @@
         }
         $dropdown.toggleClass("open");
     });
+
+    app.$dom.body.on("click.filterGroup", ".sidebar__filter__title", function(){
+        var $button = $(this),
+            $item = $button.closest(".sidebar__filter__item"),
+            $container = $button.next(".sidebar__filter__container");
+
+        $container.css("height", $container.children().height() + "px");
+
+        if ($item.hasClass("open")){
+            setTimeout(function(){
+                $container.removeAttr("style");
+            }, 20);
+        }
+        $item.toggleClass("open");
+    });
+
+    app.$dom.body.on("click.checkbox", ".checkbox", function(){
+        $(this).toggleClass("checked");
+    });
+
+    // var body = document.body,
+    //     timer;
+    //
+    // window.addEventListener('scroll', function(){
+    //     clearTimeout(timer);
+    //     if (!body.classList.contains('disable__hover')){
+    //         body.classList.add('disable__hover');
+    //     }
+    //
+    //     timer = setTimeout(function(){
+    //         body.classList.remove('disable__hover')
+    //     }, 500);
+    //
+    // }, false);
 
 })();

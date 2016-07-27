@@ -1,0 +1,37 @@
+.checkbox {
+    display:block;
+    position:relative;
+    font-size:16px;
+    padding-left:32px;
+    margin-bottom:12px;
+    max-width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    user-select:none;
+    cursor:pointer;
+    transition:color 0.2s $cubic215;
+
+    &:before {
+        content:"";
+        position:absolute;
+        top:1px;
+        left:0;
+        width:22px;
+        height:22px;
+        background:url(/assets/images/ui-checkbox.svg) no-repeat 0 0 / cover;
+        transform:scale(0);
+        transition:transform 0.2s $cubic215;
+    }
+    &.checked {
+        color:$blue;
+
+        &:before {
+            background-image:url(/assets/images/ui-checkbox_active.svg);
+        }
+    }
+    &.checked:before,
+    &:hover:before {
+        transform:scale(1);
+    }
+}

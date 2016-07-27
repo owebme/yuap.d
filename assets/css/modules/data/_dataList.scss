@@ -1,7 +1,11 @@
+.data__list {
+    padding-right:12.5px;
+}
 .data__item {
     position:relative;
     will-change:height;
     transition:height 0.35s $cubic2501, box-shadow 0.3s $cubic25;
+    padding:0 25px 0 30px;
     overflow:hidden;
     perspective:800px;
 
