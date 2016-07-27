@@ -10,6 +10,7 @@
 // UI elements
 @import 'ui/button';
 @import 'ui/tile';
+@import 'ui/dropdownMenu';
 
 // sections
 @import 'sections/nav/nav';
@@ -22,7 +23,9 @@
 @import 'modules/data/item/dataStatus';
 @import 'modules/data/item/dataEngine';
 @import 'modules/data/item/dataContent';
-@import 'modules/data/dashboard';
+
+// dashboard
+@import 'modules/data/dashboard/dashboard';
 
 // states
 @import 'states/states';

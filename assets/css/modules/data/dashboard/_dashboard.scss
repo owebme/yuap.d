@@ -1,0 +1,54 @@
+.dashboard__item {
+    position:relative;
+    border-radius:4px;
+    border:dashed 2px lighten(#c9d7df,2%);
+    min-height:314px;
+    padding:17px 22px 0 22px;
+    margin-bottom:25px;
+    cursor:pointer;
+    transition:border-color 0.25s $cubic25;
+
+    &:hover {
+        border-color:darken(#c9d7df,15%);
+    }
+    &--active,
+    &--active:hover {
+        border-style:solid;
+        border-color:lighten(#c9d7df,2%);
+        cursor:default;
+    }
+    &__title {
+        font-family:$default;
+        text-transform:uppercase;
+    }
+}
+.dashboard__select {
+    position:absolute;
+    top:15px;
+    right:10px;
+    padding-right:10px;
+
+    &__button {
+        font-size:16.5px;
+
+        &:after {
+            content:"";
+            display:inline-block;
+            vertical-align:middle;
+            margin-left:10px;
+            border-top:5px solid $blue;
+            border-right:5px solid transparent;
+            border-bottom:none;
+            border-left:5px solid transparent;
+            transition:transform 0.15s ease;
+
+            .dropdown.open & {
+                transform:rotate(180deg);
+            }
+        }
+        &:hover,
+        .dropdown.open & {
+            color:$blue;
+        }
+    }
+}
