@@ -127,3 +127,12 @@
         }
     }
 }
+
+@media screen and (max-width:$md-width){
+    .nav__menu__item__button--products {
+        margin-left:-15px;
+    }
+    .nav__menu__logout {
+        right:-50px;
+    }
+}

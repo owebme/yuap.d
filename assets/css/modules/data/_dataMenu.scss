@@ -1,0 +1,32 @@
+.data__menu {
+    &__left {
+        @include flex("row", "flex-start", "flex-end");
+        height:44px;
+        will-change:transform;
+
+        &.slide-right {
+            transform:translate3d(33.32%, 0, 0);
+        }
+    }
+}
+.sidebarSwither {
+    width:34px;
+    height:34px;
+    cursor:pointer;
+    margin-left:-32px;
+    margin-bottom:0px;
+    transition:transform 0.2s $cubic215;
+
+    &__color {
+        fill:lighten($blue_gray, 7.5%);
+        transition:fill 0.2s $cubic215;
+    }
+    .slide-right & {
+        transform:translate3d(0, -7px, 0) rotate(180deg);
+    }
+    &:hover {
+        .sidebarSwither__color {
+            fill:$blue;
+        }
+    }
+}

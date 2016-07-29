@@ -65,3 +65,9 @@
         }
     }
 }
+
+@media screen and (max-width:$md-width){
+    .data__sidebar {
+        left:-20px;
+    }
+}

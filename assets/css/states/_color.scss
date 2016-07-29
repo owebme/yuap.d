@@ -8,6 +8,9 @@
         &__fill#{$i} {
             fill:$color;
         }
+        &#{$i} {
+            color:$color;
+        }        
     }
     // &__color1 {
     //     background-color:$green;

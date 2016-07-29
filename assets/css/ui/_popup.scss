@@ -1,31 +1,24 @@
 .popup {
+    opacity:0.001;
     @include abs(fixed);
     @include flex("row", "center", "center");
     @include accelerate();
     transform:translate3d(101%, 0, 0);
+    background:rgba($bg_color,.8);
     text-align:center;
-    transition:transform 0s 0.25s;
+    will-change:opacity;
+    transition:opacity 0.25s $cubic2501, transform 0s 0.25s;
     z-index:200;
 
-    &:before {
-        content:"";
-        opacity:0.001;
-        @include abs();
-        background:rgba($bg_color,.8);
-        will-change:opacity;
-        transition:opacity 0.25s $cubic2501;
-        z-index:-1;
-    }
     &__wrapper {
-        opacity:0.001;
         position:relative;
         padding:40px 50px;
         background-color:#fff;
         border-radius:9px;
         min-width:540px;
-        will-change:opacity, transform;
+        will-change:transform;
         transform:translate3d(0, 0, 0) scale3d(0.75, 0.75, 1);
-        transition:transform 0.2s $cubic57, opacity 0.2s $cubic57;
+        transition:transform 0.2s $cubic57;
     }
     &__title {
         color:$blue;
@@ -54,9 +47,6 @@
         @include flex("row", "flex-end", "center");
         text-align:left;
 
-        &:before {
-            transition:opacity 0.2s $cubic2501;
-        }
         .popup__wrapper {
             min-width:480px;
             padding:30px 40px 40px;
@@ -68,16 +58,13 @@
         }
     }
     &[data-open="true"]{
+        opacity:1;
         transform:translate3d(0, 0, 0);
-        transition:transform 0s;
+        transition:opacity 0.25s $cubic345, transform 0s;
 
-        &:before {
-            opacity:1;
-        }
         .popup__wrapper {
-            opacity:1;
             transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
-            transition:transform 0.25s $cubic345, opacity 0.25s $cubic345;
+            transition:transform 0.25s $cubic345;
         }
     }
 }

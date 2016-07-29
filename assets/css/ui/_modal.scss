@@ -1,16 +1,25 @@
 .modal {
-    @include abs(fixed);
+    opacity:0.001;
+    @include abs();
     @include flex("row", "center", "flex-start");
+    @include accelerate();
     background-color:rgba(#fff,.95);
+    left:101%;
+    will-change:opacity;
+    transition:opacity 0.25s $cubic57, left 0s 0.25s;
     padding-top:30px;
     overflow-y:scroll;
     z-index:100;
 
     &__wrapper {
+        @include accelerate();
         position:relative;
         min-height:480px;
         background-color:#fff;
         box-shadow:0 30px 30px #fff;
+        will-change:transform;
+        transform:translate3d(0, 0, 0) scale3d(0.77, 0.77, 1);
+        transition:transform 0.2s $cubic57;
     }
     &__container {
         position:relative;
@@ -41,6 +50,7 @@
         }
     }
     &__panel__right {
+        @include accelerate(true);
         position:fixed;
         top:32px;
         left:50%;
@@ -120,6 +130,7 @@
         transform:translate3d(30px, -25px, 0);
     }
     &__footer {
+        @include accelerate(true);
         position:fixed;
         bottom:0;
         left:50%;
@@ -147,5 +158,21 @@
                 margin:0 13px;
             }
         }
+    }
+    &[data-open="true"]{
+        opacity:1;
+        left:0;
+        transition:opacity 0.25s $cubic2501, left 0s;
+
+        .modal__wrapper {
+            transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
+            transition:transform 0.28s $cubic215;
+        }
+    }
+}
+
+@media screen and (max-width:$md-width){
+    .modal__panel__right {
+        margin-left:433px;
     }
 }

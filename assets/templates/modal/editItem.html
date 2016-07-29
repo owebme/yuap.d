@@ -1,21 +1,22 @@
 <section-modal class="modal">
 
+    <div class="modal__panel__right">
+        <div class="modal__panel__item">
+            <span class="modal__button__close"></span>
+        </div>
+        <div class="modal__panel__item">
+            <span class="modal__button__print"></span>
+        </div>
+        <div class="modal__panel__item">
+            <span class="modal__button__sendEmail"></span>
+        </div>
+        <div data-balloon="Количество визитов на ваш сайт совершенных клиентом" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__count">+1</div>
+        <div data-balloon="Просмотренно страниц клиентом, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__count">7</div>
+        <div data-balloon="Проведенное время клиентом на сайте, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__time">2:04</div>
+    </div>
+
     <div class="container">
-        <div class="modal__wrapper col-md-18 center-block">
-            <div class="modal__panel__right">
-                <div class="modal__panel__item">
-                    <span class="modal__button__close"></span>
-                </div>
-                <div class="modal__panel__item">
-                    <span class="modal__button__print"></span>
-                </div>
-                <div class="modal__panel__item">
-                    <span class="modal__button__sendEmail"></span>
-                </div>
-                <div data-balloon="Количество визитов на ваш сайт совершенных клиентом" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__count">+1</div>
-                <div data-balloon="Просмотренно страниц клиентом, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__count">7</div>
-                <div data-balloon="Проведенное время клиентом на сайте, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__time">2:04</div>
-            </div>
+        <div class="modal__wrapper col-md-22 col-lg-18 center-block">
             <div class="modal__status dropdown" data-type="select">
                 <svg class="modal__status__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path class="color__fill4" d="M11.461,43.539c0,21.284,17.255,38.539,38.539,38.539c8.667,0,16.665-2.861,23.104-7.689L88.539,95V43.539  C88.539,22.255,71.284,5,50,5S11.461,22.255,11.461,43.539z M37.154,30.693c0-7.096,5.75-12.848,12.846-12.848  s12.848,5.752,12.848,12.848c0,7.095-5.752,12.846-12.848,12.846S37.154,37.788,37.154,30.693z"/></svg>
                 <span class="modal__status__title dropdown__button">Думает</span>
@@ -51,7 +52,7 @@
                                 <div class="input__group">
                                     <input type="text" class="form__control" placeholder="Введите имя" value="inbox@resumekraft.ru" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon">
-                                        <span class="input__group__addon__icon input__group__addon__icon__email"></span>
+                                        <a href="mailto:" class="input__group__addon__icon input__group__addon__icon__writeEmail"></a>
                                     </span>
                                 </div>
                             </div>
@@ -88,12 +89,13 @@
                     </div>
                 </div>
             </div>
-            <div class="modal__footer">
-                <div class="modal__footer__wrapper">
-                    <span class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
-                    <span class="btn btn-md btn-upper btn-simple">Отменить</span>
-                </div>
-            </div>
+        </div>
+    </div>
+
+    <div class="modal__footer">
+        <div class="modal__footer__wrapper">
+            <span class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
+            <span class="btn btn-md btn-upper btn-simple">Отменить</span>
         </div>
     </div>
 

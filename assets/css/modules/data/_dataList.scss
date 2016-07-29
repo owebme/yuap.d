@@ -9,6 +9,10 @@
     overflow:hidden;
     perspective:800px;
 
+    .m-touch,
+    .d-safari & {
+        transition:height 0s, box-shadow 0.3s $cubic25;
+    }
     &[data-new="true"] {
         .data__item__icon {
             background-color:rgba($azure,.06);
@@ -53,6 +57,11 @@
         will-change:opacity, transform;
         transition:opacity 0.25s $cubic57, transform 0.3s $cubic57;
         transform:translate3d(0, 10px, 0) scale(0.98);
+
+        .m-touch,
+        .d-safari & {
+            transition:none !important;
+        }
     }
     &--active {
         height:264px;
