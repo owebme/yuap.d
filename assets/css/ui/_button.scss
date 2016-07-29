@@ -6,6 +6,7 @@
     border-radius:4px;
     font-size:16px;
     user-select:none;
+    cursor:pointer;
     transition:all 0.2s $cubic645;
 
     &:hover {
@@ -19,6 +20,11 @@
         padding:14px 60px;
         border-radius:6px;
     }
+    &-md {
+        font-size:16px;
+        padding:11px 25px;
+        border-radius:5px;
+    }
     &-sm {
         font-size:14px;
         padding:5px 7px;
@@ -29,6 +35,15 @@
         padding:1px 5px;
         border-radius:3px;
     }
+    &-upper {
+        font-family:$roboto;
+        font-weight:500;
+        text-transform:uppercase;
+
+        &.btn-md {
+            font-size:15px;
+        }
+    }
     &-round {
         border-radius:30px;
     }
@@ -36,6 +51,12 @@
         color:#fff;
         border-color:#2C93FF;
         background-color:#2C93FF;
+    }
+    &-simple {
+        border:0;
+    }
+    &-muted {
+        color:$gray_light;
     }
     &-hover-fill {
         &__icon {

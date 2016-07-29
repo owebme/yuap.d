@@ -22,7 +22,7 @@
     }
     &__user__icon {
         @include abs_50(54, 54);
-        background:url(/assets/images/tile_user.svg) no-repeat 0 0 / cover;
+        background:url(/assets/images/tile/tile_user.svg) no-repeat 0 0 / cover;
         transform:translate3d(-6px, 0, 0);
     }
     &__icon {
@@ -43,19 +43,19 @@
         }
         &--callback {
             &:before {
-                background-image:url(/assets/images/tile_callback.svg);
+                background-image:url(/assets/images/tile/tile_callback.svg);
             }
         }
         &--messenger {
             &:before {
                 width:32px;
                 height:32px;
-                background-image:url(/assets/images/tile_messenger.svg);
+                background-image:url(/assets/images/tile/tile_messenger.svg);
             }
         }
         &--reviews {
             &:before {
-                background-image:url(/assets/images/tile_reviews.svg);
+                background-image:url(/assets/images/tile/tile_reviews.svg);
             }
         }
     }
@@ -75,7 +75,7 @@
             content:"";
             width:12px;
             height:12px;
-            background:url(/assets/images/tile_alarm.svg) no-repeat 0 0 / cover;
+            background:url(/assets/images/tile/tile_alarm.svg) no-repeat 0 0 / cover;
             z-index:2;
         }
     }
@@ -96,12 +96,12 @@
                 display:block;
                 width:13px;
                 height:13px;
-                background:url(/assets/images/tile_status_success.svg) no-repeat 0 0 / cover;
+                background:url(/assets/images/tile/tile_status_success.svg) no-repeat 0 0 / cover;
                 margin-left:1px;
             }
         }
         &--fail {
-            background:url(/assets/images/tile_status_fail.svg) no-repeat 0 0 #fff / cover;
+            background:url(/assets/images/tile/tile_status_fail.svg) no-repeat 0 0 #fff / cover;
         }
     }
     &__cover {
@@ -115,69 +115,6 @@
         background-color:$gray_lighten;
         overflow:hidden;
 
-        // &__color1 {
-        //     background-color:$green;
-        // }
-        // &__color2 {
-        //     background-color:#00bbaf;
-        // }
-        // &__color3 {
-        //     background-color:$azure;
-        // }
-        // &__color4 {
-        //     background-color:#ff0079;
-        // }
-        // &__color5 {
-        //     background-color:#ffd700;
-        // }
-        // &__color6 {
-        //     background-color:#ff6700;
-        // }
-        // &__color7 {
-        //     background-color:#7380d9;
-        // }
-        &__color1 {
-            background-color:#9471DB;
-        }
-        &__color2 {
-            background-color:#4D71DB;
-        }
-        &__color3 {
-            background-color:#FFB84D;
-        }
-        &__color4 {
-            background-color:#B871B8;
-        }
-        &__color5 {
-            background-color:#71B84D;
-        }
-        &__color6 {
-            background-color:#FFDB71;
-        }
-        &__color7 {
-            background-color:#4DB8B8;
-        }
-        &__color8 {
-            background-color:#4DB8DB;
-        }
-        &__color9 {
-            background-color:#DB94DB;
-        }
-        &__color10 {
-            background-color:#FFACC5;
-        }
-        &__color11 {
-            background-color:#FF944D;
-        }
-        &__color12 {
-            background-color:#B8DB4D;
-        }
-        &__color13 {
-            background-color:#FF7194;
-        }
-        &__color14 {
-            background-color:#6AD19F;
-        }
         &--profile {
             background-position:top center;
             background-repeat:no-repeat;
@@ -274,7 +211,7 @@
             opacity:0.7;
             cursor:pointer;
             transition:opacity 0.2s $cubic215;
-            background:url(/assets/images/tile_more.svg) no-repeat 0 0 / cover;
+            background:url(/assets/images/tile/tile_more.svg) no-repeat 0 0 / cover;
 
             &:hover,
             .dropdown.open & {
@@ -291,12 +228,12 @@
     //     opacity:0.8;
     //     cursor:pointer;
     //     transition:opacity 0.2s $cubic215;
-    //     background:url(/assets/images/tile_edit.svg) no-repeat 0 0 / cover;
+    //     background:url(/assets/images/tile/tile_edit.svg) no-repeat 0 0 / cover;
     //     z-index:5;
     //
     //     &:hover {
     //         opacity:1;
-    //         background-image:url(/assets/images/tile_edit_active.svg);
+    //         background-image:url(/assets/images/tile/tile_edit_active.svg);
     //     }
     // }
 }

@@ -33,25 +33,6 @@
 
     &__button {
         font-size:16.5px;
-
-        &:after {
-            content:"";
-            display:inline-block;
-            vertical-align:middle;
-            margin-left:10px;
-            border-top:5px solid $blue;
-            border-right:5px solid transparent;
-            border-bottom:none;
-            border-left:5px solid transparent;
-            transition:transform 0.15s linear;
-
-            .dropdown.open & {
-                transform:rotate(180deg);
-            }
-        }
-        &:hover,
-        .dropdown.open & {
-            color:$blue;
-        }
+        @extend .caret;
     }
 }

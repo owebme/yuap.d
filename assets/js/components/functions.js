@@ -6,29 +6,37 @@
 
         if (!$dropdown.hasClass("open")){
             var $menu = $dropdown.find(".dropdown__menu"),
-                select = $dropdown.data("select");
+                type = $dropdown.data("type");
 
-            if ($menu.data("align") === "center"){
+            if ($menu.data("align") && $menu.data("align").match(/center/)){
                 $menu.css("margin-left", (-($menu.width() / 2) + $button.width()) + "px");
-
             }
             $dropdown.on("click.item", "li", function(){
-                if (select){
-                    var $item = $(this);
+                var $item = $(this);
+                if (type === "select"){
                     $button.text($item.text());
-
                     $item.addClass("selected")
                     .siblings()
                     .removeClass("selected");
                 }
-                $dropdown.removeClass("open")
-                .off("click.item");
+                else if (type === "radio"){
+                    $item.toggleClass("selected");
+                }
+                if (type !== "radio"){
+                    $dropdown.removeClass("open")
+                    .off("click.item");
+                    app.$dom.body.off("click.dropdownClose");
+                }
             });
+            app.$dom.body.on("click.dropdownClose", function(e){
+                if (e.target.nodeName !== "LI"){
+                    $dropdown.removeClass("open")
+                    .off("click.item");
+                    app.$dom.body.off("click.dropdownClose");
+                }
+            });
+            $dropdown.addClass("open");
         }
-        else {
-            $dropdown.off("click.item");
-        }
-        $dropdown.toggleClass("open");
     });
 
     app.$dom.body.on("click.filterGroup", ".sidebar__filter__title", function(){

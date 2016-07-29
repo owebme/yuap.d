@@ -1,0 +1,25 @@
+@each $icon in (
+    loading, loading_white,
+    close, close_white,
+    print,
+    sendEmail,
+    writeEmail
+){
+    %ui-#{$icon} {
+        background:url('/assets/images/ui/ui-#{$icon}.svg') no-repeat 0 0 / cover;
+    }
+}
+@mixin ui-icon($icon, $width: false, $height: false, $color: false) {
+    @if $width {
+        width:#{$width};
+    }
+    @if $height {
+        height:#{$height};
+    }
+    @if $color {
+        @extend %ui-#{$icon}_#{$color};
+    }
+    @else {
+        @extend %ui-#{$icon};
+    }
+}

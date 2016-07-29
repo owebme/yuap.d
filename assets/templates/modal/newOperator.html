@@ -1,0 +1,128 @@
+<section-modal class="modal">
+
+    <div class="container">
+        <div class="modal__wrapper col-md-18 center-block">
+            <div class="modal__close"></div>
+            <div class="modal__container">
+                <h2 class="modal__title">
+                    <div class="modal__title__inner">Редактирование<div class="modal__cover cover__color2">М</div></div>
+                </h2>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Имя</h4>
+                        <p>Имя оператора, которое будет отображаться клиентам</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <div class="input__group">
+                                <input type="text" class="form__control" placeholder="Введите имя">
+                                <span class="input__group__addon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">E-mail (используется как логин)</h4>
+                        <p>Этот e-mail используется для отправки различных уведомлений, а так же является логином при входе в личный кабинет и приложение JivoSite</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <div class="input__group">
+                                <input type="text" class="form__control" placeholder="Введите email">
+                                <span class="input__group__addon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Пароль</h4>
+                        <p>Минимальная длина пароля - 6 символов. Обязательно наличие большой буквы и цифры</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <div class="input__group">
+                                <input type="text" class="form__control" placeholder="Введите пароль">
+                                <span class="input__group__addon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Назначить оператора на каналы</h4>
+                        <p>Выберите каналы, с которых новый оператор будет принимать сообщения</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <div class="dropdown input__group" data-type="radio">
+                                <button type="button" class="form__control dropdown__button">Выберите каналы</button>
+                                <ul class="dropdown__menu">
+                                    <li>Все каналы</li>
+                                    <li>Звонки</li>
+                                    <li>Онлайн-чат</li>
+                                    <li>Отзывы</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Отправить инструкции на email оператора</h4>
+                        <p>Мы отправим оператору на e-mail инструкции по началу работы с JivoSite, включая заданный Вами пароль и все необходимые ссылки</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Права администратора</h4>
+                        <p>Администратор может входить в личный кабинет, управлять сайтами, настройками и аккаунтами операторов и может просматривать журналы диалогов</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <input type="checkbox" class="switcher">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="modal__header">Должность</h4>
+                        <p>Необязательное поле. Должность оператора будет отображена рядом с именем оператора</p>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <div class="form__group">
+                            <div class="input__group">
+                                <input type="text" class="form__control" autocomplete="off">
+                                <span class="input__group__addon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <div class="modal__footer__wrapper">
+                    <span class="btn btn-md btn-upper btn-fill">Добавить</span>
+                    <span class="btn btn-md btn-upper btn-simple">Отменить</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    this.on("mount", function(){
+
+
+    });
+
+</script>
+
+</section-modal>

@@ -1,0 +1,83 @@
+.popup {
+    @include abs(fixed);
+    @include flex("row", "center", "center");
+    @include accelerate();
+    transform:translate3d(101%, 0, 0);
+    text-align:center;
+    transition:transform 0s 0.25s;
+    z-index:200;
+
+    &:before {
+        content:"";
+        opacity:0.001;
+        @include abs();
+        background:rgba($bg_color,.8);
+        will-change:opacity;
+        transition:opacity 0.25s $cubic2501;
+        z-index:-1;
+    }
+    &__wrapper {
+        opacity:0.001;
+        position:relative;
+        padding:40px 50px;
+        background-color:#fff;
+        border-radius:9px;
+        min-width:540px;
+        will-change:opacity, transform;
+        transform:translate3d(0, 0, 0) scale3d(0.75, 0.75, 1);
+        transition:transform 0.2s $cubic57, opacity 0.2s $cubic57;
+    }
+    &__title {
+        color:$blue;
+        margin-bottom:25px;
+
+        .subtitle {
+            color:$gray;
+        }
+    }
+    &__footer {
+        padding-top:45px;
+    }
+    &__icon {
+        display:block;
+        position:absolute;
+        top:30px;
+        right:30px;
+
+        &__sendEmail {
+            top:0px;
+            @include ui-icon(sendEmail, 102px, 102px);
+            transform:translate3d(0, 0, 0) scale3d(1, 1.2, 1);
+        }
+    }
+    &[data-align="center-right"]{
+        @include flex("row", "flex-end", "center");
+        text-align:left;
+
+        &:before {
+            transition:opacity 0.2s $cubic2501;
+        }
+        .popup__wrapper {
+            min-width:480px;
+            padding:30px 40px 40px;
+            border-radius:9px 0 0 9px;
+            transform:translate3d(25%, 0, 0) scale3d(0.75, 0.5, 1);
+        }
+        .popup__footer {
+            padding-top:40px;
+        }
+    }
+    &[data-open="true"]{
+        transform:translate3d(0, 0, 0);
+        transition:transform 0s;
+
+        &:before {
+            opacity:1;
+        }
+        .popup__wrapper {
+            opacity:1;
+            transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
+            transition:transform 0.25s $cubic345, opacity 0.25s $cubic345;
+        }
+    }
+}

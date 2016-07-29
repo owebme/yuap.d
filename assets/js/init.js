@@ -9,4 +9,12 @@
         $item.toggleClass("data__item--active");
     });
 
+    app.$dom.body.on("click", ".modal__button__sendEmail", function(){
+        $(".popup").attr("data-open", "true");
+    });
+
+    app.$dom.body.on("click", ".popup__close", function(){
+        $(".popup").attr("data-open", "false");
+    });
+
 })();

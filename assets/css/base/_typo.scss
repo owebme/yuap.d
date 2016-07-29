@@ -10,7 +10,7 @@ h2, .h2{
 }
 h3, .h3{
     font-size: 28px;
-    margin: 20px 0 10px;
+    margin: 0 0 10px;
 }
 h4, .h4{
     font-size: 22px;
@@ -48,10 +48,11 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
 h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
     font-size: 60%;
 }
-h1 .subtitle{
+h1 .subtitle,
+h2 .subtitle,
+h3 .subtitle {
     display: block;
-    line-height: 40px;
-    margin: 15px 0 30px;
+    margin: 12px 0 35px;
 }
 .text-primary, .text-primary:hover {
     color: #1D62F0;

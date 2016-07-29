@@ -83,7 +83,7 @@
         display:block;
         width:30px;
         height:30px;
-        background:url(/assets/images/tile_link_source.svg) no-repeat 0 0 / cover;
+        background:url(/assets/images/tile/tile_link_source.svg) no-repeat 0 0 / cover;
         margin-top:6px;
         user-select:none;
 
@@ -97,7 +97,7 @@
         display:block;
         width:30px;
         height:30px;
-        background:url(/assets/images/tile_link_action.svg) no-repeat 0 0 / cover;
+        background:url(/assets/images/tile/tile_link_action.svg) no-repeat 0 0 / cover;
         margin-top:6px;
         user-select:none;
 
@@ -110,7 +110,7 @@
         display:block;
         width:32px;
         height:32px;
-        background:url(/assets/images/tile_link_email.svg) no-repeat 0 0 / cover;
+        background:url(/assets/images/tile/tile_link_email.svg) no-repeat 0 0 / cover;
         margin-top:6px;
     }
     &__links__equal {
@@ -134,7 +134,7 @@
         opacity:0.7;
         cursor:pointer;
         transition:opacity 0.2s $cubic215;
-        background:url(/assets/images/tile_help.svg) no-repeat 0 0 / cover;
+        background:url(/assets/images/tile/tile_help.svg) no-repeat 0 0 / cover;
 
         &:hover {
             opacity:1;
