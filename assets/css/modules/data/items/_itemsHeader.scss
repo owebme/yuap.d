@@ -60,6 +60,14 @@
                 background-image:url(/assets/images/tile/tile_reviews.svg);
             }
         }
+        &--tweet {
+            &:before {
+                width:32px;
+                height:32px;
+                background-image:url(/assets/images/tile/tile_tweet.svg);
+                transform:translate3d(1px, 0, 0);
+            }
+        }
         &__ring {
             opacity:0.8;
             @include abs();

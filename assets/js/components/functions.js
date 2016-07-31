@@ -9,7 +9,7 @@
                 type = $dropdown.data("type");
 
             if ($menu.data("align") && $menu.data("align").match(/center/)){
-                $menu.css("margin-left", (-($menu.width() / 2) + $button.width()) + "px");
+                $menu.css("margin-left", (-$menu.width() / 2) + "px");
             }
             $dropdown.on("click.item", "li", function(){
                 var $item = $(this);

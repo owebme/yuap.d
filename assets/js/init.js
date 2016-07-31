@@ -37,7 +37,7 @@
         $(".popup").attr("data-open", "false");
     });
 
-    app.$dom.body.on("click", ".data__item__date", function(){
+    app.$dom.body.on("click", ".data__item__edit", function(){
         $("#page").addClass("no-scroll");
         $(".modal").css("top", $("#page")[0].scrollTop + "px").attr("data-open", "true");
     });

@@ -4,7 +4,6 @@
     z-index:1;
 
     &__button {
-        text-align:left;
         cursor:pointer;
 
         .input__group & {
@@ -37,7 +36,7 @@
     &__menu {
         position:absolute;
         top:100%;
-        left:0;
+        left:50%;
         border-radius:10px;
         box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
         border:1px solid #c9d7df;
@@ -45,7 +44,6 @@
         background-clip:padding-box;
         margin-top:6px;
         min-width:160px;
-        font-size:16px;
         list-style:none;
         transform:translate3d(-999em, 0, 0);
 
@@ -76,13 +74,17 @@
         }
         li {
             position:relative;
+            text-align:left;
             display:list-item;
             padding:8px 35px 8px 20px;
             white-space:nowrap;
             overflow:hidden;
             text-overflow:ellipsis;
             max-width:100%;
+            color:$gray;
             font-weight:400;
+            font-size:16px;
+            line-height:20px;
             cursor:pointer;
 
             &:hover {
@@ -139,6 +141,23 @@
                 }
             }
         }
+        &[data-align="right"]{
+            top:50%;
+            left:100%;
+            margin-top:0;
+            margin-left:20px;
+
+            &:before {
+                left:-11px;
+                top:50%;
+                transform:translate3d(0, -50%, 0);
+            }
+            &:after {
+                left:-10px;
+                top:50%;
+                transform:translate3d(0, -50%, 0);
+            }
+        }
         &[data-align="down-right"]{
             top:100%;
             left:auto;
@@ -171,6 +190,10 @@
         }
         .dropdown__menu {
             transform:translate3d(0, 0, 0);
+
+            &[data-align="right"]{
+                transform:translate3d(0, -50%, 0);
+            }
         }
     }
 }
