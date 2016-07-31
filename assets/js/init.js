@@ -4,9 +4,29 @@
         riot.mount("*");
     });
 
-    app.$dom.body.on("click", ".data__item__header", function(){
+    app.$dom.body.on("click", ".data__item__header", function(e){
+        if (!e.target.getAttribute("class").match(/checked/)){
+            var $item = $(this).closest(".data__item"),
+                $wrapper = $item.find(".data__item__wrapper");
+
+            if ($item.data("new")){
+                $item.attr("data-new", "false");
+            }
+            if ($item.hasClass("data__item--active")){
+                $wrapper.css("overflow", "hidden");
+            }
+            else {
+                app.utils.onEndTransition($wrapper[0], function(){
+                    $wrapper.css("overflow", "visible");
+                });
+            }
+            $item.toggleClass("data__item--active");
+        }
+    });
+
+    app.$dom.body.on("click", ".data__item__checked", function(){
         var $item = $(this).closest(".data__item");
-        $item.toggleClass("data__item--active");
+        $item.toggleClass("data__item--checked");
     });
 
     app.$dom.body.on("click", ".modal__button__sendEmail", function(){
@@ -18,12 +38,12 @@
     });
 
     app.$dom.body.on("click", ".data__item__date", function(){
-        app.$dom.body.addClass("no-scroll");
-        $(".modal").attr("data-open", "true");
+        $("#page").addClass("no-scroll");
+        $(".modal").css("top", $("#page")[0].scrollTop + "px").attr("data-open", "true");
     });
 
     app.$dom.body.on("click", ".modal__button__close, .modal__footer", function(){
-        app.$dom.body.removeClass("no-scroll");
+        $("#page").removeClass("no-scroll");
         $(".modal").attr("data-open", "false");
     });
 
@@ -49,7 +69,5 @@
             $dashboard.removeClass("col-md-11 col-lg-12").addClass("col-md-10 col-lg-11");
         }
     });
-
-
 
 })();

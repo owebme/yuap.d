@@ -1,9 +1,5 @@
 [data-balloon]:before,
 [data-balloon]:after {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  -khtml-opacity: 0;
-  -moz-opacity: 0;
   opacity: 0;
   pointer-events: none;
   will-change:opacity, transform;
@@ -12,9 +8,9 @@
   left: 50%;
   position: absolute;
   z-index: 10;
-  -webkit-transform: translate(-50%, 10px);
-  -ms-transform: translate(-50%, 10px);
-  transform: translate(-50%, 10px);
+  -webkit-transform: translate(-50%, 3px);
+  -ms-transform: translate(-50%, 3px);
+  transform: translate(-50%, 3px);
   -webkit-transform-origin: top;
   -ms-transform-origin: top;
   transform-origin: top;
@@ -61,9 +57,9 @@
   bottom: auto;
   left: 50%;
   top: 100%;
-  -webkit-transform: translate(-50%, -10px);
-  -ms-transform: translate(-50%, -10px);
-  transform: translate(-50%, -10px);
+  -webkit-transform: translate(-50%, -3px);
+  -ms-transform: translate(-50%, -3px);
+  transform: translate(-50%, -3px);
 }
 [data-balloon-pos="down"]:after {
   margin-top: 11px;
@@ -88,9 +84,9 @@
   left: auto;
   right: 100%;
   top: 50%;
-  -webkit-transform: translate(10px, -50%);
-  -ms-transform: translate(10px, -50%);
-  transform: translate(10px, -50%);
+  -webkit-transform: translate(3px, -50%);
+  -ms-transform: translate(3px, -50%);
+  transform: translate(3px, -50%);
 }
 [data-balloon-pos="left"]:after {
   margin-right: 9px;
@@ -114,9 +110,9 @@
   bottom: auto;
   left: 100%;
   top: 50%;
-  -webkit-transform: translate(-10px, -50%);
-  -ms-transform: translate(-10px, -50%);
-  transform: translate(-10px, -50%);
+  -webkit-transform: translate(-3px, -50%);
+  -ms-transform: translate(-3px, -50%);
+  transform: translate(-3px, -50%);
 }
 [data-balloon-pos="right"]:after {
   margin-left: 11px;
@@ -142,10 +138,10 @@
   text-align:left;
 }
 [data-balloon-length="small"]:after {
-  width: 80px;
+  width: 120px;
 }
 [data-balloon-length="medium"]:after {
-  width: 150px;
+  width: 180px;
 }
 [data-balloon-length="large"]:after {
   width: 260px;
@@ -160,4 +156,16 @@
 }
 [data-balloon-length="fit"]:after {
   width: 100%;
+}
+[data-balloon-ellipsis="true"]:after {
+  max-width:40vw;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.m-touch {
+    [data-balloon]:before,
+    [data-balloon]:after {
+        display:none;
+    }
 }

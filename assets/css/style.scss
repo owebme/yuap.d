@@ -23,16 +23,17 @@
 @import 'ui/balloonError';
 
 // sections
-@import 'sections/nav/nav';
-@import 'sections/content/content';
-@import 'sections/panel/panel';
+@import 'sections/nav';
+@import 'sections/menu';
+@import 'sections/content';
+@import 'sections/panel';
 
 // data content
 @import 'modules/data/dataContent';
 @import 'modules/data/dataList';
 @import 'modules/data/dataMenu';
+@import 'modules/data/dataOptions';
 @import 'modules/data/items/itemsHeader';
-@import 'modules/data/items/itemsStatus';
 @import 'modules/data/items/itemsEngine';
 @import 'modules/data/items/itemsContent';
 
@@ -42,9 +43,14 @@
 // data dashboard
 @import 'modules/data/dashboard/dashboard';
 
+// help
+@import 'modules/help/helpObject';
+@import 'modules/help/helpObjectCustom';
+
 // states
 @import 'states/states';
 @import 'states/color';
+@import 'states/status';
 @import 'states/sizes';
 @import 'states/text';
 @import 'states/padding';

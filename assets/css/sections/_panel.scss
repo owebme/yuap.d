@@ -40,8 +40,6 @@
                 display:inline-block;
                 width:35px;
                 height:35px;
-                background-repeat:no-repeat;
-                background-size:cover;
                 vertical-align:middle;
                 margin-right:15px;
             }
@@ -50,7 +48,7 @@
                     left:19px;
                 }
                 &:before {
-                    background-image:url(/assets/images/panel/panel_callback.svg);
+                    @include ui-icon(callback);
                 }
             }
             &--messenger {
@@ -58,7 +56,7 @@
                     left:18px;
                 }
                 &:before {
-                    background-image:url(/assets/images/panel/panel_messenger.svg);
+                    @include ui-icon(messenger);
                 }
             }
             &--reviews {
@@ -66,7 +64,7 @@
                     left:22px;
                 }
                 &:before {
-                    background-image:url(/assets/images/panel/panel_reviews.svg);
+                    @include ui-icon(reviews);
                 }
             }
             &__badge {

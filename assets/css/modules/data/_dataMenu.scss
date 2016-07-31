@@ -1,32 +1,38 @@
 .data__menu {
-    &__left {
-        @include flex("row", "flex-start", "flex-end");
+    &__left,
+    &__right {
+        @include flex("row", "flex-start", "center");
         height:44px;
-        will-change:transform;
-
-        &.slide-right {
-            transform:translate3d(33.32%, 0, 0);
-        }
+    }
+    &__left {
+        z-index:1;
     }
 }
 .sidebarSwither {
-    width:34px;
-    height:34px;
+    opacity:0.8;
+    position:absolute;
+    top:0;
+    left:0;
+    width:43px;
+    height:43px;
     cursor:pointer;
-    margin-left:-32px;
-    margin-bottom:0px;
-    transition:transform 0.2s $cubic215;
+    will-change:transform;
+    transform:translate3d(-40px, 3px, 0) scaleX(-1);
+    transition:transform 0.25s $cubic2501, opacity 0.2s $cubic215;
 
     &__color {
-        fill:lighten($blue_gray, 7.5%);
-        transition:fill 0.2s $cubic215;
+        fill:$blue;
     }
-    .slide-right & {
-        transform:translate3d(0, -7px, 0) rotate(180deg);
+    &--active {
+        transform:translate3d(-45px, 3px, 0) scaleX(1);
     }
     &:hover {
-        .sidebarSwither__color {
-            fill:$blue;
-        }
+        opacity:1;
+    }
+}
+
+@media screen and (max-width:$md-width){
+    .sidebarSwither {
+        left:20px;
     }
 }

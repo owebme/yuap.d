@@ -35,11 +35,11 @@
         }
         &:after {
             transform:translate3d(0, 0, 0) scale(1);
-            background:url(/assets/images/ui/ui-checkbox.svg) no-repeat 0 0 / cover;
+            @include ui-icon(checkbox_gray);
         }
     }
     &:checked:after {
-        background-image:url(/assets/images/ui/ui-checkbox_active.svg);
+        @include ui-icon(checkbox);
     }
 }
 .filter__checkbox {
@@ -61,9 +61,7 @@
         position:absolute;
         top:1px;
         left:0;
-        width:22px;
-        height:22px;
-        background:url(/assets/images/ui/ui-checkbox.svg) no-repeat 0 0 / cover;
+        @include ui-icon(checkbox_gray, 22px, 22px);
         transform:scale(0);
         transition:transform 0.2s $cubic215;
     }
@@ -71,11 +69,21 @@
         color:$blue;
 
         &:before {
-            background-image:url(/assets/images/ui/ui-checkbox_active.svg);
+            @include ui-icon(checkbox);
         }
     }
     &.checked:before,
     &:hover:before {
         transform:scale(1);
+    }
+    &__color {
+        position:absolute;
+        top:50%;
+        right:0;
+        width:12px;
+        height:12px;
+        border-radius:50%;
+        transform:translate3d(0, -5px, 0);
+        opacity:0.85;
     }
 }

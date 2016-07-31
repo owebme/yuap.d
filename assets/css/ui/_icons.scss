@@ -1,25 +1,33 @@
 @each $icon in (
     loading, loading_white,
     close, close_white,
+    edit,
     print,
     sendEmail,
-    writeEmail
+    writeEmail,
+    cursorFill,
+    alarm_white,
+    help_black,
+    checkbox, checkbox_gray, checkbox_big, checkbox_big_white,
+    callback, messenger, reviews,
+    facebook_white, vkontakte_white, odnoklassniki_white, twitter_white,
+    yandex, google, rambler, mailru, yahoo, bing
 ){
     %ui-#{$icon} {
-        background:url('/assets/images/ui/ui-#{$icon}.svg') no-repeat 0 0 / cover;
+        @if $icon == 'rambler' or $icon == 'mailru' {
+            background:url('/assets/images/ui/ui-#{$icon}.png') no-repeat 0 0 / cover;
+        }
+        @else {
+            background:url('/assets/images/ui/ui-#{$icon}.svg') no-repeat 0 0 / cover;
+        }
     }
 }
-@mixin ui-icon($icon, $width: false, $height: false, $color: false) {
+@mixin ui-icon($icon, $width: false, $height: false) {
     @if $width {
         width:#{$width};
     }
     @if $height {
         height:#{$height};
     }
-    @if $color {
-        @extend %ui-#{$icon}_#{$color};
-    }
-    @else {
-        @extend %ui-#{$icon};
-    }
+    @extend %ui-#{$icon};
 }

@@ -1,10 +1,19 @@
 .no-scroll {
-    overflow:hidden;
+    overflow:hidden !important;
 }
 .disable__hover,
 .disable__hover * {
 	pointer-events:none !important;
 }
 .is-hidden {
-    display:none;
+    display:none !important;
+}
+.pos-rel {
+    position:relative;
+}
+.pos-abs {
+    position:absolute;
+}
+.pos-fixed {
+    position:fixed;
 }

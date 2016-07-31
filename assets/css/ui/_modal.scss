@@ -16,7 +16,7 @@
         position:relative;
         min-height:480px;
         background-color:#fff;
-        box-shadow:0 30px 30px #fff;
+        box-shadow:0 -30px 30px #fff;
         will-change:transform;
         transform:translate3d(0, 0, 0) scale3d(0.77, 0.77, 1);
         transition:transform 0.2s $cubic57;
@@ -37,20 +37,19 @@
         &__icon {
             display:inline-block;
             vertical-align:top;
-            width:52px;
-            height:52px;
-            transform:scaleX(-1) rotate(-28deg);
+            width:60px;
+            height:60px;
+            transform:translate3d(-5px, 0, 0);
         }
         &__title {
             font-family:$roboto;
             font-size:18px;
-            line-height:36px;
-            padding-left:5px;
+            line-height:42px;
             @extend .caret;
         }
     }
     &__panel__right {
-        @include accelerate(true);
+        @include accelerate();
         position:fixed;
         top:32px;
         left:50%;
@@ -159,6 +158,16 @@
             }
         }
     }
+    &__panel__right,
+    &__footer {
+        transform:translate3d(101vw, 0, 0);
+        transition:transform 0s 0.25s;
+
+        .m-touch & {
+            left:101vw;
+            transition:left 0s 0.25s;
+        }
+    }
     &[data-open="true"]{
         opacity:1;
         left:0;
@@ -167,6 +176,16 @@
         .modal__wrapper {
             transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
             transition:transform 0.28s $cubic215;
+        }
+        .modal__panel__right,
+        .modal__footer {
+            transform:translate3d(0, 0, 0);
+            transition:transform 0s;
+
+            .m-touch & {
+                left:50%;
+                transition:left 0s;
+            }
         }
     }
 }

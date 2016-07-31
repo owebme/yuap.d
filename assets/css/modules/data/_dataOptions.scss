@@ -1,0 +1,103 @@
+.data__panel__options {
+    display:none;
+    @include abs();
+    top:1px;
+    height:calc(100% - 1px);
+    color:$gray;
+    background:#fff;
+
+    &__left,
+    &__right {
+        position:absolute;
+        top:0;
+        height:100%;
+        padding-bottom:1px;
+    }
+    &__left {
+        @include flex("row", "flex-start", "center");
+        left:0;
+        width:40%;
+    }
+    &__right {
+        @include flex("row", "flex-end", "center");
+        right:0;
+    }
+    &__count {
+        color:#fff;
+        background-color:$blue_light;
+        text-align:center;
+        border-radius:13px;
+        height:27px;
+        line-height:27px;
+        font-size:16.5px;
+        font-weight:bold;
+
+        &__title {
+            font-size:17.5px;
+        }
+    }
+    &__cancel {
+        color:$blue_light;
+        transform:translate3d(0, 0, 0);
+        cursor:pointer;
+    }
+    &__button {
+        @include flex("row", "center", "center");
+        width:60px;
+        height:100%;
+        opacity:0.7;
+        cursor:pointer;
+        transform:translate3d(0, 0, 0) scale(0.95);
+        transition:opacity 0.2s $cubic215, transform 0.2s $cubic215;
+
+        &:hover {
+            opacity:1;
+            transform:translate3d(0, -1px, 0) scale(1);
+        }
+        &:after {
+            display:block;
+            content:"";
+        }
+        &__viewed:after {
+            width:21px;
+            height:21px;
+            background:$blue;
+            border-radius:50%;
+        }
+        &__important:after {
+            width:24px;
+            height:30px;
+            background:url(/assets/images/options/important.svg) no-repeat 0 0 / cover;
+            transform:translate3d(0, 4px, 0);
+        }
+        &__remove:after {
+            width:26px;
+            height:26px;
+            background:url(/assets/images/options/remove.svg) no-repeat 0 0 / cover;
+        }
+        &__folder:after {
+            width:26px;
+            height:26px;
+            background:url(/assets/images/options/folder.svg) no-repeat 0 0 / cover;
+        }
+        &__selectAll:after {
+            width:32px;
+            height:32px;
+            background:url(/assets/images/options/selectAll.svg) no-repeat 0 0 / cover;
+        }
+    }
+    &__help {
+        position:absolute;
+        top:0;
+        left:100%;
+        opacity:0.7;
+        cursor:pointer;
+        transition:opacity 0.2s $cubic215;
+        @include ui-icon(help_black, 28px, 28px);
+        transform:translate3d(14px, 6px, 0);
+
+        &:hover {
+            opacity:1;
+        }
+    }
+}

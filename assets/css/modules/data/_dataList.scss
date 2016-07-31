@@ -1,17 +1,26 @@
 .data__list {
+    @include accelerate(true);
+    position:relative;
     padding-right:12.5px;
+    z-index:1;
 }
 .data__item {
     position:relative;
-    will-change:height;
-    transition:height 0.35s $cubic2501, box-shadow 0.3s $cubic25;
-    padding:0 25px 0 30px;
-    overflow:hidden;
+    transition:box-shadow 0.3s $cubic25;
     perspective:800px;
 
-    .m-touch,
-    .d-safari & {
-        transition:height 0s, box-shadow 0.3s $cubic25;
+    &__wrapper {
+        @include accelerate(true);
+        height:88px;
+        padding:0 25px 0 30px;
+        overflow:hidden;
+        will-change:height;
+        transition:height 0.35s $cubic2501;
+
+        .m-touch,
+        .d-safari & {
+            transition:height 0s;
+        }
     }
     &[data-new="true"] {
         .data__item__icon {
@@ -24,8 +33,8 @@
             &:after {
                 content: "";
                 position: absolute;
-                top: 17px;
-                right: 15px;
+                top: 1px;
+                right: -2px;
                 width: 15px;
                 height: 15px;
                 border: 2px solid #fff;
@@ -34,13 +43,27 @@
                 box-shadow:0 2px 5px -2px rgba($azure,.5);
             }
         }
+        .data__item__cover {
+            background-color:$azure;
+        }
+        .data__item__header {
+            .data__item__count,
+            .data__item__time {
+                color:$azure;
+            }
+        }
     }
-    &__row {
+    &[data-status] {
+        .data__item__date {
+            color:#fff;
+            border-color:transparent;
+        }
+    }
+    &__cell {
         @include flex("row", "center", "center");
         position:relative;
         height:88px;
         transform:translate3d(0, -2px, 0);
-        z-index:2;
 
         &--num,
         &--text,
@@ -51,8 +74,12 @@
                 text-align:left;
             }
         }
+        &:hover {
+            z-index:1;
+        }
     }
     &__content {
+        @include accelerate();
         opacity:0;
         will-change:opacity, transform;
         transition:opacity 0.25s $cubic57, transform 0.3s $cubic57;
@@ -64,9 +91,11 @@
         }
     }
     &--active {
-        height:264px;
         box-shadow:0 12px 40px -10px rgba($bg_color,.15);
 
+        .data__item__wrapper {
+            height:264px;
+        }
         .data__item__content {
             opacity:1;
             transform:translate3d(0, 0, 0) scale(1);
@@ -76,5 +105,13 @@
             opacity:1;
             transition:opacity 0.2s $cubic215 0.06s;
         }
+        .data__item__edit {
+            opacity:1;
+            transform:translate3d(0, 0, 0) scale(1);
+            transition:opacity 0.2s $cubic215 0.06s, transform 0s;
+        }
+    }
+    &--focus {
+        z-index:1;
     }
 }

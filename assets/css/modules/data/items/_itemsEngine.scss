@@ -26,34 +26,24 @@
 
             &--yandex:before {
                 content:"";
-                width:32px;
-                height:32px;
-                background:url(/assets/images/engine/yandex.svg) no-repeat 0 0 / cover;
+                @include ui-icon(yandex, 32px, 32px);
             }
             &--google:before {
                 content:"";
-                width:29px;
-                height:29px;
-                background:url(/assets/images/engine/google.svg) no-repeat 0 0 / cover;
+                @include ui-icon(google, 29px, 29px);
             }
             &--rambler:before {
                 content:"";
-                width:29px;
-                height:29px;
-                background:url(/assets/images/engine/rambler.png) no-repeat 0 0 / cover;
+                @include ui-icon(rambler, 29px, 29px);
             }
             &--mail:before {
                 content:"";
-                width:30px;
-                height:30px;
-                background:url(/assets/images/engine/mail.ru.png) no-repeat 0 0 / cover;
+                @include ui-icon(mailru, 30px, 30px);
             }
             &--yahoo {
                 &:before {
                     content:"";
-                    width:30px;
-                    height:30px;
-                    background:url(/assets/images/engine/yahoo.svg) no-repeat 0 0 / cover;
+                    @include ui-icon(yahoo, 30px, 30px);
                     border-radius:50%;
                 }
                 &:after {
@@ -66,15 +56,11 @@
             }
             &--bing:before {
                 content:"";
-                width:29px;
-                height:29px;
-                background:url(/assets/images/engine/bing.svg) no-repeat 0 0 / cover;
+                @include ui-icon(bing, 29px, 29px);
             }
             &--link:before {
                 content:"";
-                width:27px;
-                height:27px;
-                background:url(/assets/images/cursor.svg) no-repeat 0 0 / cover;
+                @include ui-icon(cursorFill, 27px, 27px);
                 transform:rotate(-10deg) translate3d(0, 1px, 0);
             }
         }

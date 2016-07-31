@@ -26,6 +26,9 @@ body {
 	font-style:normal;
 	background-color:#fff;
 }
+body {
+	overflow:hidden;
+}
 a {
 	text-decoration:none;
 }
@@ -44,6 +47,7 @@ div, a, p, span, th, td {
 	height:100%;
 	background-color:#F0F4F7;
 	overflow-x:hidden;
+	overflow-y:scroll;
 }
 #nav {
 	position:relative;
@@ -80,7 +84,14 @@ div, a, p, span, th, td {
 	min-height:calc(100% - #{$header_height});
 	// background:linear-gradient(to bottom, #F4F6FA, #E0E0E8);
 	background:linear-gradient(to bottom, #F0F4F7, darken(#F0F4F7,4%));
+	// background:linear-gradient(to bottom, #F0F4F7, #EDF3F8);
+	// background:linear-gradient(to bottom, #F0F4F7, #EEF5F9);
 	overflow:hidden;
+
+	.m-touch,
+    .d-safari & {
+        background:#EDF3F8;
+    }
 }
 #panel {
 	display:block;

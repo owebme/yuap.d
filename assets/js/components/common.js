@@ -8,6 +8,7 @@ var app = {
 
 /* --- Root blocks --- */
 app.$dom = {
+	root: $('#page'),
 	html: $('html'),
 	body: $('body'),
 	document: $(document),
