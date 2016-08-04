@@ -1,0 +1,14 @@
+{
+  "name": "antiscroll",
+  "homepage": "https://github.com/LearnBoost/antiscroll",
+  "_release": "1d6573cf5a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1d6573cf5a1df9ff7ca41d2d79d4fdeac43388fe"
+  },
+  "_source": "https://github.com/LearnBoost/antiscroll.git",
+  "_target": "*",
+  "_originalSource": "antiscroll",
+  "_direct": true
+}

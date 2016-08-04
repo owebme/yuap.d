@@ -1,0 +1,322 @@
+<section-data-list>
+
+    <div each={ item in get.data() } no-reorder class="data__item tile" data-new="{ item.new }" data-checked="{ item.checked }" data-show="{ item.show }" data-status="{ get.statusColor(item.status) }">
+        <div data-help="date" class="data__item__date color__bg{ get.statusColor(item.status) }">{ get.date(item.date) }</div>
+        <div class="data__item__edit__button"></div>
+        <div dropdown="dataItemOptions" dropdown-align="right" class="data__item__more__button"></div>
+        <div class="data__item__wrapper">
+            <div onClick={ open.details } class="data__item__header">
+                <div data-help="numOrder" class="data__item__cell data__item__cell--num col-md-3">
+                    <div if={ item.name } class="data__item__user__icon"></div>
+                    <div if={ !item.name } class="data__item__num">{ item.num }</div>
+                </div>
+                <div class="data__item__cell col-md-4">
+                    <div data-help="chanel" class="data__item__icon data__item__icon--{ item.chanel }">
+                        <div onClickUpdate={ onChecked } class="data__item__checked"></div>
+                        <div if={ item.alarm === true } class="data__item__alarm"></div>
+                        <div if={ item.accepted === true } class="data__item__status data__item__status--success"></div>
+                        <div if={ item.accepted === false } class="data__item__status data__item__status--fail"></div>
+                        <div if={ item.metrika.length > 1 } class="data__item__icon__ring">
+                            <span class="data__item__icon__ring__item"></span>
+                            <span class="data__item__icon__ring__item"></span>
+                        </div>
+                    </div>
+                </div>
+                <div data-help="cover" class="data__item__cell col-md-4">
+                    <div class="data__item__cover color__bg{ item.status }">{ get.cover(item.name, item.city) }</div>
+                </div>
+                <virtual if={ item.name }>
+                    <div class="data__item__cell data__item__cell--text col-md-7">
+                        <span class="data__item__label">имя</span>
+                        <span class="data__item__text"><pre>{ get.name(item.name) }</pre></span>
+                    </div>
+                    <div if={ item.phone } class="data__item__cell data__item__cell--text col-md-6">
+                        <span class="data__item__label">телефон</span>
+                        <span if={ item.phone } class="data__item__text">{ item.phone }</span>
+                        <span if={ !item.phone } class="data__item__text text-center">....</span>
+                    </div>
+                    <div if={ !item.phone } class="data__item__cell data__item__cell--text col-md-4">
+                        <span class="data__item__label text-center">телефон</span>
+                        <span class="data__item__text text-center">....</span>
+                    </div>
+                </virtual>
+                <virtual if={ !item.name }>
+                    <div data-help="visits" class="data__item__cell col-md-4">
+                        <span class="data__item__label data__item__label--hidden">визиты</span>
+                        <div class="data__item__count">+{ item.visits }</div>
+                    </div>
+                    <div data-help="adv" class="data__item__cell col-md-4">
+                        <div class="data__item__source { 'data__item__source--active' : item.metrikaLast.adv }">₽
+                            <div class="data__item__source__engine data__item__source__engine--{ item.metrikaLast.searchEngine ? item.metrikaLast.searchEngine : 'link' }"></div>
+                        </div>
+                    </div>
+                    <div data-help="time" class="data__item__cell col-md-5">
+                        <span class="data__item__label data__item__label--hidden">время</span>
+                        <div class="data__item__time">{ get.timeVisit(item.metrikaLast.time) } <small if={ item.metrikaLast.time > 60 }>мин</small></div>
+                    </div>
+                </virtual>
+            </div>
+            <div class="data__item__content">
+                <div class="data__item__cell data__item__cell--text col-md-6">
+                    <span class="data__item__label">город</span>
+                    <span title="Москва" class="data__item__text data__item__text--nowrap">{ item.city }</span>
+                </div>
+                <virtual if={ item.name }>
+                    <div class="data__item__cell col-md-3">
+                        <span class="data__item__label">визиты</span>
+                        <div class="data__item__count">+{ item.visits }</div>
+                    </div>
+                    <div class="data__item__cell col-md-3">
+                        <span class="data__item__label">просм.</span>
+                        <span class="data__item__count">{ item.metrikaLast.pages.length }</span>
+                    </div>
+                    <div class="data__item__cell col-md-3">
+                        <span class="data__item__label">время</span>
+                        <div class="data__item__number">
+                            { get.timeVisit(item.metrikaLast.time) }
+                            <small if={ item.metrikaLast.time > 60 }>мин</small>
+                        </div>
+                    </div>
+                    <div if={ item.email } class="data__item__cell data__item__cell--email col-md-9">
+                        <span class="data__item__label">email</span>
+                        <a href="mailto:{ item.email }" class="data__item__text__link">{ item.email }</a>
+                    </div>
+                    <div if={ !item.email } class="data__item__cell data__item__cell--email col-md-9">
+                        <span class="data__item__label text-center">email</span>
+                        <div class="text-center w100p">....</div>
+                    </div>
+                </virtual>
+                <virtual if={ !item.name }>
+                    <div class="data__item__cell data__item__cell--text col-md-7">
+                        <span class="data__item__label text-center">имя</span>
+                        <span class="data__item__text text-center">....</span>
+                    </div>
+                    <div if={ item.phone } class="data__item__cell data__item__cell--text col-md-5">
+                        <span class="data__item__label">телефон</span>
+                        <span class="data__item__text">{ item.phone }</span>
+                    </div>
+                    <div if={ !item.phone } class="data__item__cell data__item__cell--text col-md-5">
+                        <span class="data__item__label text-center">телефон</span>
+                        <span class="data__item__text text-center">....</span>
+                    </div>
+                    <div class="data__item__cell col-md-3">
+                        <span class="data__item__label">email</span>
+                        <div if={ item.email } class="pos-rel" data-balloon="нажмите, чтобы написать на { item.email }" data-balloon-pos="up" data-balloon-ellipsis="true">
+                            <a href="mailto:{ item.email }" class="data__item__link__email"></a>
+                        </div>
+                        <div if={ !item.email }>
+                            ....
+                        </div>
+                    </div>
+                    <div data-help="pages" class="data__item__cell col-md-3">
+                        <span class="data__item__label">просм.</span>
+                        <span class="data__item__number">{ item.metrikaLast.pages.length }</span>
+                    </div>
+                </virtual>
+            </div>
+            <div class="data__item__content data__item__content--last">
+                <div data-help="operator" class="data__item__cell data__item__cell--text col-md-6">
+                    <span class="data__item__label">принял</span>
+                    <span title="Москва" class="data__item__text data__item__text--nowrap">Александр</span>
+                </div>
+                <div data-help="source" class="data__item__cell data__item__cell--text col-md-8">
+                    <span class="data__item__label">источник перехода</span>
+                    <div if={ item.metrikaLast.searchEngine } class="data__item__text">
+                        { "Яндекс.Директ" : item.metrikaLast.adv && item.metrikaLast.searchEngine === "yandex" }
+                        { "Яндекс.Поиск" : !item.metrikaLast.adv && item.metrikaLast.searchEngine === "yandex" }
+                        { "Google.Adwords" : item.metrikaLast.adv && item.metrikaLast.searchEngine === "google" }
+                        { "Google.Поиск" : !item.metrikaLast.adv && item.metrikaLast.searchEngine === "google" }
+                        { "Rambler.Поиск" : item.metrikaLast.searchEngine === "rambler" }
+                        { "Yahoo.Поиск" : item.metrikaLast.searchEngine === "yahoo" }
+                        { "Bing.Поиск" : item.metrikaLast.searchEngine === "bing" }
+                        { "Mail.ru.Поиск" : item.metrikaLast.searchEngine === "mail" }
+                        <div if={ item.metrikaLast.keyword } data-balloon="{ item.metrikaLast.keyword }" data-balloon-pos="down" data-balloon-ellipsis="true" class="pos-rel">
+                            <div class="data__item__text data__item__text__gray data__item__text--nowrap">{ item.metrikaLast.keyword }</div>
+                        </div>
+                    </div>
+                    <div if={ !item.metrikaLast.searchEngine } class="data__item__text">
+                        <div class="data__item__text"><a class="data__item__text__link" target="_blank" href="{ item.metrikaLast.referer }">{ item.metrikaLast.referer }</a></div>
+                    </div>
+                </div>
+                <div data-help="pageStart" class="data__item__cell col-md-4">
+                    <span class="data__item__label">стр. входа</span>
+                    <a if={
+                        item.metrikaLast.startPage == '/' } target="_blank" href="{ get.domain() }" data-balloon="главная: /" data-balloon-pos="down" data-balloon-ellipsis="true" class="data__item__link__source">
+                        <span class="data__item__link__label">г</span>
+                    </a>
+                    <a if={
+                        item.metrikaLast.startPage != '/' } target="_blank" href="{ get.domain(item.metrikaLast.startPage) }" data-balloon="{ item.metrikaLast.startPage }" data-balloon-pos="down" data-balloon-ellipsis="true" class="data__item__link__source">
+                    </a>
+                    <span if={
+                        item.metrikaLast.startPage && item.metrikaLast.startPage == item.metrikaLast.startAction } class="data__item__links__equal">=
+                    </span>
+                </div>
+                <div data-help="pageAction" class="data__item__cell col-md-4">
+                    <span class="data__item__label">стр. обращ.</span>
+                    <a if={
+                        item.metrikaLast.actionPage == '/' } target="_blank" href="{ get.domain() }" data-balloon="главная: /" data-balloon-pos="down" data-balloon-ellipsis="true" class="data__item__link__action">
+                        <span class="data__item__link__label">г</span>
+                    </a>
+                    <a if={
+                        item.metrikaLast.actionPage != '/' } target="_blank" href="{ get.domain(item.metrikaLast.actionPage) }" data-balloon="{ item.metrikaLast.actionPage }" data-balloon-pos="down" data-balloon-ellipsis="true" class="data__item__link__action">
+                    </a>
+                </div>
+                <div class="data__item__cell col-md-2">
+                    <div help-item=".data__item" help-data="dataItem" class="data__item__help getHelp"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="pigination">
+        <li class=""></li>
+    </ul>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.itemsPage = 10;
+    $.currentPage = 1;
+    $.countPages = null;
+
+    $.init = function(data){
+        var size = data.length;
+        for (var i = 0; i < size; i++){
+            data[i].metrikaLast = data[i].metrika[data[i].metrika.length - 1];
+        }
+        $store.data = new Baobab(data);
+        $.update();
+    };
+
+    $.refresh = function(data){
+        //$.init();
+    };
+
+    $.fetch = function(select){
+        $fetch('data/list/menu/' + select, "get").then(function(data){
+            $.init(data);
+        });
+    };
+
+    $.openItem = function(){
+        var _this = this,
+            id = this.item._id;
+
+        $$($.parent.root).addClass("section--loading");
+    };
+
+    $.getCheckedIds = function(){
+        return _.pluck($.data.get('isChecked'), "_id");
+    };
+
+    $.open = {
+        details: function(e){
+            var _this = this,
+                item = this.item,
+                id = item._id;
+
+            if (!e.target.className.match(/data__item__checked/)){
+                var $item = $$(_this.root),
+                    $wrapper = $item.find(".data__item__wrapper");
+
+                if (item.new){
+                    item.new = false;
+                }
+                if (item.show){
+                    item.show = false;
+                    $wrapper.css("overflow", "hidden");
+                }
+                else {
+                    item.show = true;
+                    _.onEndTransition($wrapper[0], function(){
+                        $wrapper.css("overflow", "visible");
+                    });
+                }
+                _this.update();
+            }
+        }
+    };
+
+    $.get = {
+        data: function(){
+            var data = _.filter($store.data.get(), function(item){return item.active === true});
+
+            var startItem = (($.currentPage - 1) * 10) - 2;
+            $.countPages = Math.ceil(data.length / $.itemsPage);
+
+            var result = _.filter(data, function(item, i){
+                return i > startItem && i < startItem + $.itemsPage + $.currentPage + ($.currentPage > 1 ? - 1 : + 1);
+            });
+
+            return result;
+        },
+        name: function(name){
+            return name.replace(/\s+/g, "\n");
+        },
+        date: function(date){
+            var days = tempus().between(tempus(date), 'day');
+            if (days > 0) return tempus(date).format('%H:%M');
+            else if (days === -1) return "вчера";
+            else {
+                return tempus(date).format('%d %b');
+            }
+        },
+        timeVisit: function(sec){
+            if (sec > 0 && sec < 60) return "0:" + sec;
+            else if (sec > 59) {
+                if (sec > 3600) return "> 60";
+                else return Math.ceil(sec / 60);
+            }
+        },
+        cover: function(name, city){
+            if (name) return name.substr(0, 1);
+            else if (city) return city.substr(0, 1);
+        },
+        domain: function(url){
+            return 'http://resumekraft.ru' + (url ? url : '');
+        },
+        statusColor: function(status){
+            if (status) return $store.status.get({'_id': String(status)}, 'color');
+            else return status;
+        }
+    };
+
+    $.onChecked = function(){
+        this.item.checked = !this.item.checked;
+        //$store.data.select('items', {'_id': this.item._id}).set("checked", !this.item.checked);
+        //console.dir($store.data.get('isChecked'));
+        //console.dir(_.filter($store.data.get(), function(item){return item.checked === true}).length);
+    };
+
+    $.unChecked = function(){
+        $.data.get('isChecked', function(item) {
+            item.checked = false;
+        });
+        $.update();
+    };
+
+    $.selectStatus = function(){
+        var _this = this,
+            id = this.item._id;
+
+        $popupSelect.show({
+            type: "status",
+            icon: {
+                type: this.item.type,
+                image: this.item.image
+            },
+            data: $.data.get('status'),
+            value: this.item.status,
+            callback: function(value){
+                $fetch('data/list/status/' + value, "put", [id]);
+                $.data.select('items', {'_id': id}).set("status", value);
+                _this.update();
+            }
+        });
+    };
+
+</script>
+
+</section-data-list>

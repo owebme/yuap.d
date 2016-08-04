@@ -1,0 +1,6 @@
+{
+  "ignore":["/assets/**",
+            "/chat/**",
+            "/demos/**",
+            "/index.html"]
+}

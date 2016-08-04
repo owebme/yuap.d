@@ -1,25 +1,5 @@
 (function(utils, $dom){
 
-	utils.log = function(data){
-		if (!data) return;
-
-		if (typeof data === "object"){
-			console.dir(data);
-		}
-		else {
-			console.log(data);
-		}
-	};
-
-	utils.logger = function(event, data){
-		if (!event || !data) return;
-
-		if (event === "init") utils.log("Initialize: <" + data + "> ready");
-		else if (event === "open") utils.log("OPEN: <" + data + ">");
-		else if (event === "close") utils.log("CLOSE: <" + data + ">");
-		else utils.log(event + ": <" + data + ">");
-	};
-
 	utils.random = function(min,max){
 		return Math.floor(Math.random()*(max-min+1)+min);
 	};
@@ -99,26 +79,24 @@
 	    if (img.complete) loadHandler();
 	};
 
-	utils.copyArray = function(arr1, arr2){
-		var length = arr2.length;
-
-		for (var i = 0; i < length; ++i){
-			arr1.push(arr2[i]);
+	utils.indexOf = function(arr, value, from) {
+		for (var i = from || 0, l = (arr || []).length; i < l; i++) {
+			if (arr[i] == value) return i;
 		}
-		return arr1;
+		return -1;
+  	};
+
+	utils.inArray = function(arr, value) {
+		return utils.indexOf(arr, value) != -1;
 	};
 
-	utils.isArray = function(arr){
-		if (arr && Object.prototype.toString.call(arr) === '[object Array]'){
-		    return true;
-		}
-	};
-
-	utils.isFunction = function(fn){
-		if (fn && typeof fn === 'function'){
-		    return true;
-		}
-	};
+	utils.getScroll = function(scroll) {
+        var x = scroll.x * -1,
+            y = scroll.y * -1,
+			maxX = scroll.maxScrollX * -1,
+			maxY = scroll.maxScrollY * -1;
+        return {x: x, y: y, maxX: maxX, maxY: maxY};
+    };
 
 	utils.throttle = function(fn, delay) {
 		var allowSample = true;
@@ -156,5 +134,81 @@
 
 		};
 	};
+
+	// utils.extend = function(parent, child) {
+	//     var i;
+	//
+	//     child = child || {};
+	//
+	//     for (i in parent) {
+	//       if (parent.hasOwnProperty(i)) {
+	//         if (typeof parent[i] === 'object') {
+	//           child[i] = (child[i] == null) ? {} : child[i];
+	//           utils.extend(parent[i], child[i]);
+	//         } else {
+	//           child[i] = parent[i]; //primitive value can be copied over
+	//         }
+	//       }
+	//     }
+	//     return child;
+	// };
+
+
+	utils.clone = function(obj, req) {
+	  var newObj = !isObject(obj) && typeof obj.length !== 'undefined' ? [] : {};
+	  for (var i in obj) {
+	    if (/webkit/i.test(_ua) && (i == 'layerX' || i == 'layerY')) continue;
+	    if (req && typeof(obj[i]) === 'object' && i !== 'prototype') {
+	      newObj[i] = clone(obj[i]);
+	    } else {
+	      newObj[i] = obj[i];
+	    }
+
+	  }
+	  return newObj;
+	}
+
+	// function rand(mi, ma) { return Math.random() * (ma - mi + 1) + mi; }
+	// function irand(mi, ma) { return Math.floor(rand(mi, ma)); }
+	// function isFunction(obj) {return Object.prototype.toString.call(obj) === '[object Function]'; }
+	// function isArray(obj) { return Object.prototype.toString.call(obj) === '[object Array]'; }
+	// function isObject(obj) { return Object.prototype.toString.call(obj) === '[object Object]' && !(browser.msie8 && obj && obj.item !== 'undefined' && obj.namedItem !== 'undefined'); }
+	// function isEmpty(o) { if(Object.prototype.toString.call(o) !== '[object Object]') {return false;} for(var i in o){ if(o.hasOwnProperty(i)){return false;} } return true; }
+	// function vkNow() { return +new Date; }
+	// function vkImage() { return window.Image ? (new Image()) : ce('img'); } // IE8 workaround
+	// function trim(text) { return (text || '').replace(/^\s+|\s+$/g, ''); }
+	// function stripHTML(text) { return text ? text.replace(/<(?:.|\s)*?>/g, '') : ''; }
+	// function escapeRE(s) { return s ? s.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1') : ''; }
+	// function intval(value) {
+	//   if (value === true) return 1;
+	//   return parseInt(value) || 0;
+	// }
+	// function floatval(value) {
+	//   if (value === true) return 1;
+	//   return parseFloat(value) || 0;
+	// }
+	// function positive(value) {
+	//   value = intval(value);
+	//   return value < 0 ? 0 : value;
+	// }
+	//
+	// function winToUtf(text) {
+	//   return text.replace(/&#(\d\d+);/g, function(s, c) {
+	//     c = intval(c);
+	//     return (c >= 32) ? String.fromCharCode(c) : s;
+	//   }).replace(/&quot;/gi, '"').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&amp;/gi, '&');
+	// }
+	// function replaceEntities(str) {
+	//   return se('<textarea>' + ((str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')) + '</textarea>').value;
+	// }
+	// function clean(str) {
+	//   return str ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;') : '';
+	// }
+	// function unclean(str) {
+	//   return replaceEntities(str.replace(/\t/g, "\n"));
+	// }
+
+	if (window._) _.extend(_, utils);
+	else window._ = utils;
 
 })(app.utils, app.$dom);

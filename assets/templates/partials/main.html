@@ -1,0 +1,56 @@
+<root-main id="page">
+
+    <div class="screen screen__main" data-marquee="main">
+        <div class="screen__main__inner">
+            <section-nav></section-nav>
+            <section-content></section-content>
+        </div>
+        <section-panel></section-panel>
+    </div>
+    <div class="screen screen__messenger" data-marquee="messenger">
+        <section-messenger></section-messenger>
+    </div>
+
+    <section-modal></section-modal>
+    <section-popup></section-popup>
+    <dropdown-menu></dropdown-menu>
+
+<script>
+
+    $root = this;
+
+    $store = {};
+
+    this.on("mount", function(){
+
+        SCREENS = app.screens;
+        NAV = $root.tags["section-nav"];
+        CONTENT = $root.tags["section-content"];
+        PANEL = $root.tags["section-panel"];
+
+        $DataMenu = CONTENT.tags["section-data-menu"];
+        $DataSidebar = CONTENT.tags["section-data-sidebar"];
+        $DataList = CONTENT.tags["section-data-list"];
+        $Dashboard = CONTENT.tags["section-dashboard"];
+        $DropMenu = CONTENT.tags["dropdown-menu"];
+
+        $Messenger = $root.tags["section-messenger"];
+
+        SCREENS.init();
+
+        app.request('data/init/777', "get").then(function(data){
+            console.dir(data);
+            //$root.tags["data-section"].tags["data-menu"].init(data.menu);
+            $DataList.init(data.list);
+            $DataSidebar.init(data.status);
+            // $root.tags["dashboard-section"].tags["dashboard-list"].init({
+            //     weather: data.weather,
+            //     currency: data.currency
+            // });
+        });
+
+    });
+
+</script>
+
+</root-main>

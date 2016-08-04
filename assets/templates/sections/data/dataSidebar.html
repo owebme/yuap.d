@@ -1,0 +1,157 @@
+<section-data-sidebar>
+
+    <div class="sidebar__filter__item open">
+        <div class="sidebar__filter__title">Каналы</div>
+        <div class="sidebar__filter__container">
+            <div class="sidebar__filter__body">
+                <virtual each={ item in $store.chanels.get() } no-reorder>
+                    <div onClickUpdate={ select.chanel } data-hidden="{true : item.hidden}" class="filter__checkbox ch {checked: item.active, focus: item.focus}">
+                        <label class="filter__checkbox__item">{ item.title }</label>
+                        <span if={ item.count > 0 } class="filter__checkbox__count">{ item.count }</span>
+                    </div>
+                </virtual>
+                <div class="pos-rel" data-balloon="Показывать и тех, кто были перенесены в контакты" data-balloon-pos="up" data-balloon-length="medium"><label class="filter__checkbox__item">Включая всех</label></div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar__filter__item open">
+        <div class="sidebar__filter__title">Статусы</div>
+        <div class="sidebar__filter__container">
+            <div class="sidebar__filter__body">
+                <div onClickUpdateAll={ select.statusAll } class="filter__checkbox stAll { checked : statusAll }">
+                    <label class="filter__checkbox__item">Все</label>
+                </div>
+                <virtual each={ item in $store.status.get() } no-reorder>
+                    <div onClickUpdateAll={ select.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
+                        <label class="filter__checkbox__item">{ item.title }</label>
+                        <span class="filter__checkbox__color color__bg{ item.color }"></span>
+                    </div>
+                </virtual>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.statusAll = true;
+
+    $.init = function(status){
+        var chanels = [
+            {
+                chanel: 'callback',
+                title: 'Звонки'
+            },
+            {
+                chanel: 'messenger',
+                title: 'Онлайн-чат'
+            },
+            {
+                chanel: 'reviews',
+                title: 'Отзывы'
+            },
+            {
+                chanel: 'tweet',
+                title: 'Твиты'
+            },
+            {
+                chanel: 'orders',
+                title: 'Заявки'
+            }
+        ];
+
+        _.each(chanels, function(item){
+            item.count = 0;
+            item.active = true;
+        });
+
+        _.each(status, function(item){
+            item.active = true;
+        });
+
+        $store.chanels = new Baobab(chanels);
+
+        $store.status = new Baobab(status);
+
+        $.set.chanelsCount();
+
+        $.update();
+        $DataList.update();
+    };
+
+    $.select = {
+        chanel: function(e){
+            this.item.active = !this.item.active;
+            $.select.unfocus(e, this);
+            $.calc();
+        },
+        status: function(e){
+            if ($.statusAll) $.statusAll = false;
+            else {
+                this.item.active = !this.item.active;
+                $.select.unfocus(e, this);
+            }
+            $.calc();
+        },
+        statusAll: function(e){
+            $.statusAll = !$.statusAll;
+            if ($.statusAll){
+                $store.status.get(function(item) {
+                    item.active = true;
+                });
+                $.calc();
+            }
+        },
+        unfocus: function(e, $this){
+            if (!app.device.isMobile && !$this.item.active){
+                var $item = $$(e.target);
+                $this.item.focus = true;
+                $item.on("mouseleave", function(){
+                    $this.item.focus = false;
+                    $this.update();
+                    $item.off("mouseleave");
+                });
+            }
+        }
+    };
+
+    $.set = {
+        chanelsCount: function(){
+            var items = _.pluck($store.data.get(), 'chanel');
+            $store.chanels.get(function(item) {
+                $store.chanels.select({'chanel': item.chanel}).set(
+                    'count', _.filter(items, function(chanel){return chanel === item.chanel}).length
+                );
+            });
+        }
+    };
+
+    $.calc = function(){
+        console.time("calc");
+        var chanels = [];
+        $store.chanels.get(function(item) {
+            if (item.active) chanels.push(item.chanel);
+        });
+        var status = [];
+        $store.status.get(function(item) {
+            if (item.active) status.push(item._id);
+        });
+        var count = 0;
+        $store.data.get(function(item) {
+            if (_.inArray(chanels, item.chanel) && _.inArray(status, item.status)){
+                item.active = true;
+                count++;
+            }
+            else {
+                item.active = false;
+            }
+        });
+        $DataList.update();
+        console.timeEnd("calc");
+    };
+
+</script>
+
+</section-data-sidebar>

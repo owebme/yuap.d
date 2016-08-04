@@ -8,7 +8,7 @@
         &__fill#{$i} {
             fill:$color;
         }
-        &__color#{$i} {
+        &#{$i} {
             color:$color;
         }
     }

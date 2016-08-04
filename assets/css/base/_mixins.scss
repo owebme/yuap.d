@@ -20,9 +20,21 @@
     align-items:#{$align};
 }
 @mixin accelerate($transition: false) {
-    transform-style:preserve-3d;
+    // transform-style:preserve-3d;
+    transform-style:flat;
     backface-visibility:hidden;
     @if $transition {
         transform:translate3d(0, 0, 0);
+        transform:tranlsateZ(0);
+        transform:scale3d(1,1,1);
+        transform:scale3dZ(1);
+    }
+}
+@mixin textEllipsis($width: false) {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    @if $width {
+        max-width:#{$width};
     }
 }

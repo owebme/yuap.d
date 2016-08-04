@@ -1,0 +1,36 @@
+.screen {
+    @include abs();
+    @include accelerate(true);
+    will-change:transform, opacity;
+    transform-origin:100% 50%;
+    overflow:hidden;
+    background:#fff;
+
+    &--long {
+        height:auto !important;
+        min-height:100%;
+    }
+    &--active {
+        display:block;
+    }
+    &__main__inner {
+        @include abs();
+        @include accelerate(true);
+        overflow-y:scroll;
+    }
+}
+.vertical__space,
+.horizontal__space {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+.horizontal__space {
+    top:-200%;
+    width:20000%;
+
+    &__screen {
+        float:left;
+    }
+}

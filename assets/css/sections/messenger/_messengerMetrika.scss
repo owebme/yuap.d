@@ -1,0 +1,219 @@
+.chat__metrika {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#667491;
+    /*background-image:linear-gradient(to bottom, #ac9cd7, #3d487d);*/
+    color:#fff;
+    transform:translate3d(-101%, 0, 0);
+    transition:transform 0.5s ease;
+}
+.chat__metrika--active {
+    transform:translate3d(0, 0, 0);
+    transition:transform 0.45s ease;
+}
+.chat__metrika__header {
+    height:212px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    text-align:center;
+}
+.chat__metrika__close {
+    position:absolute;
+    top:17px;
+    right:17px;
+    width:28px;
+    height:28px;
+    cursor:pointer;
+    transition:opacity 0.15s ease;
+    opacity:0.75;
+}
+.chat__metrika__close:hover {
+    opacity:1;
+}
+.chat__metrika__close:before,
+.chat__metrika__close:after {
+    content:"";
+    position:absolute;
+    background:#fff;
+    border-radius:10px;
+    opacity:0;
+    transition:transform 0.35s ease 0.2s, opacity 0.35s ease 0.2s;
+}
+.chat__metrika__close:before {
+    width:2px;
+    height:100%;
+    top:0;
+    left:50%;
+    margin-left:-1px;
+    transform:rotate(90deg);
+}
+.chat__metrika__close:after {
+    width:100%;
+    height:2px;
+    top:50%;
+    left:0;
+    margin-top:-1px;
+    transform:rotate(-90deg);
+}
+.chat__metrika--active .chat__metrika__close:before,
+.chat__metrika--active .chat__metrika__close:after {
+    opacity:1;
+    transform:rotate(45deg);
+}
+.chat__metrika__time {
+    display:inline-block;
+    position:absolute;
+    top:21px;
+    left:25px;
+    font-weight:300;
+    font-size:16px;
+    line-height:22px;
+    vertical-align:bottom;
+}
+.chat__metrika__time:before {
+    content:"";
+    display:inline-block;
+    width:24px;
+    height:24px;
+    margin-right:10px;
+    background:url(/images/time.svg) no-repeat 0 0 / cover;
+    vertical-align:bottom;
+    opacity:0.75;
+}
+.chat__metrika__photo {
+    position:relative;
+    display:inline-block;
+    width:100px;
+    height:100px;
+    margin:36px 0 26px;
+    border-radius:50%;
+    background:rgba(255,255,255,.3);
+    border:5px solid rgba(255,255,255,.15);
+}
+.chat__metrika__photo:before {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:74px;
+    height:74px;
+    margin:-37px 0 0 -37px;
+    background:url(/images/user_white.svg) no-repeat 0 0 / cover;
+}
+.chat__metrika__avatar {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background-position:center top;
+    background-size:cover;
+    overflow:hidden;
+}
+.chat__metrika__title {
+    font-size:22px;
+    font-weight:500;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    width:90%;
+    margin:0 auto;
+}
+.chat__metrika__bdate {
+    position:absolute;
+    top:130px;
+    left:50%;
+    margin-left:50px;
+    font-weight:300;
+    color:rgba(255,255,255,.85);
+}
+.chat__metrika__content {
+    padding:30px 35px 0;
+    text-align:center;
+}
+.chat__metrika__tile {
+    margin-bottom:15px;
+    text-align:left;
+}
+.chat__metrika__tile__text {
+    display:inline-block;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    max-width:100%;
+}
+.chat__metrika__link,
+.chat__metrika__text__blue {
+    color:#68f5ff;
+}
+.chat__metrika__link:hover {
+    color:#fff558;
+}
+.chat__metrika__tile__subtitle {
+    font-size:14px;
+    font-weight:500;
+    text-transform:uppercase;
+}
+.chat__metrika__tile__title {
+    font-size:17px;
+    font-weight:500;
+}
+.chat__metrika__pages {
+    transform:translate3d(0, 101%, 0);
+    transition:transform 0s 0.4s;
+}
+.chat__metrika__pages,
+.chat__metrika__pages:before,
+.chat__metrika__pages__container {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+.chat__metrika__pages:before {
+    opacity:0;
+    content:"";
+    background:rgba(7,14,25,.75);
+    transition:opacity 0.4s ease;
+}
+.chat__metrika__pages__container {
+    top:40%;
+    height:60%;
+    background:#3e4757;
+    padding:35px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    transform:translate3d(0, 100%, 0);
+    transition:transform 0.4s ease;
+}
+.chat__metrika__pages--active {
+    transition:transform 0s;
+}
+.chat__metrika__pages--active,
+.chat__metrika__pages--active .chat__metrika__pages__container {
+    transform:translate3d(0, 0, 0);
+}
+.chat__metrika__pages--active:before {
+    opacity:1;
+}
+/*.chat__metrika__authButton {
+    display:inline-block;
+    margin-top:12px;
+    padding:17px 45px 18px;
+    font-size:17px;
+    line-height:17px;
+    font-weight:300;
+    border-radius:35px;
+    cursor:pointer;
+    text-align:center;
+    background:rgba(255,255,255,.1);
+    border:2px solid rgba(255,255,255,.2);
+    transition:background 0.15s ease;
+}
+.chat__metrika__authButton:hover {
+    background:rgba(255,255,255,.2);
+}*/

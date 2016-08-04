@@ -17,35 +17,45 @@
 @import 'ui/input';
 @import 'ui/select';
 @import 'ui/tile';
-@import 'ui/modal';
-@import 'ui/popup';
 @import 'ui/balloon';
 @import 'ui/balloonError';
 
+// partials
+@import 'partials/screens';
+@import 'partials/nav';
+@import 'partials/menu';
+@import 'partials/content';
+@import 'partials/panel';
+
 // sections
-@import 'sections/nav';
-@import 'sections/menu';
-@import 'sections/content';
-@import 'sections/panel';
 
 // data content
-@import 'modules/data/dataContent';
-@import 'modules/data/dataList';
-@import 'modules/data/dataMenu';
-@import 'modules/data/dataOptions';
-@import 'modules/data/items/itemsHeader';
-@import 'modules/data/items/itemsEngine';
-@import 'modules/data/items/itemsContent';
+@import 'sections/data/dataContent';
+@import 'sections/data/dataList';
+@import 'sections/data/dataMenu';
+@import 'sections/data/dataOptions';
+@import 'sections/data/items/itemsHeader';
+@import 'sections/data/items/itemsSource';
+@import 'sections/data/items/itemsContent';
 
 // data sidebar
-@import 'modules/data/sidebar/dataSidebar';
+@import 'sections/data/sidebar/dataSidebar';
 
 // data dashboard
-@import 'modules/data/dashboard/dashboard';
+@import 'sections/data/dashboard/dashboard';
 
-// help
-@import 'modules/help/helpObject';
-@import 'modules/help/helpObjectCustom';
+// messenger
+@import 'sections/messenger/messenger';
+@import 'sections/messenger/messengerHeader';
+@import 'sections/messenger/messengerList';
+@import 'sections/messenger/messengerMetrika';
+@import 'sections/messenger/messengerRoom';
+
+// modules
+@import 'modules/modal';
+@import 'modules/popup';
+@import 'modules/helpObject';
+@import 'modules/helpObjectCustom';
 
 // states
 @import 'states/states';

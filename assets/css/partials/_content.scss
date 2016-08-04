@@ -1,0 +1,29 @@
+.content__wrapper {
+    position:relative;
+    padding:21px 0 105px;
+    @include accelerate(true);
+
+    &.slide-right {
+        .data__content {
+            transform:translate3d(16.66%, 0, 0);
+        }
+        .data__sidebar {
+            opacity:1;
+            transform:translate3d(0, 0, 0);
+            transition:transform 0.4s $cubic25 0.1s, opacity 0.4s $cubic25 0.1s;
+        }
+    }
+}
+.data__content,
+.data__menu__left {
+    @include accelerate(true);
+    will-change:transform;
+    transition:transform 0.45s $cubic25;
+}
+.data__sidebar {
+    opacity:0;
+    @include accelerate();
+    will-change:opacity, transform;
+    transform:translate3d(-80px, 30px, 0);
+    transition:transform 0.25s $cubic25 0s, opacity 0.2s $cubic25 0s;
+}

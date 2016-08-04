@@ -1,0 +1,46 @@
+{
+    "port": 8080,
+    "security": {
+        "tokenLife" : 3600
+    },
+    "mongodb": {
+        "uri": "mongodb://localhost/yuap",
+		"options": {
+			"server": {
+				"socketOptions": {
+					"keepAlive": 1
+				}
+			}
+		}
+    },
+    "session": {
+        "secret": "irishka",
+        "key": "sid",
+        "cookie": {
+            "path": "/",
+            "httpOnly": true,
+            "maxAge": null
+        }
+    },
+    "parser": {
+        "weather": "",
+		"currency": {
+			"url": "http://www.cbr.ru/scripts/XML_daily.asp",
+			"valuta": ["AUD", "AZN", "GBP", "AMD", "BYR", "BGN", "DKK", "USD", "EUR", "KZT", "CAD", "CNY", "NOK", "TRY", "UAH", "CZK", "SEK", "CHF", "JPY"]
+		}
+    },	
+    "default": {
+        "api": {
+            "version" : "v1"
+        },
+        "user": {
+            "username": "admin",
+            "password": "1234"
+        },
+        "client": {
+            "name": "Android API v1",
+            "clientId": "android",
+            "clientSecret": "SomeRandomCharsAndNumbers"
+        }
+    }
+}

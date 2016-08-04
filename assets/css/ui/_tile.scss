@@ -7,7 +7,7 @@
     user-select:none;
     transition:box-shadow 0.3s $cubic25;
 
-    &:hover {
+    .m-no-touch &:hover {
         box-shadow:0 12px 40px -10px rgba(121,136,161,.3);
     }
 }
