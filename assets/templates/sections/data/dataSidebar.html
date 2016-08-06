@@ -5,7 +5,7 @@
         <div class="sidebar__filter__container">
             <div class="sidebar__filter__body">
                 <virtual each={ item in $store.chanels.get() } no-reorder>
-                    <div onClickUpdate={ select.chanel } data-hidden="{true : item.hidden}" class="filter__checkbox ch {checked: item.active, focus: item.focus}">
+                    <div onClickUpdate={ change.chanel } data-hidden="{true : item.hidden}" class="filter__checkbox ch {checked: item.active, focus: item.focus}">
                         <label class="filter__checkbox__item">{ item.title }</label>
                         <span if={ item.count > 0 } class="filter__checkbox__count">{ item.count }</span>
                     </div>
@@ -18,11 +18,11 @@
         <div class="sidebar__filter__title">Статусы</div>
         <div class="sidebar__filter__container">
             <div class="sidebar__filter__body">
-                <div onClickUpdateAll={ select.statusAll } class="filter__checkbox stAll { checked : statusAll }">
+                <div onClickUpdateAll={ change.statusAll } class="filter__checkbox stAll { checked : statusAll }">
                     <label class="filter__checkbox__item">Все</label>
                 </div>
                 <virtual each={ item in $store.status.get() } no-reorder>
-                    <div onClickUpdateAll={ select.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
+                    <div onClickUpdateAll={ change.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
                         <label class="filter__checkbox__item">{ item.title }</label>
                         <span class="filter__checkbox__color color__bg{ item.color }"></span>
                     </div>
@@ -67,6 +67,15 @@
             item.active = true;
         });
 
+        // var status = [];
+		// for (var i = 1; i < 15; ++i){
+        //     status.push({
+        // 		_id: i,
+        // 		title: "Новый",
+        // 		color: i
+        // 	});
+		// }
+
         _.each(status, function(item){
             item.active = true;
         });
@@ -78,20 +87,22 @@
         $.set.chanelsCount();
 
         $.update();
-        $DataList.update();
+        $Data.list.update();
+
+        $Data.menu.set.countAll($Data.list.get.isActive().length);
     };
 
-    $.select = {
+    $.change = {
         chanel: function(e){
             this.item.active = !this.item.active;
-            $.select.unfocus(e, this);
+            $.change.unfocus(e, this);
             $.calc();
         },
         status: function(e){
             if ($.statusAll) $.statusAll = false;
             else {
                 this.item.active = !this.item.active;
-                $.select.unfocus(e, this);
+                $.change.unfocus(e, this);
             }
             $.calc();
         },
@@ -119,37 +130,50 @@
 
     $.set = {
         chanelsCount: function(){
-            var items = _.pluck($store.data.get(), 'chanel');
+            var items = $store.data.get();
             $store.chanels.get(function(item) {
                 $store.chanels.select({'chanel': item.chanel}).set(
-                    'count', _.filter(items, function(chanel){return chanel === item.chanel}).length
+                    'count', _.filter(items, function(dataItem){return dataItem.active && dataItem.chanel === item.chanel}).length
                 );
             });
         }
     };
 
     $.calc = function(){
-        console.time("calc");
-        var chanels = [];
-        $store.chanels.get(function(item) {
-            if (item.active) chanels.push(item.chanel);
-        });
-        var status = [];
-        $store.status.get(function(item) {
-            if (item.active) status.push(item._id);
-        });
-        var count = 0;
+
+        var count = 0, shows = 0;
+
+        var chanels = _.pluck(_.filter($store.chanels.get(), function(item){
+            return item.active === true
+        }), "chanel");
+
+        var status = _.pluck(_.filter($store.status.get(), function(item){
+            return item.active === true
+        }), "_id");
+
         $store.data.get(function(item) {
+
             if (_.inArray(chanels, item.chanel) && _.inArray(status, item.status)){
+
                 item.active = true;
                 count++;
             }
             else {
                 item.active = false;
             }
+            if (item.show) {
+                item.show = false;
+                shows++;
+            }
         });
-        $DataList.update();
-        console.timeEnd("calc");
+
+        if (shows > 0){
+            $$($Data.list.root).find(".data__item[data-show=true] > .data__item__wrapper").css("overflow", "hidden");
+        }
+        $.set.chanelsCount();
+        $Data.list.currentPage = 1;
+        $Data.list.update();
+        $Data.menu.set.countAll($Data.list.get.isActive().length);
     };
 
 </script>

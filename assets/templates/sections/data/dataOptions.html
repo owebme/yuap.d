@@ -1,0 +1,112 @@
+<section-data-options class="data__panel__options" data-active="{ active }">
+
+    <div class="container">
+        <div class="row">
+            <div class="data__panel__options__left col-md-7">
+                <div class="col-md-9 data__panel__options__count__title">выбрано</div>
+                <div class="col-md-4 data__panel__options__count">{ counts }</div>
+                <div onClickUpdate={ onClear } class="col-md-9 data__panel__options__count__title text-right data__panel__options__cancel">отменить</div>
+            </div>
+            <div class="data__panel__options__right col-md-10">
+                <div onClickUpdate={ onViewed } data-help="viewed" class="data__panel__options__button data__panel__options__button__viewed"></div>
+                <div onClickUpdate={ onImportant } data-help="important" class="data__panel__options__button data__panel__options__button__important"></div>
+                <div data-help="remove" class="data__panel__options__button data__panel__options__button__remove"></div>
+                <div data-help="folder" class="data__panel__options__button data__panel__options__button__folder"></div>
+                <div onClickUpdate={ onCheckAll } data-help="selectAll" class="data__panel__options__button data__panel__options__button__selectAll"></div>
+                <div help-item=".data__panel__options__right" help-data="dataPanelOptions" class="data__panel__options__help getHelp"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$(this.root);
+
+    $.active = false;
+
+    $.init = function(counts){
+
+        if (counts) $.active = true;
+        else $.active = false;
+
+        if (!app.device.isMobile && counts == 1) $.onScroll(app.$dom.content[0].scrollTop);
+
+        $.counts = counts;
+        $.update();
+
+        if (!app.device.isMobile && !counts) $.onScroll(true, true);
+    };
+
+    $.onClear = function(update){
+        $Data.list.unChecked();
+        $.active = false;
+        $.counts = 0;
+        if (update) $.update();
+    };
+
+    $.onCheckAll = function(){
+        _.each($Data.list.get.data(), function(item){
+            if (!item.checked){
+                item.checked = true;
+                $.counts++;
+            }
+        });
+        $Data.list.update();
+    };
+
+    $.onViewed = function(){
+        app.request('setDataListViewed', $Data.list.get.isChecked(true));
+        _.each($Data.list.get.isChecked(), function(item){
+            item.new = false;
+        });
+        $.onClear();
+    };
+
+    $.onImportant = function(){
+        _.each($Data.list.get.isChecked(), function(item){
+            if (item.important) {
+                item.important = false;
+                app.request('setDataListUnimportant', [item._id]);
+            }
+            else {
+                item.important = true;
+                app.request('setDataListImportant', [item._id]);
+            }
+        });
+        $.onClear();
+    };
+
+    $.onScroll = function(scroll, force){
+        if (scroll > 93 && !force) {
+            $scope[0].style[PREFIX["transform"]] = "translate3d(0, " + scroll + "px, 0)";
+        }
+        else {
+            $scope[0].style[PREFIX["transform"]] = "translate3d(0, 93px, 0)";
+        }
+    };
+
+    this.on("mount", function(){
+
+        if (!app.device.isMobile){
+            var top = 93;
+            app.$dom.content.on("scroll.filterPanel", function(e){
+                if ($.active){
+                    var scroll = this.scrollTop,
+                    scrollContent = function(){
+                        $.onScroll(scroll);
+                    };
+                    app.utils.raf(scrollContent);
+                    scrollContent();
+                }
+            });
+        }
+    });
+
+    this.on("unmount", function(){
+        app.$dom.content.off("scroll.filterPanel");
+    });
+
+</script>
+
+</section-data-options>

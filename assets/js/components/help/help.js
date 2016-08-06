@@ -30,6 +30,14 @@
     });
 
     app.help.get = function($elem, data){
+        var $container = {};
+        if (SCREENS && SCREENS.state == "main"){
+            $container = app.$dom.content;
+        }
+        if (!$container.length) {
+            console.log("Not found container for halp");
+            return;
+        }
         var $page = app.$dom.root,
             $container = $(".screen__main__inner");
             $node = $elem.clone(),
@@ -71,7 +79,7 @@
 
         $wrapper.append($node);
 
-        $page.append($wrapper);
+        app.$dom.root.append($wrapper);
 
         $node.find("[data-help]").each(function(){
             var $item = $(this),

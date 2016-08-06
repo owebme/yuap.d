@@ -14,9 +14,8 @@
     "gulp-csso": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
-    "gulp-uglify": "^1.5.4",
-    "http": "^0.0.0",
     "gulp-uglify": "^1.5.3",
+    "http": "^0.0.0",
     "mongodb": "^2.1.16",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.12",
@@ -26,7 +25,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",

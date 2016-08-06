@@ -30,7 +30,7 @@ exports.post = function(req, res, next) {
 			});
 		},
 		function(callback){
-			db.collection('data').find({"siteID": req.session.user.siteID}).sort({"date": -1}).limit(100).toArray(function(err, data){
+			db.collection('data').find({"siteID": req.session.user.siteID}).sort({"num": 1}).limit(100).toArray(function(err, data){
 				if (!data) {
 					res.statusCode = 404;
 					return res.send({error: 'Not found'});

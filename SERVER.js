@@ -12,7 +12,7 @@ var session = require('express-session');
 //var errorHandler = require('errorhandler');
 var memoryStore = session.MemoryStore;
 var db = require('./libs/db/mongoose')(log, config);
-//var generate = require('./generate');
+var generate = require('./generate');
 var app = express();
 
 // view engine setup

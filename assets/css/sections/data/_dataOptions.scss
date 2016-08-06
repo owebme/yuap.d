@@ -1,26 +1,31 @@
 .data__panel__options {
+    @include accelerate();
     display:none;
-    @include abs();
-    top:1px;
-    height:calc(100% - 1px);
+    position:absolute;
+    top:0;
+    left:0;
+    transform:translate3d(0, 94px, 0);
+    width:100%;
+    height:44px;
     color:$gray;
     background:#fff;
+    box-shadow:0 0 1px 0 rgba(121,136,161,.12), 0 2px 5px 0 rgba(121,136,161,.1);
+    cursor:default;
+    user-select:none;
+    z-index:5;
 
     &__left,
     &__right {
-        position:absolute;
-        top:0;
-        height:100%;
-        padding-bottom:1px;
+        @include accelerate(true);
+        position:relative;
+        height:44px;
+        padding-bottom:2px;
     }
     &__left {
         @include flex("row", "flex-start", "center");
-        left:0;
-        width:40%;
     }
     &__right {
         @include flex("row", "flex-end", "center");
-        right:0;
     }
     &__count {
         color:#fff;
@@ -31,6 +36,8 @@
         line-height:27px;
         font-size:16.5px;
         font-weight:bold;
+        white-space:nowrap;
+        margin-left:-5px;
 
         &__title {
             font-size:17.5px;
@@ -94,10 +101,13 @@
         cursor:pointer;
         transition:opacity 0.2s $cubic215;
         @include ui-icon(help_black, 28px, 28px);
-        transform:translate3d(14px, 6px, 0);
+        transform:translate3d(10px, 7px, 0);
 
         &:hover {
             opacity:1;
         }
+    }
+    &[data-active="true"]{
+        display:block;
     }
 }

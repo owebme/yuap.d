@@ -1,0 +1,19 @@
+.badge-circle {
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:$red;
+    text-align:center;
+    color:#fff;
+    font-size:15px;
+    line-height:20px;
+    font-family:$roboto;
+    font-weight:bold;
+
+    &--more {
+        top:-12px;
+        width:24px;
+        height:24px;
+        line-height:24px;
+    }
+}

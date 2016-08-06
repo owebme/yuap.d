@@ -90,9 +90,6 @@
     &[data-checked="true"] {
         box-shadow:0 12px 40px -10px rgba($blue,.3);
     }
-    &[data-hidden="true"] {
-        display:none;
-    }
     &__cell {
         @include flex("row", "center", "center");
         position:relative;

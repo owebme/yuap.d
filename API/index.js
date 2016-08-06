@@ -7,7 +7,7 @@ module.exports = function(app){
 	app.post('/auth', require('./auth').post);
 
 	// Data
-	app.get('/api/data/init/:siteID', checkAuth, require('./data/dataInit').post);
+	app.get('/api/data/init', checkAuth, require('./data/dataInit').post);
 
 	app.use('/api/dashboard', checkAuth, require('./data/dashboard'));
 

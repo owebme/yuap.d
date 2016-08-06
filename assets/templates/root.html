@@ -28,26 +28,15 @@
         CONTENT = $root.tags["section-content"];
         PANEL = $root.tags["section-panel"];
 
-        $DataMenu = CONTENT.tags["section-data-menu"];
-        $DataSidebar = CONTENT.tags["section-data-sidebar"];
-        $DataList = CONTENT.tags["section-data-list"];
-        $Dashboard = CONTENT.tags["section-dashboard"];
-        $DropMenu = CONTENT.tags["dropdown-menu"];
-
-        $Messenger = $root.tags["section-messenger"];
+        app.$dom.root = $("#page");
+        app.$dom.content = app.$dom.root.find(".screen__main__inner");
 
         SCREENS.init();
 
-        app.request('data/init/777', "get").then(function(data){
-            console.dir(data);
-            //$root.tags["data-section"].tags["data-menu"].init(data.menu);
-            $DataList.init(data.list);
-            $DataSidebar.init(data.status);
-            // $root.tags["dashboard-section"].tags["dashboard-list"].init({
-            //     weather: data.weather,
-            //     currency: data.currency
-            // });
-        });
+        $Popup = $root.tags["section-popup"];
+        $Modal = $root.tags["section-modal"];
+        $DropMenu = $root.tags["dropdown-menu"];
+        $Messenger = $root.tags["section-messenger"];
 
     });
 

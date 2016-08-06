@@ -9,10 +9,10 @@
         font-family:$roboto;
         font-size:24px;
         font-weight:400;
-        background-color:$gray_lighten;
+        background-color:#D1D8DD;
 
         &--active {
-            background-color:$green;
+            background-color:#6ad19f;
         }
         &__engine {
             @include flex("row", "center", "center");

@@ -135,6 +135,15 @@
 		};
 	};
 
+	utils.sortASC = function(data, name) {
+		var compare = function(a, b) {
+		  if (a[name] > b[name]) return 1;
+		  else if (a[name] < b[name]) return -1;
+		  return 0;
+		}
+		return data.sort(compare);
+	}
+
 	// utils.extend = function(parent, child) {
 	//     var i;
 	//
@@ -210,5 +219,7 @@
 
 	if (window._) _.extend(_, utils);
 	else window._ = utils;
+
+	if (window.s) _.mixin(s.exports());
 
 })(app.utils, app.$dom);

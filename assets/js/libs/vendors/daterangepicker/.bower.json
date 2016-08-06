@@ -1,0 +1,34 @@
+{
+  "name": "daterangepicker",
+  "version": "1.5.0",
+  "main": "lib/daterangepicker/daterangepicker.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "timepicker": "git://github.com/BrandwatchLtd/timepicker.git#~0.2.0",
+    "jquery": "~3.0.0",
+    "underscore": "~1.8.3",
+    "moment": "~2.10.3",
+    "moment-timezone": "~0.3.1"
+  },
+  "devDependencies": {
+    "expectations": "~0.6.0",
+    "requirejs": "~2.1.14",
+    "mocha": "~2.5.3",
+    "bootstrap": "~2.1.1"
+  },
+  "homepage": "https://github.com/BrandwatchLtd/daterangepicker",
+  "_release": "1.5.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.5.0",
+    "commit": "77ad315a697d947aae55f3313db50b766b994b5f"
+  },
+  "_source": "https://github.com/BrandwatchLtd/daterangepicker.git",
+  "_target": "^1.5.0",
+  "_originalSource": "daterangepicker",
+  "_direct": true
+}

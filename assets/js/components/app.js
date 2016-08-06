@@ -43,16 +43,33 @@
                 document.title = 'Yuap: ' + caption + ', ' + account.name;
             }
         },
-    	request: function(url, method, params){
+    	request: function(method, params){
         	return new Promise(function(resolve, reject){
+
+                var url = _.underscored(method)
+                            .replace(/^(get|set|add|del)/g, "")
+                            .replace(/_/g, "/"),
+                    type = null;
+
+                if (method.match(/^get/)) type = 'GET';
+                else if (method.match(/^set/)) type = 'PUT';
+                else if (method.match(/^add/)) type = 'POST';
+                else if (method.match(/^del/)) type = 'DELETE';
+
+                if (!type) {
+                    reject('Error type request: ' + method);
+                    return;
+                }
 
         		var xhr = new XMLHttpRequest();
 
-                if (app.request.list && app.request.list.method === method) {
-                    app.request.list.xhr.abort();
-                }
+                try {
+                    if (app.request.list && app.request.list.method === method && app.request.list.params == JSON.stringify(params)) {
+                        app.request.list.xhr.abort();
+                    }
+                } catch(e){}
 
-        		xhr.open(method, app.url("/api/") + url, true);
+        		xhr.open(type, app.url("/api") + url, true);
         		xhr.setRequestHeader("Accept", "application/json");
         		xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -76,10 +93,13 @@
         			reject(new Error("Network Error"));
         		};
 
-                app.request.list = {
-                    method: method,
-                    xhr: xhr
-                };
+                try {
+                    app.request.list = {
+                        method: method,
+                        xhr: xhr,
+                        params: JSON.stringify(params)
+                    };
+                } catch(e){}
         	});
     	}
 	};

@@ -1,11 +1,130 @@
 .data__menu {
-    &__left,
-    &__right {
+    cursor:default;
+    user-select:none;
+
+    &__cell {
         @include flex("row", "flex-start", "center");
         height:44px;
+        padding-bottom:1px;
     }
-    &__left {
-        z-index:1;
+    &__title {
+        font-size:13.5px;
+        text-transform:uppercase;
+        white-space:nowrap;
+    }
+    &__number {
+        color:$blue_gray;
+        display:inline-block;
+        font-size:15px;
+        font-weight:bold;
+        width:54px;
+        text-align:center;
+    }
+    &__basket {
+        position:relative;
+        @include flex("row", "flex-start", "center");
+        margin-left:-8px;
+        width:168px;
+        line-height:12px;
+        cursor:pointer;
+        transition:color 0.2s $cubic215;
+
+        &:before {
+            content:"";
+            display:inline-block;
+            vertical-align:middle;
+            @include ui-icon(basket, 22px, 22px);
+            margin-right:12px;
+            opacity:0.8;
+            transform:translate3d(0, -2px, 0);
+        }
+        &:hover {
+            color:$blue;
+        }
+        &__count {
+            position:absolute;
+            top:0;
+            right:0;
+            line-height:22px;
+            transform:translate3d(0, -1px, 0);
+        }
+        &__badge {
+            position:absolute;
+            top:-7px;
+            left:9px;
+            @extend .badge-circle;
+        }
+    }
+    &__nav {
+        @include flex("row", "flex-end", "center");
+    }
+    &__button {
+        cursor:pointer;
+        opacity:0.8;
+        transition:transform 0.2s $cubic215, opacity 0.2s $cubic215;
+
+        &:active {
+            transform:translate3d(0, 1px, 0) scale(0.8);
+        }
+        &:hover {
+            opacity:1;
+        }
+    }
+    &__pigination {
+        color:$blue_gray;
+        font-size:16px;
+        margin-left:10px;
+        @include flex("row", "flex-end", "center");
+
+        span {
+            display:block;
+            margin-left:15px;
+        }
+        &__arrow {
+            @include flex("row", "center", "center");
+            margin-left:0;
+
+            &:before {
+                display:block;
+                content:"";
+                width:24px;
+                height:24px;
+
+                &.prev {
+                    @include ui-icon(arrowLeft);
+                }
+                &.next {
+                    @include ui-icon(arrowRight);
+                }
+            }
+        }
+        &__page {
+            font-weight:bold;
+            margin-left:0;
+            font-size:18px;
+        }
+    }
+    &__search {
+        margin-left:25px;
+
+        &__button {
+            @include ui-icon(search, 24px, 24px);
+        }
+    }
+    &__date__button {
+        position:relative;
+        @include ui-icon(date_change, 22px, 22px);
+        overflow:hidden;
+    }
+    &__date__rangepicker {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        cursor:pointer;
+        overflow:hidden;
+        opacity:0;
     }
 }
 .sidebarSwither {

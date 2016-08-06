@@ -6,6 +6,7 @@
             </section>
         </div>
     </div>
+    <section-data-options></section-data-options>
     <div class="container">
         <div class="row content__wrapper slide-right">
             <section-data-sidebar class="data__sidebar col-md-5 col-lg-4">
@@ -25,6 +26,24 @@
 
     this.on("mount", function(){
 
+        $Data = {
+            menu: $.tags["section-data-menu"],
+            sidebar: $.tags["section-data-sidebar"],
+            options: $.tags["section-data-options"],
+            list: $.tags["section-data-list"],
+            dashboard: $.tags["section-dashboard"]
+        }
+
+        app.request('getDataInit').then(function(data){
+            console.dir(data);
+            //$root.tags["data-section"].tags["data-menu"].init(data.menu);
+            $Data.list.init(data.list);
+            $Data.sidebar.init(data.status);
+            // $root.tags["dashboard-section"].tags["dashboard-list"].init({
+            //     weather: data.weather,
+            //     currency: data.currency
+            // });
+        });
 
     });
 

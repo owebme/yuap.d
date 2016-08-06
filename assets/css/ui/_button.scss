@@ -7,6 +7,10 @@
     font-size:16px;
     user-select:none;
     cursor:pointer;
+    background:none;
+    appearance:none;
+    outline:none;
+    @include accelerate(true);
     transition:all 0.2s $cubic645;
 
     &:hover {
@@ -79,5 +83,13 @@
                 fill:#fff;
             }
         }
+    }
+    &:disabled,
+    &:disabled:hover {
+        background:none;
+        color:$gray_light;
+        border-color:$gray_light;
+        cursor:default;
+        opacity:0.8;
     }
 }

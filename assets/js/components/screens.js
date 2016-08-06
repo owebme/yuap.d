@@ -12,7 +12,7 @@
 
             if (WD.ready) return;
 
-            WD.elem = app.$dom.root = $("#page");
+            WD.elem = app.$dom.root;
 
             var index = 100,
                 i = 0;
@@ -48,7 +48,6 @@
 
             scroll.on('scrollEnd', function(){
                 WD.state = WD.marquee.section;
-                WD.change(WD.state);
             });
 
             if (screen) {
@@ -60,8 +59,6 @@
         },
 
         change: function(screen){
-
-            console.log(screen);
 
             WD.elem.find(".screen__" + screen)
             .addClass("screen--active")

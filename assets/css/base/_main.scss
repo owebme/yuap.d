@@ -30,6 +30,10 @@ body {
 }
 body {
 	overflow:hidden;
+
+	.d-no-macOS & {
+		font-family:$default;
+	}
 }
 a, a:hover, input, textarea {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -108,7 +112,7 @@ div, a, p, span, th, td {
 }
 #panel {
 	display:block;
-	position:fixed;
+	position:absolute;
 	bottom:0;
 	left:0;
 	width:100%;

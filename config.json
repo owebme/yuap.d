@@ -28,7 +28,7 @@
 			"url": "http://www.cbr.ru/scripts/XML_daily.asp",
 			"valuta": ["AUD", "AZN", "GBP", "AMD", "BYR", "BGN", "DKK", "USD", "EUR", "KZT", "CAD", "CNY", "NOK", "TRY", "UAH", "CZK", "SEK", "CHF", "JPY"]
 		}
-    },	
+    },
     "default": {
         "api": {
             "version" : "v1"

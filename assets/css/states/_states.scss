@@ -8,6 +8,13 @@
 .is-hidden {
     display:none !important;
 }
+.no-transition {
+    transition:none !important;
+}
+.no-transitionAll,
+.no-transitionAll * {
+    transition:none !important;
+}
 .pos-rel {
     position:relative;
 }

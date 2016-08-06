@@ -9,13 +9,13 @@ var db = mongoose.connection;
 app.get('/menu/init', function(req, res) {
 
 	db.collection('data').aggregate([
-	
+
 	{$match: {"new": true}},
-	
+
 	{$project: {"type":1, "count": {$add: [1]}}},
-	
+
 	{$group: {_id: "$type", counts: {$sum: "$count"}}}
-	
+
 	]).toArray(function(err, data){
 		if (!data) {
 			res.statusCode = 404;
@@ -35,9 +35,9 @@ app.get('/menu/init', function(req, res) {
 app.get('/menu/:select', function(req, res) {
 
 	var request = {};
-	
-	request.sid = req.session.user.sid;
-	
+
+	request.sid = req.session.user.siteID;
+
 	if (req.params.select !== "all") request.type = req.params.select;
 
 	db.collection('data').find(request).sort({"date": -1}).limit(20).toArray(function(err, data){
@@ -64,7 +64,7 @@ app.put('/viewed', function(req, res) {
 		db.collection('data').update(
 		{
 			"_id": ObjectId(item),
-			"sid": req.session.user.sid
+			"siteID": req.session.user.siteID
 		},
 		{
 			$set: {
@@ -82,7 +82,7 @@ app.put('/important', function(req, res) {
 		db.collection('data').update(
 		{
 			"_id": ObjectId(item),
-			"sid": req.session.user.sid
+			"siteID": req.session.user.siteID
 		},
 		{
 			$set: {
@@ -100,7 +100,7 @@ app.put('/unimportant', function(req, res) {
 		db.collection('data').update(
 		{
 			"_id": ObjectId(item),
-			"sid": req.session.user.sid
+			"siteID": req.session.user.siteID
 		},
 		{
 			$set: {
@@ -118,7 +118,7 @@ app.put('/status/:id', function(req, res) {
 		db.collection('data').update(
 		{
 			"_id": ObjectId(item),
-			"sid": req.session.user.sid
+			"siteID": req.session.user.siteID
 		},
 		{
 			$set: {
@@ -136,7 +136,7 @@ app.delete('/remove', function(req, res) {
 		db.collection('data').remove(
 		{
 			"_id": ObjectId(item),
-			"sid": req.session.user.sid
+			"siteID": req.session.user.siteID
 		});
 	});
 });

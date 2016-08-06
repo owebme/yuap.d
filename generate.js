@@ -4,6 +4,7 @@ var utils = require(libs + 'utils');
 var validator = require('validator');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
+var tempus = require('tempusjs');
 
 MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 
@@ -19,20 +20,40 @@ MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 	db.collection('users').insert(user);
 
 	var data = [];
-	for (var i = 1; i < 1000; ++i){
+	for (var i = 1; i < 1001; ++i){
 		data.push(table.data(i));
+	}
+	var count1 = 0; var count2 = 0;
+	for (var i = 0; i < 1000; i++){
+		count1++; count2++;
+		var metrika = data[i].metrika[0];
+		if (count1 > 2){
+			data[i].name = null;
+			data[i].phone = null;
+			data[i].email = null;
+			data[i].status = 1;
+			count1 = 0;
+			if (count2 > 4){
+				data[i - 1].metrika.push(metrika);
+				count2 = 0;
+			}
+		}
+		var searchEngine = metrika.searchEngine;
+		if (searchEngine === "yandex" || searchEngine === "google"){
+			metrika.adv = true;
+		}
 	}
 	db.collection('data').insert(data);
 
 	db.collection('status').ensureIndex({accountID: 1});
 	db.collection('users').ensureIndex({accountID: 1});
-	db.collection('data').ensureIndex({accountID: 1});
+	db.collection('data').ensureIndex({siteID: 1});
 	db.collection('data').ensureIndex({siteID: 1, clientID: 1}, {unique: true});
 });
 
 var ACCOUNT_ID = ObjectId(),
 	USER_ID = ObjectId(),
-	SITE_ID = 777;
+	SITE_ID = "777";
 
 var accounts = [
 	{
@@ -89,11 +110,7 @@ var table = {
 		return ["79018942839", "79017459265", "79363746729", "79631094657", "79584915498", "79585925128", "79629459632", "79620197143", "79638874376", "79634882398", "79641873455", "79646492693", "79655836077", "79653884631", "79775673978", "79771599421", "7926042877", "79261894423", "79293128856", "79298539948"];
 	},
 	status: function(){
-		var data = [];
-		for (var i = 0; i < 7; ++i){
-			data.push(i);
-		}
-		return data;
+		return [2, 3, 4, 5];
 	},
 	visits: function(){
 		var data = [];
@@ -102,8 +119,12 @@ var table = {
 		}
 		return data;
 	},
-	metrikaAdv: function(){
-		return [true, false];
+	date: function(){
+		var data = [];
+		for (var i = 1; i < 5; ++i){
+			data.push(tempus({year: 2016, month: 8, day: i}).format('%Y-%m-%d %H:%M'));
+		}
+		return data;
 	},
 	metrikaSearchEngine: function(){
 		return ["yandex", "google", "rambler", "mail", "yahoo", "bing"];
@@ -118,6 +139,7 @@ var table = {
 		var item = {
 			num: num,
 			active: true,
+			contact: false,
 			new: false,
 			accountID: ACCOUNT_ID,
 			siteID: SITE_ID,
@@ -138,7 +160,7 @@ var table = {
 			alarm: false,
 			accepted: null,
 			status: this.get("status"),
-			date: validator.toDate("2016-04-07 11:24"),
+			date: validator.toDate(this.get("date")),
 			params: [],
 			visits: this.get("visits"),
 			metrika: [
@@ -151,7 +173,7 @@ var table = {
 					startPage: "/catalog/svetodiody",
 					actionPage: "/pages/contacts",
 					referer: "https://yandex.ru/search/?msid=1462914682.87109.22884.29544&text=refferer&suggest_reqid=427504009146291468246849369785529",
-					adv: this.get("metrikaAdv"),
+					adv: false,
 					searchEngine: this.get("metrikaSearchEngine"),
 					keyword: this.get("metrikaKeywords"),
 					time: this.get("metrikaTime"),
@@ -168,7 +190,7 @@ var table = {
 		}
 		if (num == 1){
 			item.new = true;
-			item.status = false;
+			item.status = 1;
 		}
 		if (item.type == "reviews"){
 			item.name = null;
@@ -182,37 +204,31 @@ var status = [
 	{
 		_id: "1",
 		accountID: ACCOUNT_ID,
-		title: "В работе",
-		color: 1
+		title: "Новый",
+		color: 0
 	},
 	{
 		_id: "2",
 		accountID: ACCOUNT_ID,
-		title: "Думает",
-		color: 2
+		title: "В работе",
+		color: 6
 	},
 	{
 		_id: "3",
 		accountID: ACCOUNT_ID,
-		title: "Доставлен",
+		title: "Думает",
 		color: 3
 	},
 	{
 		_id: "4",
 		accountID: ACCOUNT_ID,
-		title: "Отложенные",
-		color: 4
+		title: "Согласование",
+		color: 9
 	},
 	{
 		_id: "5",
 		accountID: ACCOUNT_ID,
-		title: "Отказник",
-		color: 5
-	},
-	{
-		_id: "6",
-		accountID: ACCOUNT_ID,
 		title: "Оплачен",
-		color: 6
+		color: 14
 	}
 ];
