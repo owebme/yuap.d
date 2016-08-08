@@ -7,6 +7,8 @@
 	window.DOMAIN = "http://192.168.1.70:3000";
 
 	app = {
+        router: {},
+        nav: {},
         screens: {},
         sizes: {},
 		utils: {},

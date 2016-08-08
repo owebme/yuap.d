@@ -73,6 +73,10 @@
 
 	app.tempus = tempus;
 
+	/* --- Moment locale (lib date) --- */
+
+	moment.locale('ru');
+
 	/*** --- Dataset helper --- ***/
 	$.fn.api = function(key){
 		return this.data(key) ? this.data(key) : this.data(key, {}).data(key);

@@ -16,6 +16,7 @@
     &__main__inner {
         @include abs();
         @include accelerate(true);
+        overflow-x:hidden;
         overflow-y:scroll;
     }
 }

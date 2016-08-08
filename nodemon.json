@@ -2,5 +2,6 @@
   "ignore":["/assets/**",
             "/chat/**",
             "/demos/**",
-            "/index.html"]
+            "/index.html",
+            "/test.js"]
 }

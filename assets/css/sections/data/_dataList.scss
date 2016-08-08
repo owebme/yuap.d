@@ -3,6 +3,11 @@
     position:relative;
     padding-right:12.5px;
     z-index:1;
+
+    &__empty {
+        @include flex("column", "center", "center");
+        height:calc(100vh - 276px);
+    }
 }
 .data__item {
     position:relative;

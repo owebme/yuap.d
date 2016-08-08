@@ -1,7 +1,8 @@
 @each $icon in (
     loading, loading_white,
-    close, close_white,
-    edit, basket, print, search, date_change, date_from, date_to, calendar,
+    close, close_white, close_strong,
+    edit, basket, print, search,
+    calendar, date_change, date_change_fill, date_from, date_to,
     important,
     sendEmail,
     writeEmail,

@@ -1,4 +1,4 @@
-<section-content id="content">
+<section-data-content>
 
     <div id="menu">
         <div class="container menu__wrapper">
@@ -34,19 +34,22 @@
             dashboard: $.tags["section-dashboard"]
         }
 
-        app.request('getDataInit').then(function(data){
-            console.dir(data);
-            //$root.tags["data-section"].tags["data-menu"].init(data.menu);
-            $Data.list.init(data.list);
-            $Data.sidebar.init(data.status);
-            // $root.tags["dashboard-section"].tags["dashboard-list"].init({
-            //     weather: data.weather,
-            //     currency: data.currency
-            // });
-        });
-
+        if (!$store.data){
+            app.request('getDataInit').then(function(data){
+                console.time("initData");
+                $Data.list.init(data.list);
+                $Data.sidebar.init(data.status);
+                console.timeEnd("initData");
+            });
+        }
+        else {
+            console.time("reInitData");
+            $Data.list.init($store.data.get());
+            $Data.sidebar.init($store.status.get());
+            console.timeEnd("reInitData");
+        }
     });
 
 </script>
 
-</section-content>
+</section-data-content>

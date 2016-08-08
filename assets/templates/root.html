@@ -3,7 +3,8 @@
     <div class="screen screen__main" data-marquee="main">
         <div class="screen__main__inner">
             <section-nav></section-nav>
-            <section-content></section-content>
+            <section-content id="content"></section-content>
+            <dropdown-menu></dropdown-menu>
         </div>
         <section-panel></section-panel>
     </div>
@@ -13,7 +14,6 @@
 
     <section-modal></section-modal>
     <section-popup></section-popup>
-    <dropdown-menu></dropdown-menu>
 
 <script>
 
@@ -24,19 +24,17 @@
     this.on("mount", function(){
 
         SCREENS = app.screens;
-        NAV = $root.tags["section-nav"];
-        CONTENT = $root.tags["section-content"];
-        PANEL = $root.tags["section-panel"];
-
-        app.$dom.root = $("#page");
+        app.$dom.root = $$($root.root);
         app.$dom.content = app.$dom.root.find(".screen__main__inner");
-
-        SCREENS.init();
 
         $Popup = $root.tags["section-popup"];
         $Modal = $root.tags["section-modal"];
         $DropMenu = $root.tags["dropdown-menu"];
         $Messenger = $root.tags["section-messenger"];
+
+        app.nav.init();
+        app.screens.init();
+        app.router.init();
 
     });
 

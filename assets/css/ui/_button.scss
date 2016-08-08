@@ -11,13 +11,13 @@
     appearance:none;
     outline:none;
     @include accelerate(true);
-    transition:all 0.2s $cubic645;
+    transition:all 0.12s $cubic645;
 
     &:hover {
         opacity:1;
     }
     &:active {
-        transform:translate3d(0, 2px, 0) scale(0.8);
+        transform:translate3d(0, 1px, 0) scale(0.9);
     }
     &-lg {
         font-size:18px;
@@ -92,4 +92,7 @@
         cursor:default;
         opacity:0.8;
     }
+    // &.hide {
+    //     display:none;
+    // }
 }

@@ -1,0 +1,90 @@
+<dropdown-menu class="dropdown__menu { dropdown__menu--active : active }" data-align="{ align }">
+
+    <div if={ !type } class="dropdown__menu__wrapper">
+        <div onClick={ onSelect } each={ items } no-reorder class="dropdown__menu__item st1">
+            { title }
+        </div>
+    </div>
+    <div if={ type === "status" } class="dropdown__menu__wrapper">
+        <div onClick={ onSelect } each={ items } no-reorder class="dropdown__menu__item st2 { selected : _id == value }">
+            <span class="dropdown__menu__color color__bg{ color }"></span>{ title }
+        </div>
+        <div class="dropdown__menu__item divider"></div>
+        <div onClick={ changeStatus } class="dropdown__menu__item dropdown__menu__button edit ">Изменить статусы</div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+
+    $.items = {};
+
+    $.show = function(params){
+        if (params && params.elem){
+            if ($._id && $._id === params.id && $.type === params.type){
+                $.onClose();
+                return;
+            }
+            if ($.active) $.onClose();
+            if (params.id) $._id = params.id;
+            $.type = params.type;
+            $.align = params.align ? params.align : "center";
+            $.items = params.data;
+            $.value = params.value;
+            $.callback = params.callback;
+            $.active = true;
+
+            var offset = params.elem.offset(),
+                marginLeft = 0, marginTop = 0;
+
+            if ($.align === "center"){
+                marginLeft = params.elem.outerWidth() / 2;
+            }
+            else if ($.align === "right"){
+                marginLeft = params.elem.outerWidth();
+                marginTop = -(params.elem.outerHeight() / 2);
+            }
+
+            $scope.css({
+                top: (app.$dom.content[0].scrollTop + offset.top + params.elem.outerHeight()) + "px",
+                left: offset.left + "px",
+                marginLeft: marginLeft + "px",
+                marginTop: marginTop + "px"
+            });
+
+            setTimeout(function(){
+                app.$dom.content.on(EV.click + ".dropdown", function(e){
+                    $.onClose();
+                });
+            }, 100);
+
+            $.update();
+        }
+    };
+
+    $.onClose = function(){
+        app.$dom.content.off(EV.click + ".dropdown");
+        $.active = false;
+        if ($._id) $._id = null;
+        $.update();
+    };
+
+    $.onSelect = function(){
+        var id = this._id;
+        $.value = id;
+        if (this._item && _.isFunction(this._item.callback)) {
+            this._item.callback();
+        }
+        if ($.callback) $.callback(id);
+    };
+
+    $.changeStatus = function(){
+
+    };
+
+</script>
+
+</dropdown-menu>

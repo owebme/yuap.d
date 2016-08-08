@@ -1,21 +1,24 @@
 <section-data-menu class="data__menu">
 
     <svg class="sidebarSwither sidebarSwither--active" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="500 0 400 500" enable-background="new 500 0 400 400" xml:space="preserve"><path class="sidebarSwither__color" d="M700,100c-9.2,0-16.7,7.5-16.7,16.7s7.5,16.7,16.7,16.7h100c9.2,0,16.7-7.5,16.7-16.7S809.2,100,800,100H700z  "/><path class="sidebarSwither__color" d="M586.1,190.8c-0.3,0.4-0.4,1-0.6,1.5c-0.5,0.9-0.9,1.9-1.2,2.9c-0.2,0.6-0.5,1.1-0.7,1.7  c-0.1,0.6,0,1.1,0,1.7c0,0.5-0.3,1-0.3,1.5s0.3,1,0.3,1.5c0.1,0.6-0.1,1.1,0,1.7c0.1,0.6,0.5,1.1,0.7,1.7c0.3,1,0.7,2,1.2,2.9  c0.3,0.5,0.3,1,0.6,1.5c0,0,0,0,0,0l33.3,50c3.2,4.8,8.5,7.4,13.9,7.4c3.2,0,6.4-0.9,9.2-2.8c7.7-5.1,9.7-15.5,4.6-23.1l-16.1-24.1  H800c9.2,0,16.7-7.5,16.7-16.7s-7.5-16.7-16.7-16.7H631.1l16.1-24.1c5.1-7.7,3-18-4.6-23.1c-7.7-5.1-18-3-23.1,4.6L586.1,190.8  C586.1,190.8,586.1,190.8,586.1,190.8z"/><path class="sidebarSwither__color" d="M800,266.7H700c-9.2,0-16.7,7.5-16.7,16.7S690.8,300,700,300h100c9.2,0,16.7-7.5,16.7-16.7  S809.2,266.7,800,266.7z"/></svg>
-    <div class="col-md-4 data__menu__cell">
+    <div class="col-lg-4 col-md-5 data__menu__cell">
         <div class="data__menu__basket">
             <!-- <span class="data__menu__basket__badge badge-circle">8</span> -->
-            <span class="data__menu__title">корзина</span><span class="data__menu__basket__count data__menu__number">47</span>
+            <span class="data__menu__title">корзина</span><span class="data__menu__basket__count data__menu__number">{ basketCount }</span>
         </div>
     </div>
-    <div class="col-md-4 data__menu__cell">
+    <div class="col-lg-4 col-md-6 data__menu__cell">
         <span class="data__menu__title">Входящих: <span class="data__menu__number">{ countAll }</span></span>
     </div>
-    <div class="col-md-9 data__menu__cell data__menu__nav">
-        <div class="data__menu__button data__menu__date__button">
-            <input type="text" class="data__menu__date__rangepicker" value="01/01/2015 - 01/01/2015" name="afafsdfsdfds"/>
+    <div class="col-lg-9 col-md-9 data__menu__cell data__menu__nav">
+        <div class="data__menu__dateRange">
+            <div class="data__menu__dateRange__button">
+                <span class="data__menu__dateRange__value">7 дней</span>
+            </div>
+            <span class="data__menu__dateRange__cancel"></span>
         </div>
         <div class="data__menu__search">
-            <div class="data__menu__button data__menu__search__button"></div>
+            <div class="data__menu__search__button"></div>
         </div>
         <div if={ $Data.list.countPages > 1 } class="data__menu__pigination">
             <span>1</span>
@@ -26,7 +29,7 @@
             <span onClickUpdate={ change.pageNext } class="data__menu__button data__menu__pigination__arrow next"></span>
         </div>
     </div>
-    <div class="col-md-7 data__menu__cell">
+    <div class="col-lg-7 col-md-4 data__menu__cell">
 
     </div>
 
@@ -36,7 +39,11 @@
     var $ = this,
     $scope = $$($.root);
 
+    $.basketCount = null;
     $.countAll = null;
+    $.searchQuery = null;
+    $.dateStart = null;
+    $.dateEnd = null;
 
     $.change = {
         pagePrev: function(){
@@ -48,21 +55,39 @@
     };
 
     $.set = {
-        countAll: function(count){
-            if (count !== undefined){
-                $.countAll = count;
-                $.update();
-            }
+        countAll: function(){
+            $.countAll = $Data.list.get.isActive().length;
+            $.update();
         }
     };
 
     this.on("mount", function(){
-        $$('.data__menu__date__rangepicker').daterangepicker({
-            format: 'MM/DD/YYYY',
+
+        $.dateRange = $scope.find('.data__menu__dateRange');
+        $.dateRangeButton = $.dateRange.find('.data__menu__dateRange__button');
+        $.dateRangeValue = $.dateRange.find('.data__menu__dateRange__value');
+        $.dateRangeCancel = $.dateRange.find('.data__menu__dateRange__cancel');
+
+        $.dateRangePicker = $.dateRangeButton.daterangepicker({
             buttonClasses: ['btn btn-hover-fill', 'btn-sm'],
             parentEl: '.screen__main__inner',
             opens: 'center',
+            ranges: {
+                'Сегодня': [moment(), moment()],
+                'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
+                'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
+                'Текущий месяц': [moment().startOf('month'), moment().endOf('month')],
+                'Прошедший месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'Квартал': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            },
+            startDate: moment(),
+            endDate: moment(),
+            alwaysShowCalendars: true,
+            showCustomRangeLabel: false,
+            autoApply: true,
             locale: {
+                format: 'DD/MM/YYYY',
                 applyLabel: 'OK',
                 cancelLabel: 'Отменить',
                 daysOfWeek: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
@@ -70,9 +95,44 @@
                 firstDay: 1
             }
         }, function (start, end) {
-            console.log(start.toISOString(), end.toISOString());
-            //$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+            $.dateRange.addClass("data__menu__dateRange--active");
+            $.dateStart = start.format('YYYY-MM-DD');
+            $.dateEnd = end.format('YYYY-MM-DD');
+
+            if ($.dateStart === $.dateEnd){
+                var days = moment().diff(moment(start), 'days'),
+                    text = null;
+
+                if (days === 1) text = "Вчера";
+                else if (days === 0) text = "Сегодня";
+                else text = start.format('DD/MM/YYYY');
+
+                $.dateRangeValue.text(text);
+            }
+            else {
+                var days = moment(end).diff(moment(start), 'days');
+                $.dateRangeValue.text((days + 1) + " дней");
+            }
+
+            $Data.list.search.run();
         });
+
+        $.dateRangeCancel.on('click', function(ev, picker) {
+            $.dateRange.removeClass("data__menu__dateRange--active");
+            $.dateStart = null;
+            $.dateEnd = null;
+            $Data.list.search.run();
+        });
+
+        $.dateRangePicker.on('show.daterangepicker hide.daterangepicker', function(ev, picker) {
+            $.dateRange.toggleClass("data__menu__dateRange--show");
+        });
+    });
+
+    this.on("unmount", function(){
+        $.dateRangePicker.off();
+        $.dateRangeCancel.off();
     });
 
 </script>

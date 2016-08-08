@@ -61,6 +61,7 @@
             position:relative;
             cursor:pointer;
             white-space:nowrap;
+            padding-bottom:7px;
 
             &:before {
                 content:"";
@@ -115,15 +116,15 @@
                 }
             }
         }
-        &__logout {
+        &__fullscreen {
             position:absolute;
             top:50%;
             right:-25px;
-            width:28px;
-            height:28px;
-            margin-top:-15px;
-            background:url(/assets/images/nav/nav_logout.svg) no-repeat 0 0 / cover;
+            width:30px;
+            height:30px;
+            background:url(/assets/images/nav/nav_fullscreen.svg) no-repeat 0 0 / cover;
             cursor:pointer;
+            transform:translate3d(0, -20px, 0);
         }
     }
 }
@@ -135,9 +136,9 @@
 
     &__avatar {
         position:relative;
-        width:78px;
-        height:78px;
-        border:5px solid rgba($bg_color,.13);
+        width:72px;
+        height:72px;
+        border:3px solid rgba($bg_color,.13);
         border-radius:50%;
 
         &__image {

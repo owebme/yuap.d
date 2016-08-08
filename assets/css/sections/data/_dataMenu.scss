@@ -27,7 +27,7 @@
         width:168px;
         line-height:12px;
         cursor:pointer;
-        transition:color 0.2s $cubic215;
+        color:$blue;
 
         &:before {
             content:"";
@@ -37,9 +37,6 @@
             margin-right:12px;
             opacity:0.8;
             transform:translate3d(0, -2px, 0);
-        }
-        &:hover {
-            color:$blue;
         }
         &__count {
             position:absolute;
@@ -109,12 +106,51 @@
 
         &__button {
             @include ui-icon(search, 24px, 24px);
+            cursor:pointer;
         }
     }
-    &__date__button {
-        position:relative;
-        @include ui-icon(date_change, 22px, 22px);
-        overflow:hidden;
+    &__dateRange {
+        @include flex("row", "center", "center");
+        cursor:pointer;
+        font-size:0;
+
+        &__button {
+            &:before {
+                content:"";
+                display:inline-block;
+                vertical-align:middle;
+                @include ui-icon(date_change, 22px, 22px);
+            }
+        }
+        &__value {
+            display:none;
+            color:$blue_light;
+            height:24px;
+            font-size:14px;
+            line-height:22px;
+            margin-left:10px;
+            border:1px solid $blue_light;
+            padding:0 8px;
+            border-radius:4px;
+            vertical-align:middle;
+        }
+        &__cancel {
+            display:none;
+            vertical-align:middle;
+            @include ui-icon(close_strong, 28px, 28px);
+            margin:0 -15px 0 2px;
+        }
+        &--show {
+            .data__menu__dateRange__button:before {
+                @include ui-icon(date_change_fill, 23px, 23px);
+            }
+        }
+        &--active {
+            .data__menu__dateRange__value,
+            .data__menu__dateRange__cancel {
+                display:inline-block;
+            }
+        }
     }
     &__date__rangepicker {
         position:absolute;

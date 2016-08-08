@@ -38,9 +38,7 @@
             console.log("Not found container for halp");
             return;
         }
-        var $page = app.$dom.root,
-            $container = $(".screen__main__inner");
-            $node = $elem.clone(),
+        var $node = $elem.clone(),
             scrollTop = $container[0].scrollTop,
             scrollDelta = 200,
             offset = {

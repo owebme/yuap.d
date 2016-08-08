@@ -96,7 +96,7 @@
         chanel: function(e){
             this.item.active = !this.item.active;
             $.change.unfocus(e, this);
-            $.calc();
+            $Data.list.search.run();
         },
         status: function(e){
             if ($.statusAll) $.statusAll = false;
@@ -104,7 +104,7 @@
                 this.item.active = !this.item.active;
                 $.change.unfocus(e, this);
             }
-            $.calc();
+            $Data.list.search.run();
         },
         statusAll: function(e){
             $.statusAll = !$.statusAll;
@@ -112,7 +112,7 @@
                 $store.status.get(function(item) {
                     item.active = true;
                 });
-                $.calc();
+                $Data.list.search.run();
             }
         },
         unfocus: function(e, $this){
@@ -129,51 +129,15 @@
     };
 
     $.set = {
-        chanelsCount: function(){
+        chanelsCount: function(update){
             var items = $store.data.get();
             $store.chanels.get(function(item) {
                 $store.chanels.select({'chanel': item.chanel}).set(
                     'count', _.filter(items, function(dataItem){return dataItem.active && dataItem.chanel === item.chanel}).length
                 );
             });
+            if (update) $.update();
         }
-    };
-
-    $.calc = function(){
-
-        var count = 0, shows = 0;
-
-        var chanels = _.pluck(_.filter($store.chanels.get(), function(item){
-            return item.active === true
-        }), "chanel");
-
-        var status = _.pluck(_.filter($store.status.get(), function(item){
-            return item.active === true
-        }), "_id");
-
-        $store.data.get(function(item) {
-
-            if (_.inArray(chanels, item.chanel) && _.inArray(status, item.status)){
-
-                item.active = true;
-                count++;
-            }
-            else {
-                item.active = false;
-            }
-            if (item.show) {
-                item.show = false;
-                shows++;
-            }
-        });
-
-        if (shows > 0){
-            $$($Data.list.root).find(".data__item[data-show=true] > .data__item__wrapper").css("overflow", "hidden");
-        }
-        $.set.chanelsCount();
-        $Data.list.currentPage = 1;
-        $Data.list.update();
-        $Data.menu.set.countAll($Data.list.get.isActive().length);
     };
 
 </script>

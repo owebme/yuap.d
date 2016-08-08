@@ -1,10 +1,15 @@
 <section-data-list>
 
+    <div if={ !get.isActive().length } class="data__list__empty text-center">
+        <h3>Нет подходящих результатов</h3>
+        <p class="mb20">попробуйте смягчить условия поиска</p>
+        <span onClick={ search.reset } class="data__list__reset btn btn-hover-fill">Сбросить фильтры</span>
+    </div>
     <div each={ item in get.data() } no-reorder class="data__item tile" data-num="{ item.num }" data-new="{ item.new }" data-checked="{ item.checked }" data-show="{ item.show }" data-status="{ get.statusColor(item.status) }">
         <div if={ item.important } class="data__item__important"></div>
-        <div data-help="date" class="data__item__date color__bg{ get.statusColor(item.status) }">{ get.date(item.date, item.status) }</div>
+        <div onClick={ open.changeStatus } data-help="date" class="data__item__date color__bg{ get.statusColor(item.status) }">{ get.date(item.date, item.status) }</div>
         <div class="data__item__edit__button"></div>
-        <div dropdown="dataItemOptions" dropdown-align="right" class="data__item__more__button"></div>
+        <div onClick={ open.itemOptions } class="data__item__more__button"></div>
         <div class="data__item__wrapper">
             <div onClick={ open.details } class="data__item__header">
                 <div data-help="numOrder" class="data__item__cell data__item__cell--num col-md-3">
@@ -13,7 +18,7 @@
                 </div>
                 <div class="data__item__cell col-md-4">
                     <div data-help="chanel" class="data__item__icon data__item__icon--{ item.chanel }">
-                        <div onClickUpdate={ onChecked } class="data__item__checked"></div>
+                        <div onClickUpdate={ set.onChecked } class="data__item__checked"></div>
                         <div if={ item.alarm === true } class="data__item__alarm"></div>
                         <div if={ item.accepted === true } class="data__item__status data__item__status--success"></div>
                         <div if={ item.accepted === false } class="data__item__status data__item__status--fail"></div>
@@ -178,6 +183,7 @@
     var $ = this,
     $scope = $$($.root);
 
+    $.mode = "inbox";
     $.itemsPage = 10;
     $.currentPage = 1;
     $.countPages = null;
@@ -191,27 +197,15 @@
                 }
             }
         } catch(e){}
+        _.each(data, function(item){
+            item.active = true;
+        });
         $store.data = new Baobab(data);
         $.update();
     };
 
     $.refresh = function(data){
         //$.init();
-    };
-
-    $.onChecked = function(){
-        this.item.checked = !this.item.checked;
-
-        var counts = $.get.isChecked().length;
-
-        $Data.options.init(counts);
-    };
-
-    $.unChecked = function(){
-        _.each($.get.isChecked(), function(item){
-            item.checked = false;
-        });
-        $.update();
     };
 
     $.open = {
@@ -240,6 +234,86 @@
                 }
                 _this.update();
             }
+        },
+        changeStatus: function(e){
+            var _this = this,
+                id = this.item._id;
+
+            $DropMenu.show({
+                id: id,
+                align: "right",
+                type: "status",
+                elem: $$(e.currentTarget),
+                data: $store.status.get(),
+                value: this.item.status,
+                callback: function(value){
+                    app.request('setDataListStatus', {
+                        status: value,
+                        ids: [id]
+                    });
+                    $store.data.select({'_id': id}).set("status", value);
+                    _this.update();
+                }
+            });
+        },
+        itemOptions: function(e){
+            var _this = this,
+                item = this.item,
+                id = item._id;
+
+            $DropMenu.show({
+                id: id,
+                elem: $$(e.currentTarget),
+                data: [
+                    {
+                        title: "Редактировать",
+                        callback: function(){
+                            console.log(id);
+                        }
+                    },
+                    {
+                        title: "Передать в контакты",
+                        callback: function(){
+                            app.request('setDataListState', {
+                                state: "contact",
+                                ids: [id]
+                            });
+                            $store.data.select({'_id': id}).set("state", "contact");
+                            $.search.run();
+                        }
+                    },
+                    {
+                        title: "Убрать в корзину",
+                        callback: function(){
+                            app.request('setDataListState', {
+                                state: "basket",
+                                ids: [id]
+                            });
+                            $store.data.select({'_id': id}).set("state", "basket");
+                            $.search.run();
+                        }
+                    },
+                    {
+                        title: "Убрать и напомнить",
+                        callback: function(){
+                            app.request('setDataListState', {
+                                state: "basket",
+                                ids: [id]
+                            });
+                            $store.data.select({'_id': id}).set("state", "basket");
+                            $.search.run();
+                        }
+                    },
+                    {
+                        title: "Удалить",
+                        callback: function(){
+                            app.request('delDataListRemove', [id]);
+                            $store.data.select({'_id': id}).unset();
+                            $.search.run();
+                        }
+                    }
+                ]
+            });
         }
     };
 
@@ -264,6 +338,67 @@
         }
     };
 
+    $.search = {
+        run: function(){
+            console.time("searchRun");
+            var $this = this,
+                shows = 0,
+
+            chanels = _.pluck(_.filter($store.chanels.get(), function(item){
+                return item.active === true
+            }), "chanel"),
+
+            status = _.pluck(_.filter($store.status.get(), function(item){
+                return item.active === true
+            }), "_id");
+
+            $store.data.get(function(item) {
+                if ($.mode !== item.state) return;
+                if (_.inArray(chanels, item.chanel) && _.inArray(status, item.status)){
+                    if ($this.date($Data.menu.dateStart, $Data.menu.dateEnd, item.date)){
+                        item.active = true;
+                    }
+                    else {
+                        item.active = false;
+                    }
+                }
+                else {
+                    item.active = false;
+                }
+                if (item.show) {
+                    item.show = false;
+                    shows++;
+                }
+            });
+
+            if (shows > 0){
+                $scope.find(".data__item[data-show=true] > .data__item__wrapper")
+                .css("overflow", "hidden");
+            }
+
+            //$Data.menu.set.basketCount(true);
+            $Data.sidebar.set.chanelsCount(true);
+            $.currentPage = 1;
+            $.update();
+            $Data.menu.set.countAll($.get.isActive().length);
+            console.timeEnd("searchRun");
+        },
+        date: function(start, end, date){
+            if (!start || !end || !date) return true;
+            else {
+                if (moment(date).diff(moment(start), 'days') > -1 && moment(date).diff(moment(end), 'days') < 1){
+                    return true;
+                }
+                // if (tempus(date).between(tempus(start), 'day') < 1 && tempus(date).between(tempus(end), 'day') > -1){
+                //     return true;
+                // }
+            }
+        },
+        reset: function(){
+
+        }
+    };
+
     $.get = {
         data: function(){
             var data = this.isActive();
@@ -277,8 +412,8 @@
 
             return result;
         },
-        isActive: function(ids){
-            var items = _.filter($store.data.get(), function(item){return item.active === true});
+        isActive: function(mode = $.mode, ids){
+            var items = _.filter($store.data.get(), function(item){return mode === item.state && item.active === true});
             if (ids) return _.pluck(items, "_id");
             else return items;
         },
@@ -286,6 +421,9 @@
             var items = _.filter($store.data.get(), function(item){return item.checked === true});
             if (ids) return _.pluck(items, "_id");
             else return items;
+        },
+        isShowed: function(){
+            return _.filter($store.data.get(), function(item){return item.show === true});
         },
         name: function(name){
             return name.replace(/\s+/g, "\n");
@@ -295,11 +433,11 @@
                 return $store.status.get({'_id': String(status)}, 'title');
             }
             else {
-                var days = tempus().between(tempus(date), 'day');
-                if (days === -1) return tempus(date).format('%H:%M');
-                else if (days === -2) return "вчера";
+                var days = moment(date).diff(moment(), 'days');
+                if (days === 0) return moment(date).format('HH:mm');
+                else if (days === -1) return "вчера";
                 else {
-                    return tempus(date).format('%d %b');
+                    return moment(date).format('D MMM');
                 }
             }
         },
@@ -323,24 +461,20 @@
         }
     };
 
-    $.selectStatus = function(){
-        var _this = this,
-            id = this.item._id;
+    $.set = {
+        onChecked: function(){
+            this.item.checked = !this.item.checked;
 
-        $popupSelect.show({
-            type: "status",
-            icon: {
-                type: this.item.type,
-                image: this.item.image
-            },
-            data: $.data.get('status'),
-            value: this.item.status,
-            callback: function(value){
-                $fetch('data/list/status/' + value, "put", [id]);
-                $.data.select('items', {'_id': id}).set("status", value);
-                _this.update();
-            }
-        });
+            var counts = $.get.isChecked().length;
+
+            $Data.options.init(counts);
+        },
+        unChecked: function(){
+            _.each($.get.isChecked(), function(item){
+                item.checked = false;
+            });
+            $.update();
+        }
     };
 
 </script>

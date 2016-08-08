@@ -1675,10 +1675,12 @@ function Tag(impl, conf, innerHTML) {
       // MY_FIXED
       if (__clickHandlers && __clickHandlers[_tagName]){
           _$(_tagName).off(clickEvent);
-        //   var handlers = __clickHandlers[_tagName];
-        //   for (var key in handlers) {
-        //       _$(_tagName).off(clickEvent, handlers[key].value);
-        //   }
+          if (riot.debugMode){
+              var handlers = __clickHandlers[_tagName];
+              for (var key in handlers) {
+                  console.log(_tagName + " -> " + handlers[key]);
+              }
+          }
           delete __clickHandlers[_tagName];
       }
 
@@ -1771,15 +1773,15 @@ function setEventHandlerClick(handler, dom, tag, update) {
 	dom["_tag"] = tag;
 	dom["_handler"] = handler;
 
-	var rootTag = tag.parent.root,
-        rootTagName = tag.parent.root.tagName.toLowerCase(),
+	var rootTag = !tag.item && !tag._item && tag.root.tagName.match(/-/) ? tag.root : tag.parent.root,
+        rootTagName = rootTag.tagName.toLowerCase(),
         clickNode = null;
 
     if (dom.id) {
         clickNode = "#" + dom.id;
     }
     else if (dom.className) {
-        clickNode = "." + dom.className.replace(/\s/g, ".").replace(/\.?\{.+\}/g, "");
+        clickNode = "." + dom.className.replace(/(\w+|\s)?\{.+\}/g, "").replace(/\s(\w+)/g, ".$1");
     }
 	if (!clickNode || __clickHandlers && __clickHandlers[rootTagName] && __clickHandlers[rootTagName][clickNode]) return;
 
@@ -1787,7 +1789,11 @@ function setEventHandlerClick(handler, dom, tag, update) {
 
     __clickHandlers[rootTagName][clickNode] = clickNode;
 
+    if (riot.debugMode) console.log(rootTagName + " -> " + clickNode);
+
   _$(rootTag).on(clickEvent, clickNode, function(e){
+
+    if (!this._tag) return;
 
     var riotAttr = this.getAttribute("riot-item");
 

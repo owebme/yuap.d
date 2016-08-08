@@ -110,11 +110,11 @@ app.put('/unimportant', function(req, res) {
 	});
 });
 
-app.put('/status/:id', function(req, res) {
+app.put('/status', function(req, res) {
 
-	if (!req.body.length || req.params.id === 'undefined') return;
+	if (!req.body || !req.body.ids || !req.body.status) return;
 
-	req.body.forEach(function(item){
+	req.body.ids.forEach(function(item){
 		db.collection('data').update(
 		{
 			"_id": ObjectId(item),
@@ -122,7 +122,25 @@ app.put('/status/:id', function(req, res) {
 		},
 		{
 			$set: {
-				"status": req.params.id
+				"status": req.body.status
+			}
+		});
+	});
+});
+
+app.put('/state', function(req, res) {
+
+	if (!req.body || !req.body.ids || !req.body.state) return;
+
+	req.body.ids.forEach(function(item){
+		db.collection('data').update(
+		{
+			"_id": ObjectId(item),
+			"siteID": req.session.user.siteID
+		},
+		{
+			$set: {
+				"state": req.body.state
 			}
 		});
 	});

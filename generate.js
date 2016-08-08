@@ -121,8 +121,11 @@ var table = {
 	},
 	date: function(){
 		var data = [];
-		for (var i = 1; i < 5; ++i){
-			data.push(tempus({year: 2016, month: 8, day: i}).format('%Y-%m-%d %H:%M'));
+		for (var i = 1; i < 30; ++i){
+			var day = i,
+				month = this.random(7, 8);
+			if (month === 8) day = this.random(1, 7);
+			data.push(tempus({year: 2016, month: month, day: day}).format('%Y-%m-%d %H:%M'));
 		}
 		return data;
 	},
@@ -137,14 +140,13 @@ var table = {
 	},
 	data: function(num){
 		var item = {
-			num: num,
-			active: true,
-			contact: false,
-			new: false,
 			accountID: ACCOUNT_ID,
 			siteID: SITE_ID,
 			userID: USER_ID,
 			clientID: (100 + num),
+			num: num,
+			new: false,
+			state: "inbox",
 			chanel: this.get("chanel"),
 			profile: {
 				id: "158013862",

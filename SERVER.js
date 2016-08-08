@@ -12,7 +12,7 @@ var session = require('express-session');
 //var errorHandler = require('errorhandler');
 var memoryStore = session.MemoryStore;
 var db = require('./libs/db/mongoose')(log, config);
-var generate = require('./generate');
+//var generate = require('./generate');
 var app = express();
 
 // view engine setup
@@ -36,10 +36,10 @@ app.use(express.static(path.join(__dirname, '/')));
 
 require('./api')(app);
 
-app.get('/contacts', function(req, res, next) {
-    res.statusCode = 200;
-    return res.end(fs.readFileSync('index.html'));
-});
+// app.get('*', function(req, res, next) {
+//     res.statusCode = 200;
+//     return res.end(fs.readFileSync('index.html'));
+// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
