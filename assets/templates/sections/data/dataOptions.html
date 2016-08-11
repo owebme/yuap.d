@@ -2,17 +2,17 @@
 
     <div class="container">
         <div class="row">
-            <div class="data__panel__options__left col-md-7">
+            <div class="data__panel__options__left col-lg-7 col-md-9">
                 <div class="col-md-9 data__panel__options__count__title">выбрано</div>
                 <div class="col-md-4 data__panel__options__count">{ counts }</div>
-                <div onClickUpdate={ onClear } class="col-md-9 data__panel__options__count__title text-right data__panel__options__cancel">отменить</div>
+                <div onClick={ onClear } class="col-md-9 data__panel__options__count__title text-right data__panel__options__cancel">отменить</div>
             </div>
-            <div class="data__panel__options__right col-md-10">
-                <div onClickUpdate={ onViewed } data-help="viewed" class="data__panel__options__button data__panel__options__button__viewed"></div>
-                <div onClickUpdate={ onImportant } data-help="important" class="data__panel__options__button data__panel__options__button__important"></div>
+            <div class="data__panel__options__right col-lg-10 col-md-10">
+                <div onClick={ onViewed } data-help="viewed" class="data__panel__options__button data__panel__options__button__viewed"></div>
+                <div onClick={ onImportant } data-help="important" class="data__panel__options__button data__panel__options__button__important"></div>
                 <div data-help="remove" class="data__panel__options__button data__panel__options__button__remove"></div>
                 <div data-help="folder" class="data__panel__options__button data__panel__options__button__folder"></div>
-                <div onClickUpdate={ onCheckAll } data-help="selectAll" class="data__panel__options__button data__panel__options__button__selectAll"></div>
+                <div onClick={ onCheckAll } data-help="selectAll" class="data__panel__options__button data__panel__options__button__selectAll"></div>
                 <div help-item=".data__panel__options__right" help-data="dataPanelOptions" class="data__panel__options__help getHelp"></div>
             </div>
         </div>
@@ -87,6 +87,8 @@
     };
 
     this.on("mount", function(){
+
+        if ($store.data) $.init($Data.list.get.isChecked().length);
 
         if (!app.device.isMobile){
             var top = 93;

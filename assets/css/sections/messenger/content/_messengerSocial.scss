@@ -1,0 +1,66 @@
+.WD__messenger__item__social__buttons {
+    padding:10px 0 3px;
+    text-align:right;
+    font-size:0;
+}
+.WD__messenger__item__social__button {
+    display:inline-block;
+    vertical-align:top;
+    position:relative;
+    width:38px;
+    height:36px;
+    margin-left:12px;
+    opacity:0.8;
+
+    &:after {
+        content:"";
+        background-position:0 0;
+        background-repeat:no-repeat;
+        background-size:cover;
+    }
+    &:before {
+        content:"";
+        @include abs();
+        border-radius:6px;
+        border:1px solid transparent;
+        opacity:0.75;
+    }
+    &__vk {
+        &:after {
+            @include abs_50(60, 60);
+            background-image:url(/public/images/social/vkontakte.svg);
+            transform:translate3d(0, -1px, 0);
+        }
+        &:before {
+            border-color:#4D76A1;
+        }
+    }
+    &__fb {
+        &:after {
+            @include abs_50(56, 56);
+            background-image:url(/public/images/social/facebook.svg);
+        }
+        &:before {
+            border-color:#4362A5;
+        }
+    }
+    &__dk {
+        &:after {
+            @include abs_50(60, 60);
+            background-image:url(/public/images/social/odnoklassniki.svg);
+            transform:translate3d(0, -1px, 0);
+        }
+        &:before {
+            border-color:#E67E17;
+        }
+    }
+    &__tw {
+        &:after {
+            @include abs_50(62, 62);
+            background-image:url(/public/images/social/twitter.svg);
+        }
+        &:before {
+            border-color:#55ACEE;
+        }
+    }
+}

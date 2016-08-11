@@ -12,19 +12,29 @@
 
         render: function(){
 
-            WD.elem.on(EV.click, ".nav__menu__item", function(){
+            WD.elem.on(EV.click, ".nav__menu__item", function(e){
+                e.preventDefault();
+                var url = this.getAttribute("href");
                 $(this).addClass("nav__menu__item--active")
                 .siblings()
                 .removeClass("nav__menu__item--active");
+                setTimeout(function(){
+                    location.replace(url);
+                }, 0);
             });
 
+            WD.panel.find(".panel__item__button--messenger").on(EV.click, function(e){
+                SCREENS.nav("messenger");
+            });
         },
 
         change: function(section){
-            WD.elem.find(".nav__menu__item[data-item=" + section + "]")
-            .addClass("nav__menu__item--active")
-            .siblings()
-            .removeClass("nav__menu__item--active");
+            var $item = WD.elem.find(".nav__menu__item[data-item=" + section + "]");
+            if (!$item.hasClass("nav__menu__item--active")){
+                $item.addClass("nav__menu__item--active")
+                .siblings()
+                .removeClass("nav__menu__item--active");
+            }
         }
     };
 

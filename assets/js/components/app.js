@@ -4,7 +4,7 @@
 
     window.app = {};
 
-	window.DOMAIN = "http://192.168.1.70:3000";
+	window.DOMAIN = "http://192.168.1.65:3000";
 
 	app = {
         router: {},

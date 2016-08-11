@@ -24,30 +24,33 @@
 
     var $ = this;
 
+    $Data = {
+        menu: $.tags["section-data-menu"],
+        sidebar: $.tags["section-data-sidebar"],
+        options: $.tags["section-data-options"],
+        list: $.tags["section-data-list"],
+        dashboard: $.tags["section-dashboard"],
+        config: new Baobab({
+            mode: "inbox",
+            itemsPage: 10,
+            currentPage: 1,
+            countPages: null,
+            sidebarExpand: true
+        }, { autoCommit: true })
+    };
+
     this.on("mount", function(){
-
-        $Data = {
-            menu: $.tags["section-data-menu"],
-            sidebar: $.tags["section-data-sidebar"],
-            options: $.tags["section-data-options"],
-            list: $.tags["section-data-list"],
-            dashboard: $.tags["section-dashboard"]
-        }
-
         if (!$store.data){
             app.request('getDataInit').then(function(data){
-                console.time("initData");
                 $Data.list.init(data.list);
                 $Data.sidebar.init(data.status);
-                console.timeEnd("initData");
             });
         }
         else {
-            console.time("reInitData");
             $Data.list.init($store.data.get());
             $Data.sidebar.init($store.status.get());
-            console.timeEnd("reInitData");
         }
+        $Data.menu.change.sidebarState($Data.config.get('sidebarExpand'));
     });
 
 </script>

@@ -1,0 +1,101 @@
+.WD__messenger__header__title,
+.WD__messenger__form__title,
+.WD__messenger__item__button {
+    color:#1289FE;
+}
+.WD__messenger__item__operator {
+    a {
+        color:#0074b0;
+    }
+    strong {
+        color:darken(#74a3c7,20%);
+    }
+}
+.WD__messenger__item__user {
+    .WD__messenger__item__text {
+        background:#1289FE;
+
+        &:after {
+            border-left-color:#1289FE;
+        }
+    }
+}
+.WD__messenger__button__send__icon__color,
+.WD__messenger__emoji__item--active .WD__messenger__emoji__item__color,
+.WD__messenger__item__button__cursor__color,
+.WD__messenger__menu__item__icon__color,
+.WD__messenger__item__button__icon__color {
+    fill:#1289FE;
+}
+.WD__messenger__products__item__string__title,
+a.WD__messenger__products__item__string__link,
+.WD__messenger__menu__item__link {
+    color:#158ffe;
+}
+.WD__messenger__menu__item__link {
+    border-bottom-color:rgba(#158ffe,.3);
+}
+.WD__messenger__products__like,
+.WD__messenger__item__emoji,
+.WD__messenger__item__emoji:before,
+.WD__messenger__item__emoji:after {
+    background-color:#158ffe;
+}
+.WD__messenger__item__button {
+    border-color:rgba(#1289FE,.6);
+}
+.WD__messenger__form__textarea:focus,
+.WD__messenger__form__input:focus {
+    border-bottom-color:rgba(#158ffe,.5);
+}
+
+// @each $color in (#6a76fc, #00a8ff, #a570f9, #00ab6b, #1abc9c, #ff2d55, #ff665a, #ff6000, #4f81b6, #517da2, #148de0, #895caf, #6739b6, #eb8227, #a1408f, #0088b2, #f0545f, #3897F0, #1c9ff1, #009688, #664C8E, #A570F9){
+
+.WD__messenger {
+    @each $color in (#6a76fc){
+        &[data-color="#{$color}"]{
+            .WD__messenger__header__title,
+            .WD__messenger__form__title,
+            .WD__messenger__item__button,
+            .WD__messenger__products__item__string__title,
+            a.WD__messenger__products__item__string__link,
+            .WD__messenger__menu__item__link,
+            .WD__messenger__item__operator a,
+            .WD__messenger__item__operator strong {
+                color:$color;
+            }
+            .WD__messenger__menu__item__link {
+                border-bottom-color:rgba($color,.3);
+            }
+            .WD__messenger__item__user {
+                .WD__messenger__item__text {
+                    background:$color;
+
+                    &:after {
+                        border-left-color:$color;
+                    }
+                }
+            }
+            .WD__messenger__button__send__icon__color,
+            .WD__messenger__emoji__item--active .WD__messenger__emoji__item__color,
+            .WD__messenger__item__button__cursor__color,
+            .WD__messenger__menu__item__icon__color,
+            .WD__messenger__item__button__icon__color {
+                fill:$color;
+            }
+            .WD__messenger__products__like,
+            .WD__messenger__item__emoji,
+            .WD__messenger__item__emoji:before,
+            .WD__messenger__item__emoji:after {
+                background-color:$color;
+            }
+            .WD__messenger__item__button {
+                border-color:rgba($color,.6);
+            }
+            .WD__messenger__form__textarea:focus,
+            .WD__messenger__form__input:focus {
+                border-bottom-color:rgba($color,.5);
+            }
+        }
+    }
+}

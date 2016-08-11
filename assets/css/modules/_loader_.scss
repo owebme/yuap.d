@@ -1,0 +1,22 @@
+.loader {
+    @include flex("row", "center", "center");
+    display:none;
+    @include abs();
+    z-index:100;
+
+    &__spinner {
+        animation:spinner 1s infinite linear;
+
+        &__path {
+            fill:$blue;
+        }
+    }
+    &[data-show="true"]{
+        display:flex;
+    }
+}
+
+@keyframes spinner {
+	0% {transform:rotate(0)}
+	100% {transform:rotate(360deg)}
+}

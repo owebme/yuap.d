@@ -5,7 +5,7 @@
         <div class="sidebar__filter__container">
             <div class="sidebar__filter__body">
                 <virtual each={ item in $store.chanels.get() } no-reorder>
-                    <div onClickUpdate={ change.chanel } data-hidden="{true : item.hidden}" class="filter__checkbox ch {checked: item.active, focus: item.focus}">
+                    <div onClick={ change.chanel } data-hidden="{true : item.hidden}" class="filter__checkbox ch {checked: item.active, focus: item.focus}">
                         <label class="filter__checkbox__item">{ item.title }</label>
                         <span if={ item.count > 0 } class="filter__checkbox__count">{ item.count }</span>
                     </div>
@@ -18,11 +18,11 @@
         <div class="sidebar__filter__title">Статусы</div>
         <div class="sidebar__filter__container">
             <div class="sidebar__filter__body">
-                <div onClickUpdateAll={ change.statusAll } class="filter__checkbox stAll { checked : statusAll }">
+                <div onClick={ change.statusAll } class="filter__checkbox stAll { checked : statusAll }">
                     <label class="filter__checkbox__item">Все</label>
                 </div>
                 <virtual each={ item in $store.status.get() } no-reorder>
-                    <div onClickUpdateAll={ change.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
+                    <div onClick={ change.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
                         <label class="filter__checkbox__item">{ item.title }</label>
                         <span class="filter__checkbox__color color__bg{ item.color }"></span>
                     </div>
@@ -81,22 +81,28 @@
         });
 
         $store.chanels = new Baobab(chanels);
-
         $store.status = new Baobab(status);
 
-        $.set.chanelsCount();
-
-        $.update();
+        $.refresh();
         $Data.list.update();
-
-        $Data.menu.set.countAll($Data.list.get.isActive().length);
+        $Data.menu.set.countAll();
     };
+
+    $.refresh = function(){
+        var items = $store.data.get();
+        $store.chanels.get(function(item) {
+            $store.chanels.select({'chanel': item.chanel}).set(
+                'count', _.filter(items, function(dataItem){return dataItem.active && dataItem.state === $Data.list.config.mode && dataItem.chanel === item.chanel}).length
+            );
+        });
+        $.update();
+    };    
 
     $.change = {
         chanel: function(e){
             this.item.active = !this.item.active;
             $.change.unfocus(e, this);
-            $Data.list.search.run();
+            $Data.list.refresh();
         },
         status: function(e){
             if ($.statusAll) $.statusAll = false;
@@ -104,7 +110,7 @@
                 this.item.active = !this.item.active;
                 $.change.unfocus(e, this);
             }
-            $Data.list.search.run();
+            $Data.list.refresh();
         },
         statusAll: function(e){
             $.statusAll = !$.statusAll;
@@ -112,7 +118,7 @@
                 $store.status.get(function(item) {
                     item.active = true;
                 });
-                $Data.list.search.run();
+                $Data.list.refresh();
             }
         },
         unfocus: function(e, $this){
@@ -125,18 +131,6 @@
                     $item.off("mouseleave");
                 });
             }
-        }
-    };
-
-    $.set = {
-        chanelsCount: function(update){
-            var items = $store.data.get();
-            $store.chanels.get(function(item) {
-                $store.chanels.select({'chanel': item.chanel}).set(
-                    'count', _.filter(items, function(dataItem){return dataItem.active && dataItem.chanel === item.chanel}).length
-                );
-            });
-            if (update) $.update();
         }
     };
 

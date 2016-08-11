@@ -4,7 +4,7 @@
         <div class="screen__main__inner">
             <section-nav></section-nav>
             <section-content id="content"></section-content>
-            <dropdown-menu></dropdown-menu>
+            <ui-dropmenu></ui-dropmenu>
         </div>
         <section-panel></section-panel>
     </div>
@@ -14,6 +14,11 @@
 
     <section-modal></section-modal>
     <section-popup></section-popup>
+    <section-alert></section-alert>
+    <section-loader></section-loader>
+    <!-- <div class="tutorial">
+        <div class="tutorial__shape"></div>
+    </div> -->
 
 <script>
 
@@ -27,13 +32,15 @@
         app.$dom.root = $$($root.root);
         app.$dom.content = app.$dom.root.find(".screen__main__inner");
 
-        $Popup = $root.tags["section-popup"];
         $Modal = $root.tags["section-modal"];
-        $DropMenu = $root.tags["dropdown-menu"];
+        $Popup = $root.tags["section-popup"];
+        $Alert = $root.tags["section-alert"];
+        $DropMenu = $root.tags["ui-dropmenu"];
         $Messenger = $root.tags["section-messenger"];
+        $Loader = $root.tags["section-loader"];
 
         app.nav.init();
-        app.screens.init();
+        app.screens.init("messenger");
         app.router.init();
 
     });

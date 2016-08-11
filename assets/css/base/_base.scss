@@ -29,6 +29,7 @@ $pink: #ec425f;
 $green: #00ab6b;
 $lime: #95EA5E;
 $azure: #00aff2;
+$azure_dark: #00a7eb;
 // $red_bright: #ee5050;
 // $red_light: #ee728a;
 
@@ -91,6 +92,18 @@ $cubic25: cubic-bezier(.25,.46,.45,.94);
 $cubic2501: cubic-bezier(.25,.1,.25,1);
 $cubic42: cubic-bezier(.42,0,.05,1);
 $cubic345: cubic-bezier(.345,.000,.050,.995);
+
+$cubic145: cubic-bezier(.145,.82,.34,1.015);
+
+// .pushright, .pushleft
+$cubic272: cubic-bezier(.272,.224,.265,.975);
+// .pushleft.out, .pushleft.in {animation-duration: 420ms;}
+// translateX(-30%)
+
+$cubic205: cubic-bezier(.205,.735,.635,1.01);
+$bounce: cubic-bezier(.175,.885,.32,1.275);
+$bounceSoft: cubic-bezier(.175,.885,.32,1.1125);
+$cubic68: cubic-bezier(.68,-.55,.265,1.55);
 
 $cubic19: cubic-bezier(.19,1,.22,1);
 $cubic34b: cubic-bezier(.34,.61,.7,1);

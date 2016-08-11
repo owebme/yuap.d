@@ -11,9 +11,20 @@
 }
 .data__item {
     position:relative;
-    transition:box-shadow 0.3s $cubic25;
     perspective:800px;
+    background-color:#fff;
+    min-height:88px;
+    border-radius:4px;
+    box-shadow:0 12px 40px 0 rgba(162,172,191,.06);
+    margin-bottom:25px;
+    will-change:height;
+    user-select:none;
+    @include accelerate(true);
+    transition:box-shadow 0.3s $cubic25;
 
+    &:hover {
+        box-shadow:0 12px 40px -10px rgba(121,136,161,.3);
+    }
     &__wrapper {
         @include accelerate(true);
         height:88px;

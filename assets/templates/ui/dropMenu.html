@@ -1,16 +1,16 @@
-<dropdown-menu class="dropdown__menu { dropdown__menu--active : active }" data-align="{ align }">
+<ui-dropmenu class="dropmenu { dropmenu--active : active }" data-align="{ align }">
 
-    <div if={ !type } class="dropdown__menu__wrapper">
-        <div onClick={ onSelect } each={ items } no-reorder class="dropdown__menu__item st1">
+    <div if={ !type } class="dropmenu__wrapper">
+        <div onClick={ onSelect } each={ items } no-reorder class="dropmenu__item st1">
             { title }
         </div>
     </div>
-    <div if={ type === "status" } class="dropdown__menu__wrapper">
-        <div onClick={ onSelect } each={ items } no-reorder class="dropdown__menu__item st2 { selected : _id == value }">
-            <span class="dropdown__menu__color color__bg{ color }"></span>{ title }
+    <div if={ type === "status" } class="dropmenu__wrapper">
+        <div onClick={ onSelect } each={ items } no-reorder class="dropmenu__item st2 { selected : _id == value }">
+            <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
         </div>
-        <div class="dropdown__menu__item divider"></div>
-        <div onClick={ changeStatus } class="dropdown__menu__item dropdown__menu__button edit ">Изменить статусы</div>
+        <div class="dropmenu__item divider"></div>
+        <div onClick={ changeStatus } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
     </div>
 
 <script>
@@ -48,13 +48,6 @@
                 marginTop = -(params.elem.outerHeight() / 2);
             }
 
-            $scope.css({
-                top: (app.$dom.content[0].scrollTop + offset.top + params.elem.outerHeight()) + "px",
-                left: offset.left + "px",
-                marginLeft: marginLeft + "px",
-                marginTop: marginTop + "px"
-            });
-
             setTimeout(function(){
                 app.$dom.content.on(EV.click + ".dropdown", function(e){
                     $.onClose();
@@ -62,6 +55,13 @@
             }, 100);
 
             $.update();
+
+            $scope.css({
+                top: (app.$dom.content[0].scrollTop + offset.top + params.elem.outerHeight()) + "px",
+                left: offset.left + "px",
+                marginLeft: marginLeft + "px",
+                marginTop: marginTop + "px"
+            });
         }
     };
 
@@ -87,4 +87,4 @@
 
 </script>
 
-</dropdown-menu>
+</ui-dropmenu>

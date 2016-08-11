@@ -1,0 +1,52 @@
+<section-alert class="alert" data-open="{ active }">
+
+    <div class="alert__wrapper">
+        <div class="alert__header">
+            <h3 class="alert__title">{ data.title }</h3>
+            <p if={ data.subtitle } class="alert__subtitle">{ data.subtitle }</p>
+        </div>
+        <div class="alert__buttons">
+            <div onClick={ onCancel } class="alert__button { alert__button--active : data.button === "cancel" }">{ data.cancel && data.cancel.title ? data.cancel.title : "Отмена" }</div>
+            <div onClick={ onSuccess } class="alert__button { alert__button--active : data.button === "success" }">{ data.success && data.success.title ? data.success.title : "OK" }</div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+
+    $.data = {
+        title: null,
+        subtitle: null
+    };
+
+    $.show = function(data){
+        if (data){
+            $.data = data;
+            $.active = true;
+            $.update();
+        }
+    };
+
+    $.onSuccess = function(){
+        if ($.data.success && typeof $.data.success.callback === "function"){
+            $.data.success.callback();
+        }
+        $.data.button = "success";
+        $.active = false;
+    };
+
+    $.onCancel = function(){
+        if ($.data.cancel && typeof $.data.cancel.callback === "function"){
+            $.data.cancel.callback();
+        }
+        $.data.button = "cancel";
+        $.active = false;
+    };
+
+</script>
+
+</section-alert>

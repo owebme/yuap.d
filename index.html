@@ -7,11 +7,12 @@
     <meta name="HandheldFriendly" content="true" />
     <meta name="MobileOptimized" content="width" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
 	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="format-detection" content="telephone=no" />
 	<meta name="google" content="notranslate" />
-    <link rel="stylesheet" href="/assets/css/style.min.css">
+    <link id="styles" rel="stylesheet" href="/assets/css/style.min.css">
     <link rel="stylesheet" href="/assets/js/libs/vendors/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
@@ -19,7 +20,8 @@
     <root-main></root-main>
 
     <script src="/assets/js/libs/modernizr.custom.js"></script>
-    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js"></script>
+    <!-- <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js"></script> -->
+    <script src="/assets/js/libs/vendors/jquery/dist/jquery.min.js"></script>
     <script src="/assets/js/libs/fastclick.js"></script>
     <!-- <script src="/assets/js/libs/jquery.tap.js"></script> -->
     <!-- <script src="/assets/js/libs/zepto.min.js"></script> -->
@@ -46,11 +48,15 @@
     <script src="/assets/templates/sections/data/dataSidebar.html" type="riot/tag"></script>
     <script src="/assets/templates/sections/data/dataOptions.html" type="riot/tag"></script>
     <script src="/assets/templates/sections/data/dashboard.html" type="riot/tag"></script>
+    <script src="/assets/templates/sections/contacts/contacts.html" type="riot/tag"></script>
     <script src="/assets/templates/sections/messenger/messenger.html" type="riot/tag"></script>
     <script src="/assets/templates/modules/statusMark.html" type="riot/tag"></script>
     <script src="/assets/templates/modules/modal/editItem.html" type="riot/tag"></script>
     <script src="/assets/templates/modules/popup/popup.html" type="riot/tag"></script>
-    <script src="/assets/templates/modules/dropMenu.html" type="riot/tag"></script>
+    <script src="/assets/templates/modules/alert.html" type="riot/tag"></script>
+    <script src="/assets/templates/modules/loader.html" type="riot/tag"></script>
+    <script src="/assets/templates/ui/dropMenu.html" type="riot/tag"></script>
+    <script src="/assets/templates/ui/select.html" type="riot/tag"></script>
 
     <script src="/assets/js/components/app.js"></script>
     <script src="/assets/js/components/common.js"></script>

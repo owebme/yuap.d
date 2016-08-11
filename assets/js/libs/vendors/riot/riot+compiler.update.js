@@ -2,7 +2,12 @@
 
 ;(function(window, undefined) {
   'use strict';
-var riot = { version: 'v2.5.0', settings: {}, debugMode: false },
+var riot = { version: 'v2.5.0', settings: {}, touchClick: "click",
+    debug: {
+        delegate: true,
+        update: false
+    }
+ },
   // be aware, internal usage
   // ATTENTION: prefix the global dynamic variables with `__`
 
@@ -231,8 +236,7 @@ var RE_ORIGIN = /^.+?\/\/+[^\/]+/,
   base, current, parser, secondParser, emitStack = [], emitStackLevel = 0
 
   // MY_FIXED
-  // if (!window.clickEvent) window.clickEvent = doc && 'ontouchstart' in doc.documentElement ? 'tap' : 'click';
-  window.clickEvent = 'click';
+  if (!window.clickEvent) window.clickEvent = doc && 'ontouchstart' in doc.documentElement ? riot.touchClick : 'click';
 
 /**
  * Default parser. You can replace it via router.parser method.
@@ -1241,7 +1245,8 @@ function _each(dom, parent, expr) {
           item: item
         }, dom.innerHTML)
 
-
+        // MY_FIXED
+        tag.root.isLoop = true;
 
         tag.mount()
 
@@ -1675,10 +1680,10 @@ function Tag(impl, conf, innerHTML) {
       // MY_FIXED
       if (__clickHandlers && __clickHandlers[_tagName]){
           _$(_tagName).off(clickEvent);
-          if (riot.debugMode){
+          if (riot.debug.delegate){
               var handlers = __clickHandlers[_tagName];
               for (var key in handlers) {
-                  console.log(_tagName + " -> " + handlers[key]);
+                  console.log("Undelegate: " + _tagName + " -> " + handlers[key]);
               }
           }
           delete __clickHandlers[_tagName];
@@ -1781,7 +1786,9 @@ function setEventHandlerClick(handler, dom, tag, update) {
         clickNode = "#" + dom.id;
     }
     else if (dom.className) {
-        clickNode = "." + dom.className.replace(/(\w+|\s)?\{.+\}/g, "").replace(/\s(\w+)/g, ".$1");
+        var domClassName = dom.className;
+        if (dom.tagName.toLowerCase() === "svg") domClassName = domClassName.baseVal;
+        if (domClassName) clickNode = "." + domClassName.replace(/(\w+|\s)?\{.+\}/g, "").replace(/\s(\w+)/g, ".$1");
     }
 	if (!clickNode || __clickHandlers && __clickHandlers[rootTagName] && __clickHandlers[rootTagName][clickNode]) return;
 
@@ -1789,9 +1796,11 @@ function setEventHandlerClick(handler, dom, tag, update) {
 
     __clickHandlers[rootTagName][clickNode] = clickNode;
 
-    if (riot.debugMode) console.log(rootTagName + " -> " + clickNode);
+    if (riot.debug.delegate) console.log("Init delegate: " + rootTagName + " -> " + clickNode);
 
   _$(rootTag).on(clickEvent, clickNode, function(e){
+
+    if (riot.debug.delegate) console.log("Click delegate: " + rootTagName + " -> " + clickNode);
 
     if (!this._tag) return;
 
@@ -1936,7 +1945,7 @@ function insertTo(root, node, before) {
  */
 function update(expressions, tag) {
 
-    if (riot.debugMode) console.log(expressions.length);
+    if (riot.debug.update) console.log(expressions.length);
 
   each(expressions, function(expr, i) {
 
@@ -1985,15 +1994,19 @@ function update(expressions, tag) {
 
     // event handler
     if (isFunction(value)) {
-        if (attrName === "onclick"){
-			setEventHandlerClick(value, dom, tag, false)
-		}
-		else if (attrName === "onclickupdate"){
-			setEventHandlerClick(value, dom, tag, true)
-		}
-		else if (attrName === "onclickupdateall"){
-			setEventHandlerClick(value, dom, tag, "all")
-		}
+        // MY_FIXED
+        if (attrName === "onclick" && dom.getAttribute("native")){
+            setEventHandler(attrName, value, dom, tag)
+        }
+        else if (tag.root.isLoop && attrName === "onclick" || attrName === "dgclick"){
+            setEventHandlerClick(value, dom, tag, false)
+        }
+        else if (tag.root.isLoop && attrName === "onclickupdate" || attrName === "dgclickupdate"){
+            setEventHandlerClick(value, dom, tag, true)
+        }
+        else if (tag.root.isLoop && attrName === "onclickupdateall" || attrName === "dgclickupdateall"){
+            setEventHandlerClick(value, dom, tag, "all")
+        }
 		else {
 			setEventHandler(attrName, value, dom, tag)
 		}

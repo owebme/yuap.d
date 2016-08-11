@@ -35,10 +35,12 @@ body {
 		font-family:$default;
 	}
 }
-a, a:hover, input, textarea {
+a, a:hover, input, textarea, button {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
+	appearance:none;
+    outline:none;
 }
 a {
 	text-decoration:none;
@@ -105,12 +107,15 @@ div, a, p, span, th, td {
 	// background:linear-gradient(to bottom, #F0F4F7, #EEF5F9);
 	overflow:hidden;
 
-	.m-touch,
     .d-safari & {
         background:#EDF3F8;
     }
+	.m-touch & {
+		background:#EFF2F7;
+	}
 }
 #panel {
+	@include accelerate(true);
 	display:block;
 	position:absolute;
 	bottom:0;
@@ -130,4 +135,8 @@ div, a, p, span, th, td {
 }
 .center-block {
 	float:none;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (min-resolution: 144dpi), screen and (-webkit-min-device-pixel-ratio: 144), screen and (min-resolution: 144dppx){
+
 }

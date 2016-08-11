@@ -1,0 +1,67 @@
+<ui-textEdit class="UI__controlPanel__item">
+
+    <span class="UI__controlPanel__title">{ opts.title }</span>
+    <span class="UI__controlPanel__value">
+        <span class="UI__textEdit { 'UI__textEdit--active' : active }">
+            <span data-errballoon="{ opts.require }" name="UI__textEdit__container" class="UI__textEdit__container">
+                <input onKeyUp={ onKeyUp } name="UI__textEdit__input" class="UI__textEdit__input" type="text" value="{ value }" placeholder="{ opts.title }" autocomplete="off">
+                <span onClick={ onSave } class="UI__textEdit__save"></span>
+                <span onClick={ onCancel } class="UI__textEdit__close"></span>
+            </span>
+            <span onClick={ onShow } class="UI__textEdit__current">{ value }</span>
+        </span>
+    </span>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+
+    $.value = $.parent.data.get($.opts.value);
+
+    this.on("mount", function(){
+        $.container = $$($["UI__textEdit__container"]);
+        $.input = $$($["UI__textEdit__input"]);
+    });
+
+    $.onShow = function(){
+        $.active = true;
+        $.container.css("width", (parseInt($scope.width()) - 30) + "px");
+        $.input.focus();
+    };
+
+    $.onKeyUp = function(e){
+        if ($.opts.keyup) $.parent.data.set($.opts.value, e.target.value);
+        if (e.keyCode == "13") $.onSave();
+    };
+
+    $.onSave = function(){
+        var text = $.input.val();
+        if (!text.length){
+            $.container.attr("data-errballoon", "Введите текст");
+            return;
+        }
+        if ($.value != text){
+            $.value = text;
+            $.parent.data.set($.opts.value, $.value);
+        }
+        $.close();
+    };
+
+    $.onCancel = function(){
+        var text = $.input.val();
+        $.input.val($.value);
+        if ($.opts.keyup && $.value != text) $.parent.data.set($.opts.value, $.value);
+        $.close();
+    };
+
+    $.close = function(){
+        $.active = false;
+        $.container.removeAttr("data-errballoon").css("width", "100%");
+    };
+
+</script>
+
+</ui-textEdit>

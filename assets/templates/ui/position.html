@@ -1,0 +1,44 @@
+<ui-position class="UI__controlPanel__item UI__position UI__position__items{ opts.items.get().length }">
+
+    <span class="UI__position__title">{ opts.title }</span>
+    <span class="UI__position__wrapper">
+        <span onClick={ onSelect } each={item in opts.items.get()} no-reorder class="UI__position__item { 'UI__position__item--active' : item.value == value }">{ item.title }</span>
+    </span>
+
+<script>
+
+    var $ = this;
+
+    $.active = false;
+
+    $.getCurrent = function(value){
+        return $.opts.items.get({'value': value}, 'title');
+    };
+
+    $.value = $.parent.data.get($.opts.value);
+    $.current = $.getCurrent($.value);
+
+    $.onShow = function(){
+        $.active = true;
+    };
+
+    $.onSelect = function(){
+        if ($.value != this.item.value) $.parent.data.set($.opts.value, this.item.value);
+        $.value = this.item.value;
+        $.current = $.getCurrent($.value);
+        $.active = false;
+    };
+
+    if ($.opts.observer){
+        this.on("mount", function(){
+            $.parent.data.select($.opts.value).on('update', function(e){
+                $.value = $.parent.data.get($.opts.value);
+                $.current = $.getCurrent($.value);
+                $.update();
+            });
+        });
+    }
+
+</script>
+
+</ui-position>

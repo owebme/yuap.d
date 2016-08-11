@@ -212,3 +212,7 @@
 {"level":"info","message":"Connected to DB!","timestamp":"2016-08-08T02:54:31.414Z"}
 {"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-08T02:56:59.871Z"}
 {"level":"info","message":"Connected to DB!","timestamp":"2016-08-08T02:56:59.892Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-10T11:09:08.853Z"}
+{"level":"error","message":"Connection error: connect ECONNREFUSED 127.0.0.1:27017","timestamp":"2016-08-10T11:09:08.864Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-10T11:09:20.311Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-10T11:09:20.329Z"}

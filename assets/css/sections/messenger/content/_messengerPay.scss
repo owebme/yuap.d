@@ -1,0 +1,83 @@
+.WD__messenger__item__pay {
+    $WD__messenger__pay__color:darken(#00d895,3%);
+    $WD__messenger__pay__color_dark:darken(#0bb28a,4.5%);
+    $WD__messenger__pay__color_button:darken(#0bb28a,3.5%);
+    position:relative;
+    color:#fff;
+    background-color:$WD__messenger__pay__color;
+    padding:16px 18px 42px;
+    margin-bottom:4px;
+    border-radius:12px;
+    max-width:92.2%;
+    font-size:0;
+    text-align:center;
+
+    &:before {
+        content:"";
+        position:absolute;
+        top:18px;
+        right:100%;
+        height:0;
+        width:0;
+        border:solid transparent;
+        border-right-color:$WD__messenger__pay__color;
+        border-width:9px;
+        transform:translate3d(1px, 0, 0);
+    }
+    &:after {
+        content:"";
+        position:absolute;
+        top:7px;
+        right:12px;
+        width:30px;
+        height:30px;
+        background:url(/public/images/ui-wallet_white.svg) no-repeat 0 0 / cover;
+    }
+    &__title {
+        font-weight:500;
+        font-size:18px;
+        text-align:left;
+    }
+    &__price {
+        display:inline-block;
+        vertical-align:top;
+        background-color:$WD__messenger__pay__color_dark;
+        border-radius:50px;
+        padding:11px 25px 9px;
+        font-size:23.5px;
+        line-height:24px;
+        font-weight:500;
+        margin:17px 0 7px;
+    }
+    &__text {
+        color:rgba(#fff,.95);
+        font-size:17px;
+        line-height:20px;
+        font-weight:400;
+        overflow:hidden;
+        max-width:100%;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        text-align:left;
+        padding:7px 0;
+        border-bottom:1px dashed rgba(#fff,.8);
+    }
+    &__button {
+        position:absolute;
+        bottom:-16px;
+        left:50%;
+        background-color:#fff;
+        border-radius:50px;
+        color:$WD__messenger__pay__color_button !important;
+        font-size:18px;
+        line-height:50px;
+        font-weight:500;
+        width:148px;
+        height:48px;
+        margin-left:-74px;
+        text-transform:uppercase;
+        box-shadow:0 6px 16px -10px rgba($WD__messenger__pay__color_dark,.32),0 4px 10px -5px rgba(0,0,0,.2);
+        // box-shadow:0 1px 2px 0 rgba(234,236,238,.8);
+        // border:1px solid #dadee2;
+    }
+}

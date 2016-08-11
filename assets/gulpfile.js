@@ -18,6 +18,9 @@ var reload = browserSync.reload;
 browserSync.init({
 	open: false,
 	notify: false,
+	watchOptions: {
+        usePolling: true
+    },
 	proxy: "http://localhost:8080/"
 	// server: {
 	// 	baseDir: "../"
@@ -50,9 +53,10 @@ gulp.task('css', function() {
 gulp.task('css.mobi', function() {
 	return combiner(
 		gulp.src('css/style.min.css'),
-		replace(':hover', ':active'),
+		replace(':hover', '.m-hover'),
 		rename("style.mobi.min.css"),
-		gulp.dest('css')
+		gulp.dest('css'),
+		browserSync.stream()
 	).on('error', notify.onError({
 		"sound": false,
 	}));
@@ -89,19 +93,17 @@ gulp.task('svgSpriteBuild', function () {
 		.pipe(gulp.dest('css'));
 });
 
-gulp.task('watch', function() {
-	gulp.watch([
-		'css/style.scss',
-		'css/**/*.scss'
-	], ['css']);
+gulp.task('build', gulp.series('css', 'css.mobi'));
 
-    gulp.watch([
-		'../index.html',
-		'templates/*.html',
-		'templates/**/*.html',
-		'js/*.js',
-		'js/**/*.js'
-	]).on('change', reload);
-});
+gulp.watch([
+	'css/style.scss',
+	'css/**/*.scss'
+], gulp.series('css', 'css.mobi'));
 
-gulp.task('default', ['css', 'watch']);
+gulp.watch([
+	'../index.html',
+	'templates/*.html',
+	'templates/**/*.html',
+	'js/*.js',
+	'js/**/*.js'
+]).on('change', reload);

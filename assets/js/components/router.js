@@ -4,8 +4,6 @@
 
         base: "#",
 
-        url: false,
-
         init: function(){
 
             riot.route('/', function(){
@@ -23,7 +21,18 @@
         },
 
         mount: function(tag){
-            CONTENT = riot.mount("section-content", tag)[0];
+            if (app.device.isMobile){
+                $Loader.show();
+                setTimeout(function(){
+                    CONTENT = riot.mount("section-content", tag)[0];
+                    CONTENT.on("updated", function(e, s){
+                        $Loader.hide();
+                    });
+                }, 50);
+            }
+            else {
+                riot.mount("section-content", tag)[0];
+            }
         }
     };
 

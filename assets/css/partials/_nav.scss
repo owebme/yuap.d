@@ -72,6 +72,7 @@
                 height:5px;
                 border-radius:4px 4px 0 0;
                 background:$blue;
+                will-change:transform;
                 box-shadow:0 0 13px 0 rgba(53,99,193,0.21);
                 transform:translate3d(0, 0, 0) scale3d(0, 0, 1);
                 transition:transform 0.2s $cubic215, border-radius 0.2s $cubic215;
@@ -130,16 +131,27 @@
 }
 .profile__panel {
     @include flex("column", "center", "center");
-    width:100%;
+    width:72px;
     height:92px;
-    transform:translate3d(-50px, 0, 0);
+    transform:translate3d(-21px, 0, 0);
+    cursor:pointer;
+    @extend %caret;
 
+    &:after {
+        position:absolute;
+        top:50%;
+        left:100%;
+        transform:translate3d(1px, 0, 0) scale(1.35);
+        border-radius:20px;
+    }
     &__avatar {
         position:relative;
         width:72px;
         height:72px;
+        will-change:border-color;
         border:3px solid rgba($bg_color,.13);
         border-radius:50%;
+        transition:border-color 0.2s $cubic215;
 
         &__image {
             @include abs();
@@ -148,6 +160,9 @@
             background-size:cover;
             border-radius:50%;
             opacity:0.95;
+        }
+        &:hover {
+            border-color:rgba($bg_color,.2);
         }
     }
     // &__score {
@@ -218,10 +233,13 @@
 }
 
 @media screen and (max-width:$md-width){
+    .profile__panel {
+        transform:translate3d(-11px, 0, 0);
+    }
     .nav__menu__item__button--products {
         margin-left:-15px;
     }
-    .nav__menu__logout {
-        right:-50px;
+    .nav__menu__fullscreen {
+        right:-40px;
     }
 }

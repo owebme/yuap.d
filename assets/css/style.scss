@@ -17,7 +17,7 @@
 @import 'ui/switcher';
 @import 'ui/input';
 @import 'ui/dropmenu';
-@import 'ui/tile';
+@import 'ui/select';
 @import 'ui/datepicker';
 @import 'ui/balloon';
 @import 'ui/balloonError';
@@ -50,14 +50,22 @@
 @import 'sections/messenger/messenger';
 @import 'sections/messenger/messengerHeader';
 @import 'sections/messenger/messengerList';
-@import 'sections/messenger/messengerMetrika';
 @import 'sections/messenger/messengerRoom';
+@import 'sections/messenger/messengerSidebar';
+@import 'sections/messenger/content/messengerContent';
+@import 'sections/messenger/content/messengerSocial';
+@import 'sections/messenger/content/messengerProducts';
+@import 'sections/messenger/content/messengerPay';
+// @import 'sections/messenger/messengerColor';
 
 // modules
 @import 'modules/modal';
 @import 'modules/popup';
+@import 'modules/alert';
+@import 'modules/loader';
 @import 'modules/helpObject';
 @import 'modules/helpObjectCustom';
+@import 'modules/tutorial';
 
 // states
 @import 'states/states';

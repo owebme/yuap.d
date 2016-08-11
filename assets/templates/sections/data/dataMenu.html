@@ -1,16 +1,16 @@
 <section-data-menu class="data__menu">
 
-    <svg class="sidebarSwither sidebarSwither--active" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="500 0 400 500" enable-background="new 500 0 400 400" xml:space="preserve"><path class="sidebarSwither__color" d="M700,100c-9.2,0-16.7,7.5-16.7,16.7s7.5,16.7,16.7,16.7h100c9.2,0,16.7-7.5,16.7-16.7S809.2,100,800,100H700z  "/><path class="sidebarSwither__color" d="M586.1,190.8c-0.3,0.4-0.4,1-0.6,1.5c-0.5,0.9-0.9,1.9-1.2,2.9c-0.2,0.6-0.5,1.1-0.7,1.7  c-0.1,0.6,0,1.1,0,1.7c0,0.5-0.3,1-0.3,1.5s0.3,1,0.3,1.5c0.1,0.6-0.1,1.1,0,1.7c0.1,0.6,0.5,1.1,0.7,1.7c0.3,1,0.7,2,1.2,2.9  c0.3,0.5,0.3,1,0.6,1.5c0,0,0,0,0,0l33.3,50c3.2,4.8,8.5,7.4,13.9,7.4c3.2,0,6.4-0.9,9.2-2.8c7.7-5.1,9.7-15.5,4.6-23.1l-16.1-24.1  H800c9.2,0,16.7-7.5,16.7-16.7s-7.5-16.7-16.7-16.7H631.1l16.1-24.1c5.1-7.7,3-18-4.6-23.1c-7.7-5.1-18-3-23.1,4.6L586.1,190.8  C586.1,190.8,586.1,190.8,586.1,190.8z"/><path class="sidebarSwither__color" d="M800,266.7H700c-9.2,0-16.7,7.5-16.7,16.7S690.8,300,700,300h100c9.2,0,16.7-7.5,16.7-16.7  S809.2,266.7,800,266.7z"/></svg>
+    <svg onClick="{ change.sidebarState }" class="sidebarSwither { sidebarSwither--active : $Data.config.get('sidebarExpand') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="500 0 400 500" enable-background="new 500 0 400 400" xml:space="preserve"><path class="sidebarSwither__color" d="M700,100c-9.2,0-16.7,7.5-16.7,16.7s7.5,16.7,16.7,16.7h100c9.2,0,16.7-7.5,16.7-16.7S809.2,100,800,100H700z  "/><path class="sidebarSwither__color" d="M586.1,190.8c-0.3,0.4-0.4,1-0.6,1.5c-0.5,0.9-0.9,1.9-1.2,2.9c-0.2,0.6-0.5,1.1-0.7,1.7  c-0.1,0.6,0,1.1,0,1.7c0,0.5-0.3,1-0.3,1.5s0.3,1,0.3,1.5c0.1,0.6-0.1,1.1,0,1.7c0.1,0.6,0.5,1.1,0.7,1.7c0.3,1,0.7,2,1.2,2.9  c0.3,0.5,0.3,1,0.6,1.5c0,0,0,0,0,0l33.3,50c3.2,4.8,8.5,7.4,13.9,7.4c3.2,0,6.4-0.9,9.2-2.8c7.7-5.1,9.7-15.5,4.6-23.1l-16.1-24.1  H800c9.2,0,16.7-7.5,16.7-16.7s-7.5-16.7-16.7-16.7H631.1l16.1-24.1c5.1-7.7,3-18-4.6-23.1c-7.7-5.1-18-3-23.1,4.6L586.1,190.8  C586.1,190.8,586.1,190.8,586.1,190.8z"/><path class="sidebarSwither__color" d="M800,266.7H700c-9.2,0-16.7,7.5-16.7,16.7S690.8,300,700,300h100c9.2,0,16.7-7.5,16.7-16.7  S809.2,266.7,800,266.7z"/></svg>
     <div class="col-lg-4 col-md-5 data__menu__cell">
-        <div class="data__menu__basket">
+        <div onClick={ change.mode.basket } class="data__menu__basket">
             <!-- <span class="data__menu__basket__badge badge-circle">8</span> -->
-            <span class="data__menu__title">корзина</span><span class="data__menu__basket__count data__menu__number">{ basketCount }</span>
+            <span class="data__menu__title data__menu__nav__item { active : $Data.config.get('mode') === 'basket' }">Корзина<span class="data__menu__basket__count data__menu__number">{ basketCount }</span></span>
         </div>
     </div>
-    <div class="col-lg-4 col-md-6 data__menu__cell">
-        <span class="data__menu__title">Входящих: <span class="data__menu__number">{ countAll }</span></span>
+    <div class="col-lg-4 col-md-4 data__menu__cell">
+        <span onClick={ change.mode.inbox } class="data__menu__title data__menu__nav__item { active : $Data.config.get('mode') === 'inbox' }">Входящих:<span class="data__menu__number">{ inboxCount }</span></span>
     </div>
-    <div class="col-lg-9 col-md-9 data__menu__cell data__menu__nav">
+    <div class="col-lg-9 col-md-11 data__menu__cell data__menu__nav">
         <div class="data__menu__dateRange">
             <div class="data__menu__dateRange__button">
                 <span class="data__menu__dateRange__value">7 дней</span>
@@ -20,19 +20,18 @@
         <div class="data__menu__search">
             <div class="data__menu__search__button"></div>
         </div>
-        <div if={ $Data.list.countPages > 1 } class="data__menu__pigination">
+        <div if={ $Data.config.get('countPages') > 1 } class="data__menu__pigination">
             <span>1</span>
             <span>...</span>
-            <span>{ $Data.list.countPages }</span>
-            <span onClickUpdate={ change.pagePrev } class="data__menu__button data__menu__pigination__arrow prev"></span>
-            <span class="data__menu__pigination__page">{ $Data.list.currentPage }</span>
-            <span onClickUpdate={ change.pageNext } class="data__menu__button data__menu__pigination__arrow next"></span>
+            <span>{ $Data.config.get('countPages') }</span>
+            <span onClick={ change.pagePrev } class="data__menu__button data__menu__pigination__arrow prev"></span>
+            <span class="data__menu__pigination__page">{ $Data.config.get('currentPage') }</span>
+            <span onClick={ change.pageNext } class="data__menu__button data__menu__pigination__arrow next"></span>
         </div>
     </div>
     <div class="col-lg-7 col-md-4 data__menu__cell">
-
+        <span class="data__menu__title data__menu__pages">На странице:<ui-select items={ pages } data={ $Data.config } value={ 'itemsPage' }></ui-select></span>
     </div>
-
 
 <script>
 
@@ -40,12 +39,56 @@
     $scope = $$($.root);
 
     $.basketCount = null;
-    $.countAll = null;
+    $.inboxCount = null;
     $.searchQuery = null;
     $.dateStart = null;
     $.dateEnd = null;
 
+    $.pages = new Baobab([
+        { title: "8", value: 8 },
+        { title: "10", value: 10 },
+        { title: "12", value: 12 },
+        { title: "16", value: 16 },
+        { title: "20", value: 20 }
+    ]);
+
     $.change = {
+        mode: {
+            basket: function(){
+                if ($Data.config.get("mode") !== "basket") {
+                    $Data.config.select().set("mode", "basket");
+                    $Data.list.refresh();
+                }
+            },
+            inbox: function(){
+                if ($Data.config.get("mode") !== "inbox") {
+                    $Data.config.select().set("mode", "inbox");
+                    $Data.list.refresh();
+                }
+            }
+        },
+        sidebarState: function(expand){
+            if (expand === true && $Data.config.get('sidebarExpand')
+             || expand === false && !$Data.config.get('sidebarExpand')){
+                return;
+            }
+            var $wrapper = $$(".content__wrapper"),
+                $dataList = $$(".data__list"),
+                $dashboard = $$(".dashboard");
+
+            if (expand == true || expand !== true && expand !== false && !$Data.config.get('sidebarExpand')){
+                $Data.config.select().set("sidebarExpand", true);
+                $wrapper.addClass("slide-right");
+                $dataList.removeClass("col-md-13 col-lg-12").addClass("col-md-14 col-lg-13");
+                $dashboard.removeClass("col-md-11 col-lg-12").addClass("col-md-10 col-lg-11");
+            }
+            else {
+                $Data.config.select().set("sidebarExpand", false);
+                $wrapper.removeClass("slide-right");
+                $dataList.removeClass("col-md-14 col-lg-13").addClass("col-md-13 col-lg-12");
+                $dashboard.removeClass("col-md-10 col-lg-11").addClass("col-md-11 col-lg-12");
+            }
+        },
         pagePrev: function(){
             $Data.list.change.page("prev");
         },
@@ -56,7 +99,8 @@
 
     $.set = {
         countAll: function(){
-            $.countAll = $Data.list.get.isActive().length;
+            $.basketCount = $Data.list.get.isActive("basket").length;
+            $.inboxCount = $Data.list.get.isActive("inbox").length;
             $.update();
         }
     };
@@ -83,7 +127,7 @@
             },
             startDate: moment(),
             endDate: moment(),
-            alwaysShowCalendars: true,
+            alwaysShowCalendars: app.device.isMobile ? false : true,
             showCustomRangeLabel: false,
             autoApply: true,
             locale: {
@@ -115,14 +159,14 @@
                 $.dateRangeValue.text((days + 1) + " дней");
             }
 
-            $Data.list.search.run();
+            $Data.list.refresh();
         });
 
         $.dateRangeCancel.on('click', function(ev, picker) {
             $.dateRange.removeClass("data__menu__dateRange--active");
             $.dateStart = null;
             $.dateEnd = null;
-            $Data.list.search.run();
+            $Data.list.refresh();
         });
 
         $.dateRangePicker.on('show.daterangepicker hide.daterangepicker', function(ev, picker) {

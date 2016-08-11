@@ -1,0 +1,33 @@
+<ui-palette class="UI__controlPanel__item">
+
+    <span class="UI__controlPanel__title">{ opts.title }</span>
+    <span class="UI__controlPanel__value">
+        <span class="UI__palette { 'UI__palette--active' : active }">
+            <span onClick={ onShow } class="UI__palette__current" style="background-color:{ value }"></span>
+            <span class="UI__palette__items">
+                <span onClick={ onSelect } each={item in opts.items} no-reorder class="UI__palette__item" style="background-color:{ item }"></span>
+            </span>
+        </span>
+    </span>
+
+<script>
+
+    var $ = this;
+
+    $.active = false;
+
+    $.value = $.parent.data.get($.opts.value);
+
+    $.onShow = function(){
+        $.active = true;
+    };
+
+    $.onSelect = function(){
+        if ($.value != this.item) $.parent.data.set($.opts.value, this.item);
+        $.value = this.item;
+        $.active = false;
+    };
+
+</script>
+
+</ui-palette>

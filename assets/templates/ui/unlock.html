@@ -1,0 +1,56 @@
+<ui-unlock class="UI__controlPanel__item">
+
+    <span class="UI__unlock__wrapper">
+        <span onClick={ onShow } class="UI__unlock { 'UI__unlock--active' : active }">{ title }</span>
+    </span>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+    $.title = $.opts.title;
+
+    this.on("mount", function(){
+
+        $.sidebar = $$($.parent.root).find(".UI__controlPanel__sidebar__" + $.opts.sidebar);
+        $.elem = $scope.find(".UI__unlock");
+
+        if ($.parent.data.get($.opts.value)) {
+            $.onShow();
+            $.update();
+        }
+    });
+
+    $.onShow = function(e){
+        $.active = !$.active;
+
+        if ($.active) {
+            $.title = "Закрыть";
+            $.elem.css("transform", "translate3d(" + (parseInt($scope.width()) - 133) + "px, 0, 0)");
+            $.sidebar.addClass("UI__controlPanel__sidebar--active");
+            $.parent.tags["ui-unlock"].forEach(function(unlock){
+                if ($ !== unlock) unlock.close();
+            });
+        }
+        else {
+            $.active = true;
+            $.close();
+        }
+
+        if ($.opts.value) $.parent.data.set($.opts.value, $.active);
+    };
+
+    $.close = function(){
+        if (!$.active) return;
+        $.active = false;
+        $.title = $.opts.title;
+        $.elem.css("transform", "translate3d(0, 0, 0)");
+        $.sidebar.removeClass("UI__controlPanel__sidebar--active");
+        $.update();
+    };
+
+</script>
+
+</ui-unlock>

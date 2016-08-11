@@ -1,0 +1,30 @@
+<section-loader class="loader" data-show="{ active }">
+
+    <div class="loader__spinner">
+    	<div class="loader__spinner__right__side">
+    		<div class="loader__spinner__bar"></div>
+    	</div>
+    	<div class="loader__spinner__left__side">
+    		<div class="loader__spinner__bar"></div>
+    	</div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    $.active = false;
+
+    $.show = function(){
+        $.active = true;
+        $.update();
+    };
+
+    $.hide = function(){
+        $.active = false;
+        $.update();
+    };
+
+</script>
+
+</section-loader>

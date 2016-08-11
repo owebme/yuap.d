@@ -4,6 +4,10 @@
         riot.mount("*");
     });
 
+    if (app.device.isMobile){
+        document.getElementById("styles").setAttribute("href", "/assets/css/style.mobi.min.css");
+    }
+
     // app.$dom.body.on("click", ".modal__button__sendEmail", function(){
     //     $(".popup").attr("data-open", "true");
     // });
@@ -21,11 +25,5 @@
     //     $("#page").removeClass("no-scroll");
     //     $(".modal").attr("data-open", "false");
     // });
-
-    if ('addEventListener' in document) {
-        document.addEventListener('DOMContentLoaded', function() {
-            FastClick.attach(document.body);
-        }, false);
-    }
 
 })();

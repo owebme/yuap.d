@@ -5,7 +5,7 @@
             <div class="col-md-3">
                 <div class="profile__panel">
                     <div class="profile__panel__avatar">
-                        <div class="profile__panel__avatar__image" style="background-image:url(https://marketing.intercomassets.com/assets/_redesign/support/cta/josh-2970f0e920f70deddcab34b0dfa933ab3a3c3e96255efd4afd731bf335980bd3.png)"></div>
+                        <div class="profile__panel__avatar__image" style="background-image:url(https://randomuser.me/api/portraits/men/{ state.photo }.jpg)"></div>
                         <!-- <div class="profile__panel__score__left">24</div>
                         <div class="profile__panel__score">
                             <div class="profile__panel__score__item">36</div>
@@ -43,6 +43,10 @@
 <script>
 
     var $ = this;
+
+    $.state = {
+        photo: _.random(1, 99)
+    };
 
     this.on("mount", function(){
 
