@@ -1,0 +1,284 @@
+.messenger__metrika {
+    padding:16px;
+
+    &__header {
+        @include flex("row", "flex-start", "center");
+        margin-bottom:20px;
+        width:100%;
+
+        &__cover {
+            position:relative;
+            @include flex("row", "center", "center");
+            width:48px;
+            height:48px;
+            color:#fff;
+            font-size:19px;
+            border-radius:5px;
+        }
+        &__title {
+            padding:10px 0 0;
+            color:#37474f;
+            font-family:$roboto;
+            font-weight:500;
+            font-size:16px;
+            margin-left:12px;
+            width:calc(100% - 62px);
+            line-height:20px;
+            @include textEllipsis();
+            letter-spacing:-0.012em;
+        }
+        &__connect {
+            color:#fff;
+            position:absolute;
+            top:-10px;
+            left:100%;
+            height:19px;
+            padding:0 9px;
+            font-size:9px;
+            line-height:19px;
+            border-radius:10px;
+            text-transform:uppercase;
+            margin-top:4px;
+            font-weight:bold;
+            white-space:nowrap;
+            transform:translate3d(-15px, 0, 0);
+
+            &[data-status="online"]{
+                background-color:$emerald;
+            }
+            &[data-status="offline"]{
+                background-color:rgba($red,.85);
+            }
+        }
+        &__status {
+            color:#fff !important;
+            position:absolute;
+            top:5px;
+            right:10px;
+            height:19px;
+            padding:0 7px 0 9px;
+            font-size:9px;
+            line-height:19px;
+            border-radius:10px;
+            text-transform:uppercase;
+            margin-top:4px;
+            font-weight:bold;
+            white-space:nowrap;
+            cursor:pointer;
+            user-select:none;
+            @extend %caret;
+
+            &:after {
+                border-top-color:#fff;
+                margin-left:5px;
+                margin-top:-2px;
+            }
+        }
+    }
+    &__title {
+        font-family:$roboto;
+        font-size:15px;
+        color:#37474F;
+        font-weight:500;
+        margin-bottom:12px;
+    }
+    &__icon {
+        @include flex("row", "center", "center");
+        width:18px;
+        height:18px;
+        text-align:center;
+        margin-right:6px;
+
+        &:before {
+            content:"";
+            display:inline-block;
+            width:16px;
+            height:16px;
+            background-size:cover;
+            background-repeat:no-repeat;
+            background-position:0 0;
+        }
+        &__location:before {
+            background-image:url(/assets/images/messenger/location.svg);
+        }
+        &__time:before {
+            width:14px;
+            height:14px;
+            background-image:url(/assets/images/messenger/time.svg);
+        }
+        &__yandex:before {
+            @include ui-icon(yandex, 18px, 18px);
+        }
+        &__google:before {
+            @include ui-icon(google);
+        }
+        &__rambler:before {
+            @include ui-icon(rambler);
+        }
+        &__mail:before {
+            @include ui-icon(mailru, 18px, 18px);
+        }
+        &__yahoo:before {
+            @include ui-icon(yahoo);
+        }
+        &__bing:before {
+            @include ui-icon(bing);
+        }
+        &__link:before {
+            @include ui-icon(cursor_fill, 17px, 17px);
+        }
+        &__link__source:before {
+            @include ui-icon(link_source, 18px, 18px);
+        }
+        &__link__action:before {
+            @include ui-icon(link_action, 20px, 20px);
+        }
+        &__visits:before {
+            background-image:url(/assets/images/messenger/visits.svg);
+        }
+        &__calendar:before {
+            width:15px;
+            height:15px;
+            background-image:url(/assets/images/messenger/calendar.svg);
+            transform:translate3d(0, -1px, 0);
+        }
+        &__name:before {
+            background-image:url(/assets/images/messenger/name.svg);
+        }
+        &__email:before {
+            background-image:url(/assets/images/messenger/email.svg);
+        }
+        &__phone:before {
+            width:17px;
+            height:17px;
+            background-image:url(/assets/images/messenger/phone.svg);
+            transform:translate3d(0, -1px, 0);
+        }
+    }
+    &__string {
+        @include flex("row", "flex-start", "center");
+        font-family:$default;
+        font-size:11px;
+        line-height:12px;
+        text-transform:uppercase;
+        height:18px;
+        margin-bottom:12px;
+        margin-left:-2px;
+
+        &__title {
+            display:block;
+            color:#78909c;
+            padding-right:15px;
+            font-weight:500;
+        }
+        &__text {
+            display:block;
+            color:#37474F;
+            font-size:12px;
+            @include textEllipsis(70%);
+        }
+        a {
+            font-size:13px;
+            text-transform:none;
+            transition:color 0.12s $cubic215;
+
+            &:hover {
+                color:$blue;
+            }
+        }
+        strong {
+            display:inline-block;
+            font-size:13px;
+            vertical-align:top;
+            transform:translate3d(0, -1px, 0);
+        }
+    }
+    &__hr {
+        margin:20px 0;
+        width:100%;
+        height:0;
+        border-top:1px solid #e1e7ea;
+    }
+    &__button {
+        @include flex("row", "space-between", "center");
+        margin:16px 0 13px;
+
+        &:before,
+        &:after {
+            display:block;
+            content:"";
+            width:20%;
+            height:1px;
+            background:rgba($blue,.5);
+        }
+        &__item {
+            @include flex("row", "flex-start", "center");
+            font-family:$default;
+            color:$blue;
+            height:26px;
+            font-size:11px;
+            line-height:26px;
+            text-transform:uppercase;
+            padding:0 10px;
+            border-radius:20px;
+            border:1px solid rgba($blue,.75);
+            white-space:nowrap;
+            cursor:pointer;
+            user-select:none;
+            transition:all 0.12s $cubic215;
+
+            &:before {
+                content:"";
+                display:block;
+                margin-right:5px;
+                @include ui-icon(edit, 12px, 12px);
+            }
+            &:hover {
+                color:#fff;
+                border-color:$blue;
+                background-color:$blue;
+
+                &:before {
+                    @include ui-icon(edit_white);
+                }
+            }
+            &:active {
+                transform:translate3d(0, 1px, 0) scale(0.9);
+            }
+        }
+    }
+    &__addButton {
+        display:inline-block;
+        height:29px;
+        padding:0 9px;
+        font-size:13px;
+        line-height:27px;
+        border-radius:20px;
+        border:1px solid #dadee2;
+        vertical-align:middle;
+        cursor:pointer;
+        user-select:none;
+        transition:all 0.12s $cubic215;
+
+        &:before {
+            display:inline-block;
+            content:"";
+            @include ui-icon(plus, 17px, 17px);
+            margin-right:5px;
+            vertical-align:middle;
+            transform:translate3d(0, -1px, 0);
+        }
+        &:hover {
+            color:#fff;
+            border-color:$blue;
+            background-color:$blue;
+
+            &:before {
+                @include ui-icon(plus_white);
+            }
+        }
+        &:active {
+            transform:translate3d(0, 1px, 0) scale(0.9);
+        }
+    }
+}

@@ -98,7 +98,7 @@ gulp.task('build', gulp.series('css', 'css.mobi'));
 gulp.watch([
 	'css/style.scss',
 	'css/**/*.scss'
-], gulp.series('css', 'css.mobi'));
+], gulp.series('css'));
 
 gulp.watch([
 	'../index.html',

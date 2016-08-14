@@ -1,25 +1,22 @@
-<ui-switcher class="UI__controlPanel__item { 'UI__controlPanel__item--top' : opts.top }">
+<ui-switcher>
 
-    <span class="UI__controlPanel__title { 'UI__controlPanel__title--active' : value }">{ opts.title } <span if="{ opts.help }" class="UI__help" data-wballoon-length="large" data-wballoon="{ opts.help }">?</span></span>
-    <span class="UI__controlPanel__value">
-        <input onClick={ onClick } type="checkbox" class="UI__switcher UI__controlPanel__switcher" checked="{ checked : value }">
-    </span>
+    <input onClick={ onClick } type="checkbox" class="switcher { small : typeof opts.small !== 'undefined' } { green : typeof opts.green !== 'undefined' }" disabled="{ true : typeof opts.disabled !== 'undefined' }" checked="{ checked : value }">
 
 <script>
 
     var $ = this;
 
-    $.value = $.parent.data.get($.opts.value);
+    $.value = $.opts.data.get($.opts.value);
 
     $.onClick = function(){
         $.value = !$.value;
-        $.parent.data.set($.opts.value, $.value);
+        $.opts.data.set($.opts.value, $.value);
     };
 
     if ($.opts.observer){
         this.on("mount", function(){
-            $.parent.data.select($.opts.value).on('update', function(e){
-                $.value = $.parent.data.get($.opts.value);
+            $.opts.data.select($.opts.value).on('update', function(e){
+                $.value = $.opts.data.get($.opts.value);
                 $.update();
             });
         });

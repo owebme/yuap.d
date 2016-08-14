@@ -1,0 +1,167 @@
+.messenger__header {
+    @include flex("row", "flex-start", "stretch");
+    background:#F2F5F7;
+    border-bottom:1px solid #DAE2E8;
+    user-select:none;
+
+    &__column {
+        @include flex("row", "flex-start", "center");
+        padding:0 20px;
+
+        &__search {
+            @include flex("row", "space-between", "center");
+        }
+        &__status {
+            @include flex("row", "space-between", "center");
+            padding:0 75px 0 0;
+        }
+    }
+    &__columns {
+        position:relative;
+        @include flex("row", "flex-start", "center");
+    }
+    &__button__back {
+        @include flex("row", "flex-start", "flex-start");
+        font-size:16px;
+        line-height:20px;
+        transform:translate3d(0, 2px, 0);
+        cursor:pointer;
+        transition:color 0.12s $cubic645;
+
+        &__icon {
+            display:block;
+            width:28px;
+            height:28px;
+            margin-right:5px;
+
+            &__color {
+                fill:$blue_gray;
+                transition:fill 0.12s $cubic645;
+            }
+        }
+        &:hover {
+            color:$blue;
+
+            .messenger__header__button__back__icon__color {
+                fill:$blue;
+            }
+        }
+    }
+    &__button__search {
+        @include ui-icon(search, 24px, 24px);
+        cursor:pointer;
+    }
+    &__button {
+        @include flex("row", "flex-start", "center");
+        font-weight:bold;
+        // color:#586976;
+        font-size:11.5px;
+        text-transform:uppercase;
+        white-space:nowrap;
+        margin-right:25px;
+        cursor:pointer;
+        transition:color 0.12s $cubic645;
+        margin-bottom:1px;
+        letter-spacing:0.012em;
+
+        &:last-child {
+            margin-right:0;
+        }
+        &:hover {
+            color:$blue;
+            // #6e8593
+        }
+        span {
+            display:inline-block;
+            padding-left:3px;
+        }
+        &:before {
+            content:"";
+            display:inline-block;
+            vertical-align:middle;
+            width:24px;
+            height:24px;
+            margin-right:10px;
+        }
+        &--transfer:before {
+            background:url(/assets/images/messenger/transfer.svg) no-repeat 0 0 / cover;
+            transform:translate3d(0, 0, 0) scaleX(-1);
+        }
+        &--spam:before {
+            background:url(/assets/images/messenger/spam.svg) no-repeat 0 0 / cover;
+        }
+        &--clear:before {
+            width:20px;
+            height:20px;
+            background:url(/assets/images/messenger/clear.svg) no-repeat center center / cover;
+        }
+        &--unload:before {
+            width:24px;
+            height:26px;
+            background:url(/assets/images/messenger/unload.svg) no-repeat center center / cover;
+            transform:translate3d(0, 3px, 0);
+        }
+        &__settings {
+            @include flex("row", "center", "center");
+            position:absolute;
+            top:0;
+            right:54px;
+            width:54px;
+            height:100%;
+            border-left:1px solid #C9D7DF;
+            cursor:pointer;
+
+            &:before {
+                display:block;
+                content:"";
+                @include ui-icon(settings, 27px, 27px);
+            }
+        }
+        &__help {
+            @include flex("row", "center", "center");
+            position:absolute;
+            top:0;
+            right:0;
+            width:54px;
+            height:100%;
+            border-left:1px solid #C9D7DF;
+            opacity:0.85;
+            transition:opacity 0.12s $cubic645;
+            cursor:pointer;
+
+            &:before {
+                display:block;
+                content:"";
+                @include ui-icon(help_black, 30px, 30px);
+            }
+            &:hover {
+                opacity:1;
+            }
+        }
+    }
+    &__status__operator {
+        @include flex("row", "flex-start", "center");
+        font-size:13.5px;
+        text-transform:uppercase;
+        white-space:nowrap;
+        transform:translate3d(-62px, 0, 0);
+
+        input {
+            margin:0 10px;
+        }
+    }
+}
+
+@media screen and (max-width:$md-width){
+    .messenger__header__operator {
+        font-size:12px;
+        padding-left:15px;
+
+        input {
+            margin:0 6px;
+        }
+        &__status:after {
+            margin-left:8px;
+        }
+    }
+}

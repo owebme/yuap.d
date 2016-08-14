@@ -60,7 +60,7 @@
             }
             &--link:before {
                 content:"";
-                @include ui-icon(cursorFill, 27px, 27px);
+                @include ui-icon(cursor_fill, 27px, 27px);
                 transform:rotate(-10deg) translate3d(0, 1px, 0);
             }
         }

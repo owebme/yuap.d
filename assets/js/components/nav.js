@@ -6,6 +6,7 @@
 
             WD.elem = $($root.tags["section-nav"].root);
             WD.panel = $($root.tags["section-panel"].root);
+            WD.messenger = $($root.tags["section-messenger"].root);
 
             WD.render();
         },
@@ -25,6 +26,10 @@
 
             WD.panel.find(".panel__item__button--messenger").on(EV.click, function(e){
                 SCREENS.nav("messenger");
+            });
+
+            WD.messenger.find(".messenger__header__button__back").on(EV.click, function(e){
+                SCREENS.nav("main");
             });
         },
 

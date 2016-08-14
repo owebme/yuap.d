@@ -1,0 +1,163 @@
+.messenger__launcher {
+    @include flex("row", "center", "center");
+    // display:none;
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    cursor:pointer;
+    box-shadow:0 1px 6px rgba(0,0,0,.06), 0 2px 32px rgba(0,0,0,.16);
+    z-index:1000;
+
+    &__icon {
+        display:block;
+        width:245px * 0.12;
+        height:287px * 0.12;
+        transform:translate3d(0, 0, 0) rotate(-32deg) scale(1);
+        transition:transform 0.35s $bounce;
+        // animation:messenger__launcher__pulse2 5.5s ease-in-out infinite;
+        // animation:messenger__launcher__pulse1 1.3s linear infinite;
+        z-index:1;
+    }
+    &__bg {
+        display:none;
+        width:52px;
+        height:52px;
+        transform:translate3d(0, 3px, 0);
+    }
+
+    &:hover {
+        .messenger__launcher__icon {
+            transform:translate3d(0, 0, 0) rotate(3deg) scale(1.1);
+        }
+    }
+    &:active {
+        .messenger__launcher__icon {
+            transform:translate3d(0, 1px, 0) rotate(3deg) scale(0.85);
+        }
+    }
+    &__badge {
+        position:absolute;
+        top:0;
+        right:0;
+        background:#fc576b;
+        width:22px;
+        height:22px;
+        line-height:22px;
+        border-radius:50%;
+        color:#fff;
+        font-family:$roboto;
+        font-size:13px;
+        font-weight:bold;
+        text-align:center;
+        z-index:1;
+    }
+}
+.messenger__launcher__blobs {
+    @include abs();
+    border-radius:50%;
+    @include accelerate();
+    transform:translateZ(0);
+    z-index:0;
+    will-change:transform;
+    transition:transform 0.15s $cubic215;
+    outline:90px solid transparent;
+    filter:url("#messenger__launcher__filter");
+}
+.messenger__launcher__blob {
+    display:block;
+    @include abs();
+    border-radius:50%;
+    background:$blue2;
+    @include accelerate(true);
+    z-index:-1;
+    pointer-events:none;
+
+    // &:nth-child(1) {
+    //     animation:messenger__launcher__blob1 1.7s linear infinite alternate;
+    // }
+    // &:nth-child(2) {
+    //     animation:messenger__launcher__blob2 2.5s linear infinite alternate;
+    // }
+    // &:nth-child(3) {
+    //     animation:messenger__launcher__blob3 3.2s linear infinite alternate;
+    // }
+    // &:nth-child(4) {
+    //     animation:messenger__launcher__blob4 1.7s linear infinite alternate;
+    // }
+}
+@keyframes messenger__launcher__blob1 {
+    0% {
+        transform:translate3d(-3px, -4px, 0px);
+    }
+    100% {
+        transform:translate3d(4px, 3px, 0px);
+    }
+}
+@keyframes messenger__launcher__blob2 {
+    0% {
+        transform:translate3d(3px, 4px, 0px);
+    }
+    100% {
+        transform:translate3d(-4px, -3px, 0px);
+    }
+}
+@keyframes messenger__launcher__blob3 {
+    0% {
+        transform:translate3d(-6px, 0px, 0px);
+    }
+    100% {
+        transform:translate3d(6px, 0px, 0px);
+    }
+}
+@keyframes messenger__launcher__blob4 {
+    0% {
+        transform:translate3d(6px, 0px, 0px);
+    }
+    100% {
+        transform:translate3d(-6px, 0px, 0px);
+    }
+}
+
+@keyframes messenger__launcher__pulse1 {
+     0% {
+        transform:scale(1.2) rotate(-32deg);
+     }
+     50% {
+        transform:scale(0.85) rotate(-32deg);
+     }
+     100% {
+        transform:scale(1) rotate(-32deg);
+     }
+}
+@keyframes messenger__launcher__pulse2 {
+    0% {
+        transform:rotate(0deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    2.5% {
+        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    5% {
+        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    7.5% {
+        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    10% {
+        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    12.5% {
+        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    15% {
+        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    17.5% {
+        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+    100%, 20% {
+        transform:rotate(0deg) translate3d(0, -3px, 0) skew(1deg);
+    }
+}

@@ -2,7 +2,23 @@
     @include flex("row", "flex-start", "stretch");
 
     &__inner {
-        padding:18px 16px 25px;
-        background:#F0F4F7;
+        position:relative;
+        background:#F2F5F7;
+        background:linear-gradient(to bottom, #F2F5F7, #F5F8FA);
+    }
+    &__content {
+        @include abs();
+        height:calc(100% - 142px);
+        padding:53px 15px 65px;
+        overflow-y:auto;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
+    }
+    &__panel {
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:142px;
     }
 }

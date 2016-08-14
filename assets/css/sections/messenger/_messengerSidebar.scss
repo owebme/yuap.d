@@ -1,4 +1,13 @@
-.messenger__sidebar {
+.messenger__sidebar__left {
     background:#fff;
+    border-right:1px solid #e1e4e8;
+
+    &__tabs {
+        height:42px;
+        border-bottom:1px solid #c0cad5;
+    }
+}
+.messenger__sidebar__right {
+    background:#fbfbfc;
     border-left:1px solid #E1E4E8;
 }

@@ -10,13 +10,14 @@
     background:none;
     appearance:none;
     outline:none;
+    will-change:transform, background-color, color;
     @include accelerate(true);
     transition:all 0.12s $cubic645;
 
     &:hover {
         opacity:1;
     }
-    &:active {
+    &:not(.disabled):active {
         transform:translate3d(0, 1px, 0) scale(0.9);
     }
     &-lg {
@@ -46,6 +47,10 @@
 
         &.btn-md {
             font-size:15px;
+        }
+        &.btn-sm {
+            font-size:13px;
+            padding:6px 7px 4px;
         }
     }
     &-round {
@@ -85,7 +90,9 @@
         }
     }
     &:disabled,
-    &:disabled:hover {
+    &:disabled:hover,
+    &.disabled,
+    &.disabled:hover {
         background:none;
         color:$gray_light;
         border-color:$gray_light;

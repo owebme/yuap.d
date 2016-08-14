@@ -1,12 +1,12 @@
 <ui-dropmenu class="dropmenu { dropmenu--active : active }" data-align="{ align }">
 
     <div if={ !type } class="dropmenu__wrapper">
-        <div onClick={ onSelect } each={ items } no-reorder class="dropmenu__item st1">
+        <div onClick={ onSelect } native="true" each={ items } no-reorder class="dropmenu__item">
             { title }
         </div>
     </div>
     <div if={ type === "status" } class="dropmenu__wrapper">
-        <div onClick={ onSelect } each={ items } no-reorder class="dropmenu__item st2 { selected : _id == value }">
+        <div onClick={ onSelect } native="true" each={ items } no-reorder class="dropmenu__item { selected : _id == value }">
             <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
         </div>
         <div class="dropmenu__item divider"></div>
@@ -21,6 +21,8 @@
     $.active = false;
 
     $.items = {};
+
+    $.rootScroll = null;
 
     $.show = function(params){
         if (params && params.elem){
@@ -43,13 +45,18 @@
             if ($.align === "center"){
                 marginLeft = params.elem.outerWidth() / 2;
             }
+            else if ($.align === "left" || $.align === "down-left"){
+                marginTop = -(params.elem.outerHeight() / 2);
+            }
             else if ($.align === "right"){
                 marginLeft = params.elem.outerWidth();
                 marginTop = -(params.elem.outerHeight() / 2);
             }
 
+            $.rootScroll = params.rootScroll ? params.rootScroll : app.$dom.content;
+
             setTimeout(function(){
-                app.$dom.content.on(EV.click + ".dropdown", function(e){
+                $.rootScroll.on(EV.click + ".dropdown", function(e){
                     $.onClose();
                 });
             }, 100);
@@ -57,7 +64,7 @@
             $.update();
 
             $scope.css({
-                top: (app.$dom.content[0].scrollTop + offset.top + params.elem.outerHeight()) + "px",
+                top: ($.rootScroll[0].scrollTop + offset.top + params.elem.outerHeight()) + "px",
                 left: offset.left + "px",
                 marginLeft: marginLeft + "px",
                 marginTop: marginTop + "px"
@@ -66,7 +73,7 @@
     };
 
     $.onClose = function(){
-        app.$dom.content.off(EV.click + ".dropdown");
+        $.rootScroll.off(EV.click + ".dropdown");
         $.active = false;
         if ($._id) $._id = null;
         $.update();

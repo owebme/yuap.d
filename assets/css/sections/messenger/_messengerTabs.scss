@@ -1,0 +1,47 @@
+.messenger__tabs {
+    @include flex("row", "flex-start", "stretch");
+    font-size:12px;
+    line-height:35px;
+    text-transform:uppercase;
+    font-weight:bold;
+
+    &__item {
+        @include flex("row", "center", "center");
+        position:relative;
+        padding:0 20px 2px;
+        margin-right:12px;
+        cursor:default;
+        color:$gray_lighten;
+        transform:translate3d(0, 1px, 0);
+        transition:color 0.2s $cubic215;
+
+        &:after {
+            content:"";
+            position:absolute;
+            bottom:0;
+            left:0;
+            width:100%;
+            height:2px;
+            background-color:$blue;
+            transform:translate3d(0, 0, 0) scale3d(0, 0, 1);
+            will-change:transform;
+            transform:translate3d(0, 0, 0) scale3d(0, 0, 1);
+            transition:transform 0.2s $cubic215;
+        }
+        &.active {
+            color:$blue;
+
+            &:after {
+                transform:translate3d(0, 0, 0) scale3d(1.12, 1, 1);
+            }
+        }
+        &:not(.active):hover {
+            color:$blue;
+            cursor:pointer;
+
+            &:after {
+                transform:translate3d(0, 0, 0) scale3d(0.8, 1, 1);
+            }
+        }
+    }
+}

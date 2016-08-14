@@ -51,11 +51,16 @@
 @import 'sections/messenger/messengerHeader';
 @import 'sections/messenger/messengerList';
 @import 'sections/messenger/messengerRoom';
+@import 'sections/messenger/messengerForm';
+@import 'sections/messenger/messengerPharses';
 @import 'sections/messenger/messengerSidebar';
+@import 'sections/messenger/messengerTabs';
+@import 'sections/messenger/messengerMetrika';
 @import 'sections/messenger/content/messengerContent';
 @import 'sections/messenger/content/messengerSocial';
 @import 'sections/messenger/content/messengerProducts';
 @import 'sections/messenger/content/messengerPay';
+@import 'sections/messenger/messengerLauncher';
 // @import 'sections/messenger/messengerColor';
 
 // modules
@@ -66,6 +71,7 @@
 @import 'modules/helpObject';
 @import 'modules/helpObjectCustom';
 @import 'modules/tutorial';
+@import 'modules/auth';
 
 // states
 @import 'states/states';

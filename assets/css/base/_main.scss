@@ -133,6 +133,11 @@ div, a, p, span, th, td {
         background-color:#F4F6FA;
     }
 }
+.blured {
+	.screen--active {
+		filter:blur(10px);
+	}
+}
 .center-block {
 	float:none;
 }
