@@ -1,6 +1,6 @@
 .color {
     $i:-1;
-    @each $color in (#a8b6bf, #9471DB, #4D71DB, #FFB84D, #B871B8, #71B84D, #FFDB71, #4DB8B8, #4DB8DB, #DB94DB, #FFACC5, #FF944D, #B8DB4D, #FF7194, #6AD19F){
+    @each $color in (rgba($blue_gray,.35), #9471DB, #4D71DB, #FFB84D, #B871B8, #71B84D, #FFDB71, #4DB8B8, #4DB8DB, #DB94DB, #FFACC5, #FF944D, #B8DB4D, #FF7194, #6AD19F){
         $i: $i + 1;
         &__bg#{$i} {
             background-color:$color;

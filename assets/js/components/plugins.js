@@ -244,12 +244,15 @@ app.plugins.marquee = function($frame, settings){
 				screens[i].api.state.isFullHide = false;
 				if (settings.hideSections) screens[i].block[0].style.display = 'block';
 				marquee.section = screens[i].block[0].getAttribute("data-" + (settings.dataAttr ? settings.dataAttr : "marquee"));
-				if (settings.activeClass) screens[i].block.addClass(settings.activeClass);
+				//if (settings.activeClass) screens[i].block.addClass(settings.activeClass);
 			} else if (!screens[i].api.state.isFullHide) {
 				if (settings.hideSections) screens[i].block[0].style.display = 'none';
 				screens[i].block.triggerHandler('fullHide');
 				screens[i].api.state.isFullHide = true;
-				if (settings.activeClass) screens[i].block.removeClass(settings.activeClass);
+				if (settings.activeClass) {
+					screens[marquee.index].block.addClass(settings.activeClass);
+					screens[i].block.removeClass(settings.activeClass);
+				}
 			}
 		}
 	};

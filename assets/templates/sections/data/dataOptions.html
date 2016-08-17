@@ -30,7 +30,7 @@
         if (counts) $.active = true;
         else $.active = false;
 
-        if (!app.device.isMobile && counts == 1) $.onScroll(app.$dom.content[0].scrollTop);
+        if (!app.device.isMobile && counts == 1) $.onScroll(app.$dom.scroll[0].scrollTop);
 
         $.counts = counts;
         $.update();
@@ -92,7 +92,7 @@
 
         if (!app.device.isMobile){
             var top = 93;
-            app.$dom.content.on("scroll.filterPanel", function(e){
+            app.$dom.scroll.on("scroll.filterPanel", function(e){
                 if ($.active){
                     var scroll = this.scrollTop,
                     scrollContent = function(){
@@ -106,7 +106,7 @@
     });
 
     this.on("unmount", function(){
-        app.$dom.content.off("scroll.filterPanel");
+        app.$dom.scroll.off("scroll.filterPanel");
     });
 
 </script>

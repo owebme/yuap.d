@@ -73,6 +73,13 @@
 	device.isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 	$dom.html.addClass(device.isFirefox ? 'd-firefox' : 'd-no-firefox');
 
+	/* --- Fix click onTouch device --- */
+	if (device.isMobile && window.FastClick && 'addEventListener' in document) {
+		document.addEventListener('DOMContentLoaded', function() {
+			FastClick.attach(document.body);
+		}, false);
+	}
+
 })(app.device, app.$dom);
 
 (function(effects, prefixed){
@@ -125,3 +132,19 @@
 		if (position==1) $block[0].style[prefixed.transform] = 'translateY(-101%)';
 	};
 })(app.effects, app.prefixed);
+
+app.fixScroll = function(scroll){
+	var timer;
+	if (!app.device.isMobile){
+		scroll.addEventListener('scroll', function(){
+			clearTimeout(timer);
+			if (!scroll.getAttribute("class").match(/disable__hover/)){
+				scroll.classList.add('disable__hover');
+			}
+
+			timer = setTimeout(function(){
+				scroll.classList.remove('disable__hover')
+			}, 300);
+		}, false);
+	}
+};

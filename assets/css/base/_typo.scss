@@ -1,3 +1,22 @@
+a, a:hover, input, textarea, button {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	appearance:none;
+    outline:none;
+}
+a {
+	text-decoration:none;
+}
+h1, h2, h3, h4, h5, h6 {
+	color:$header;
+}
+div, a, p, span, th, td {
+	color:inherit;
+	font-size:inherit;
+	line-height:inherit;
+	font-family:inherit;
+}
 h1, .h1, h2, .h2, h3, .h3, h4, .h4{
     font-weight: 400;
     margin:0 0 15px;

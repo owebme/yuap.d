@@ -4,7 +4,7 @@
   'use strict';
 var riot = { version: 'v2.5.0', settings: {}, touchClick: "click",
     debug: {
-        delegate: true,
+        delegate: false,
         update: false
     }
  },
@@ -1816,6 +1816,9 @@ function setEventHandlerClick(handler, dom, tag, update) {
         }
         else if (riotAttr.match(/find:/)) {
             $item = _$(this).find(riotAttr.match(/find:(.+)/)[1]);
+        }
+        else if (riotAttr.match(/next:/)) {
+            $item = _$(this).next(riotAttr.match(/next:(.+)/)[1]);
         }
         else $item = _$(riotAttr);
 

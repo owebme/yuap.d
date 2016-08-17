@@ -9,7 +9,7 @@
         <section-panel></section-panel>
     </div>
     <div class="screen screen__messenger" data-marquee="messenger">
-        <section-messenger></section-messenger>
+        <section-messenger class="screen__messenger__inner"></section-messenger>
     </div>
 
     <section-modal></section-modal>
@@ -32,7 +32,8 @@
 
         SCREENS = app.screens;
         app.$dom.root = $$($root.root);
-        app.$dom.content = app.$dom.root.find(".screen__main__inner");
+        app.$dom.scroll = app.$dom.root.find(".screen__main__inner");
+        app.$dom.content = app.$dom.scroll.find("#content");
 
         $Modal = $root.tags["section-modal"];
         $Popup = $root.tags["section-popup"];
@@ -41,9 +42,9 @@
         $Loader = $root.tags["section-loader"];
 
         app.nav.init();
-        app.screens.init("messenger");
+        app.screens.init();
         app.router.init();
-
+        app.fixScroll(app.$dom.scroll[0]);
     });
 
 </script>

@@ -1,14 +1,5 @@
 <section-loader class="loader" data-show="{ active }">
 
-    <div class="loader__spinner">
-    	<div class="loader__spinner__right__side">
-    		<div class="loader__spinner__bar"></div>
-    	</div>
-    	<div class="loader__spinner__left__side">
-    		<div class="loader__spinner__bar"></div>
-    	</div>
-    </div>
-
 <script>
 
     var $ = this;
@@ -18,6 +9,12 @@
     $.show = function(){
         $.active = true;
         $.update();
+
+        return new Promise(function(resolve, reject){
+            _.onEndTransition($.root, function(){
+                return resolve();
+            });
+        });
     };
 
     $.hide = function(){

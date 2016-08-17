@@ -6,11 +6,17 @@
 
         items: [],
 
+        index: null,
+
         state: null,
 
         init: function(screen){
 
             if (WD.ready) return;
+
+            if (!screen && location.href.match(/\/messenger/)){
+                screen = "messenger";
+            }
 
             WD.elem = app.$dom.root;
 
@@ -46,8 +52,15 @@
 
             var scroll = WD.marquee.scroll;
 
+            scroll.on('scrollStart', function(){
+                WD.index = WD.marquee.index;
+            });
             scroll.on('scrollEnd', function(){
-                WD.state = WD.marquee.section;
+                if (WD.index !== WD.marquee.index){
+                    WD.state = WD.marquee.section;
+                    if (WD.state === "main") app.setUrl(app.prevUrl);
+                    else if (WD.state === "messenger") app.setUrl("messenger");
+                }
             });
 
             if (screen) {

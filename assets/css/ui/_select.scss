@@ -79,10 +79,8 @@
             position:absolute;
             top:50%;
             right:10px;
-            width:23px;
-            height:23px;
             margin-top:-11px;
-            background:url(/assets/images/ui/ui-select_active.svg) no-repeat 0 0 / cover;
+            @include ui-icon(check, 23px, 23px);
         }
         &.selected {
             color:$black;
@@ -123,7 +121,7 @@
     }
     &.active {
         z-index:101;
-        
+
         .select__wrapper {
             transition:transform 0s;
             transform:translate3d(0, 0, 0);

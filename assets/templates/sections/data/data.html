@@ -1,21 +1,17 @@
-<section-data-content>
+<section-data>
 
     <div id="menu">
         <div class="container menu__wrapper">
-            <section-data-menu>
-            </section>
+            <section-data-menu></section-data-menu>
         </div>
     </div>
     <section-data-options></section-data-options>
     <div class="container">
         <div class="row content__wrapper slide-right">
-            <section-data-sidebar class="data__sidebar col-md-5 col-lg-4">
-            </section-data-sidebar>
+            <section-data-sidebar></section-data-sidebar>
             <div class="data__content">
-                <section-data-list class="data__list col-md-15 col-md-offset-1 col-lg-offset-0 col-lg-13">
-                </section-data-list>
-                <section-dashboard class="dashboard col-md-8 col-lg-11">
-                </section-dashboard>
+                <section-data-list></section-data-list>
+                <section-dashboard></section-dashboard>
             </div>
         </div>
     </div>
@@ -42,13 +38,13 @@
 
     this.on("mount", function(){
         if (!$store.data){
-            app.request('getDataInit').then(function(data){
-                $Data.list.init(data.list);
-                $Data.sidebar.init(data.status);
+            app.fetch("getDataInit").then(function(){
+                $Data.list.init();
+                $Data.sidebar.init();
             });
         }
         else {
-            $Data.list.init($store.data.get());
+            $Data.list.init();
             $Data.sidebar.init($store.status.get());
         }
         $Data.menu.change.sidebarState($Data.config.get('sidebarExpand'));
@@ -56,4 +52,4 @@
 
 </script>
 
-</section-data-content>
+</section-data>

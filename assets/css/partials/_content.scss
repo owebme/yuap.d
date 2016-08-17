@@ -13,6 +13,9 @@
             transition:transform 0.4s $cubic25 0.1s, opacity 0.4s $cubic25 0.1s;
         }
     }
+    #content[data-is="section-contacts"] & {
+        z-index:2;
+    }
 }
 .data__content,
 .data__menu__cell {

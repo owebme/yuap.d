@@ -53,7 +53,7 @@
                 marginTop = -(params.elem.outerHeight() / 2);
             }
 
-            $.rootScroll = params.rootScroll ? params.rootScroll : app.$dom.content;
+            $.rootScroll = params.rootScroll ? params.rootScroll : app.$dom.scroll;
 
             setTimeout(function(){
                 $.rootScroll.on(EV.click + ".dropdown", function(e){

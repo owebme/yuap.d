@@ -19,11 +19,12 @@
 @import 'ui/dropmenu';
 @import 'ui/select';
 @import 'ui/datepicker';
+@import 'ui/filter';
+@import 'ui/pagination';
 @import 'ui/balloon';
 @import 'ui/balloonError';
 
 // partials
-@import 'partials/screens';
 @import 'partials/nav';
 @import 'partials/menu';
 @import 'partials/content';
@@ -32,7 +33,6 @@
 // sections
 
 // data content
-@import 'sections/data/dataContent';
 @import 'sections/data/dataList';
 @import 'sections/data/dataMenu';
 @import 'sections/data/dataOptions';
@@ -45,6 +45,11 @@
 
 // data dashboard
 @import 'sections/data/dashboard/dashboard';
+
+// contacts
+@import 'sections/contacts/contactsTable';
+@import 'sections/contacts/contactsFilters';
+@import 'sections/contacts/contactsPrint';
 
 // messenger
 @import 'sections/messenger/messenger';
@@ -62,6 +67,8 @@
 @import 'sections/messenger/content/messengerPay';
 @import 'sections/messenger/messengerLauncher';
 // @import 'sections/messenger/messengerColor';
+
+@import 'partials/screens';
 
 // modules
 @import 'modules/modal';

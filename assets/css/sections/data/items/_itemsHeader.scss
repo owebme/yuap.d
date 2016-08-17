@@ -204,9 +204,9 @@
             background-size:cover;
             text-indent:999em;
         }
-        .data__item:not([data-new="true"]) &.color__bg0 {
-            opacity:0.53;
-        }
+        // .data__item:not([data-new="true"]) &.color__bg0 {
+        //     opacity:0.53;
+        // }
     }
     &__profile {
         @include abs();

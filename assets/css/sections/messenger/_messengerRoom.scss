@@ -7,6 +7,7 @@
         background:linear-gradient(to bottom, #F2F5F7, #F5F8FA);
     }
     &__content {
+        display:block;
         @include abs();
         height:calc(100% - 142px);
         padding:53px 15px 65px;
@@ -15,6 +16,7 @@
         -webkit-overflow-scrolling:touch;
     }
     &__panel {
+        display:block;
         position:absolute;
         bottom:0;
         left:0;

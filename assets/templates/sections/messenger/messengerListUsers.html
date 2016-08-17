@@ -1,0 +1,77 @@
+<messenger-list-users class="messenger__list" data-active="true">
+
+    <div class="messenger__list__filters">
+        <ui-select items={ filterSitesList } align="right" data={ $Messenger.config } value={ ['filters', 'sitesList'] }></ui-select>
+        <ui-select items={ filterStatusList } align="right" data={ $Messenger.config } value={ ['filters', 'statusList'] }></ui-select>
+    </div>
+    <div class="messenger__item" data-online="true">
+        <!-- <div class="messenger__item__counter badge-circle">2</div> -->
+        <div class="messenger__item__date">10:34</div>
+        <div class="messenger__item__header">
+            <div class="messenger__item__header__cover color__bg7">С<div class="messenger__item__site__name">Re</div></div>
+            <div class="messenger__item__header__title">Сергей</div>
+        </div>
+        <div class="messenger__item__text">Добрый день, я рада приветствовать Вас, ожидаю ваших вопросов.</div>
+    </div>
+    <div class="messenger__item" data-online="true" data-active="true">
+        <div class="messenger__item__date">12:17</div>
+        <div class="messenger__item__header">
+            <div class="messenger__item__header__cover color__bg2">М<div class="messenger__item__site__name">Le</div></div>
+            <div class="messenger__item__header__title">Посетитель</div>
+        </div>
+        <div class="messenger__item__text">Вас интересует сделки по недвижимостью?</div>
+    </div>
+    <div class="messenger__item">
+        <div class="messenger__item__date">11:34</div>
+        <div class="messenger__item__header">
+            <div class="messenger__item__header__cover color__bg11">ДА<div class="messenger__item__site__name">Le</div></div>
+            <div class="messenger__item__header__title">Дмитрий Александрович</div>
+        </div>
+        <div class="messenger__item__text">Добрый день, я рада приветствовать Вас, ожидаю ваших вопросов.</div>
+    </div>
+    <div class="messenger__item">
+        <div class="messenger__item__date">09:12</div>
+        <div class="messenger__item__header">
+            <div class="messenger__item__header__cover color__bg4">М<div class="messenger__item__site__name">Le</div></div>
+            <div class="messenger__item__header__title">Посетитель</div>
+        </div>
+        <div class="messenger__item__text">Вас интересует сделки по недвижимостью?</div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    $.filterSitesList = new Baobab([
+        {
+            title: "Все сайты",
+            value: "all"
+        },
+        {
+            title: "resumekraft.ru",
+            value: "1"
+        },
+        {
+            title: "ledtop-shop.ru",
+            value: "2"
+        }
+    ]);
+
+    $.filterStatusList = new Baobab([
+        {
+            title: "Все статусы",
+            value: "all"
+        },
+        {
+            title: "Онлайн",
+            value: "online"
+        },
+        {
+            title: "Оффлайн",
+            value: "offline"
+        }
+    ]);
+
+</script>
+
+</messenger-list-users>

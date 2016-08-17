@@ -6,12 +6,45 @@
     overflow:hidden;
     background:#fff;
 
+    &:before {
+        opacity:1;
+        content:"";
+        @include abs();
+        background:#fff;
+        transform:translate3d(0, 0, 0);
+        transition:opacity 0.3s $cubic2501, transform 0s;
+        z-index:110;
+    }
+    &:after {
+        content:"";
+        @include abs_50(58, 58);
+        @include ui-icon(loading);
+        animation:spinner 1s infinite linear;
+        z-index:111;
+    }
     &--long {
         height:auto !important;
         min-height:100%;
     }
+    &__main__inner,
+    &__messenger__inner {
+        display:none;
+    }
     &--active {
-        display:block;
+        &:before {
+            opacity:0;
+            transform:translate3d(101%, 0, 0);
+            transition:opacity 0.3s $cubic2501, transform 0s 0.3s;
+        }
+        &:after {
+            display:none;
+        }
+        .screen__main__inner {
+            display:block;
+        }
+        .screen__messenger__inner {
+            display:flex;
+        }
     }
     &__main__inner {
         @include abs();

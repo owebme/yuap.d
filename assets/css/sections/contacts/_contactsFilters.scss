@@ -1,0 +1,247 @@
+.dataTable {
+    &__filters {
+        &__top {
+            @include flex("row", "flex-start", "center");
+            position:absolute;
+            top:-65px;
+            left:0;
+            width:100%;
+            height:44px;
+            padding:0 15px;
+            user-select:none;
+
+            .addUser__button {
+                display:block;
+                cursor:pointer;
+                @include ui-icon(userAdd, 25px, 25px);
+                opacity:0.8;
+                transform:translate3d(0, 1px, 0) scale(1);
+                transition:opacity 0.12s $cubic645, transform 0.12s $cubic645;
+
+                &:hover {
+                    opacity:1;
+                }
+                &:active {
+                    transform:translate3d(0, 2px, 0) scale(0.9);
+                }
+            }
+            .pagination {
+                width:330px;
+                height:44px;
+            }
+            .paginate_button {
+                height:44px;
+                line-height:44px;
+                width:28px;
+                border-radius:0px;
+                border-left:1px solid transparent;
+                border-right:1px solid transparent;
+
+                &.active {
+                    color:$blue;
+                    font-size:18px;
+                    background:none;
+                    border-left:1px solid #E9EEF2;
+                    border-right:1px solid #E9EEF2;
+                }
+            }
+        }
+        &__bottom {
+            .pagination {
+                width:350px;
+                margin:-10px auto 0;
+            }
+        }
+    }
+    &__filterColumn {
+        position:absolute;
+        top:50%;
+        right:0.5em;
+        transform:translate3d(0, -30%, 0);
+        line-height:22px;
+        z-index:1;
+
+        &__button {
+            @include ui-icon(cog, 16px, 16px);
+            cursor:pointer;
+        }
+        &__wrapper {
+            @extend .dropmenu;
+            top:100%;
+            margin:8px 0 0 8px;
+
+            &.active {
+                @extend .dropmenu--active;
+            }
+        }
+        &__dropmenu {
+            @extend .dropmenu__wrapper;
+            padding:12px 22px 7px 10px;
+            text-transform:none;
+        }
+        .filter__checkbox {
+            &:before {
+                top:0px;
+            }
+            &__item {
+                padding-left:29px;
+                padding-right:25px;
+            }
+        }
+    }
+}
+#datatable-buttons_info {
+    @include flex("row", "flex-start", "center");
+    margin-right:10px;
+}
+#datatable-buttons_filter {
+    label {
+        @extend .filter__label;
+    }
+    .search__icon {
+        display:inline-block;
+        @include ui-icon(search, 24px, 24px);
+    }
+    input {
+        border:none;
+        background:none;
+        border-bottom:1px solid #dae2e8;
+        width:120px;
+        height:28px;
+        margin-left:10px;
+        color:$black_text;
+        font-family:$default;
+        font-size:14.5px;
+        line-height:20px;
+        transition:border-color 0.2s $cubic645;
+
+        &:focus,
+        &:hover {
+            border-bottom-color:$blue;
+        }
+    }
+}
+#datatable-buttons_length {
+    @extend .filter__label;
+    @include flex("row", "center", "center");
+    width:180px;
+}
+#datatable-buttons_wrapper {
+    .dt-buttons {
+        margin-left:35px;
+        transform:translate3d(0, -2px, 0);
+
+        .btn-print {
+            position:relative;
+            padding:5px 15px;
+            border-left-top:none;
+
+            &:after {
+                content:"";
+                @include abs_50(18, 18);
+                @include ui-icon(print, 18px, 18px);
+            }
+            &:hover:after {
+                @include ui-icon(print_white);
+            }
+        }
+    }
+}
+
+/*
+ * DataTables ColVis Setting
+ */
+
+.ColVis {
+	display:block;
+    margin:0 15px;
+
+    &_Button {
+        @include flex("row", "center", "center");
+        @extend .btn;
+        @extend .btn-sm;
+        @extend .btn-hover-fill;
+        width:29px;
+        height:29px;
+        padding:0;
+        transform:translate3d(0, -1px, 0);
+
+        &:after {
+            content:"";
+            display:block;
+            @include ui-icon(columns, 19px, 19px);
+        }
+        &:hover:after,
+        &.active:after {
+            @include ui-icon(columns_white);
+        }
+    }
+    &_collectionBackground {
+    	@include abs(fixed);
+    	background-color:$bg_color;
+    	z-index:1100;
+    }
+    &_collection {
+        background-color:#fff;
+    	list-style:none;
+    	min-width:157px;
+        padding:0;
+        margin:0;
+        border-radius:10px;
+        box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
+        overflow:hidden;
+        font-size:0;
+        white-space:nowrap;
+        transform:translate3d(-12px, 2px, 0px);
+    	z-index:2002;
+
+        li {
+            font-size:14px;
+            min-height:35px;
+            padding:0 38px 0 13px;
+            text-align:left;
+            cursor:pointer;
+            user-select:none;
+            border-bottom:1px solid #e2e7eb;
+
+            &:hover {
+                color:$black;
+                background-color:#E9EEF2;
+
+                input {
+                    @include ui-icon(check_gray);
+
+                    &:checked {
+                        @include ui-icon(check);
+                    }
+                }
+            }
+            &:first-child {
+                padding-top:4px;
+                border-radius:10px 10px 0 0;
+            }
+            &:last-child {
+                padding-bottom:5px;
+                border-radius:0 0 10px 10px;
+            }
+        }
+        label {
+            @include flex("row", "flex-start", "center");
+            height:35px;
+            cursor:pointer;
+        }
+        input {
+            display:inline-block;
+            cursor:pointer;
+            @include ui-icon(check_muted, 20px, 20px);
+
+            &:checked {
+                @include ui-icon(check);
+            }
+        }
+        span {
+        	padding-left:11px;
+            cursor:pointer;
+        }
+    }
+}

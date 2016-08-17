@@ -1,0 +1,21 @@
+<messenger-list class="messenger__sidebar__left col-md-6 p0">
+
+    <div class="messenger__sidebar__left__tabs messenger__tabs">
+        <div class="messenger__tabs__item w50p text-center active">Посетители</div>
+        <div class="messenger__tabs__item w50p text-center">Операторы</div>
+    </div>
+    <messenger-list-users></messenger-list-users>
+    <messenger-list-operators></messenger-list-operators>
+
+<script>
+
+    var $ = this;
+
+    this.on("mount", function(){
+        $Messenger.listUsers = $.tags["messenger-list-users"];
+        $Messenger.listOperators = $.tags["messenger-list-operators"];
+    });
+
+</script>
+
+</messenger-list>

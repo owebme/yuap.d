@@ -12,6 +12,7 @@ var svgSprite = require('gulp-svg-sprites');
 var svgmin = require('gulp-svgmin');
 var cheerio = require('gulp-cheerio');
 var replace = require('gulp-replace');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 

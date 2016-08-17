@@ -69,6 +69,10 @@
     &[data-active="true"] {
         background-color:#F3F5F7;
         background-color:lighten(#EDF1F5, 1.5%);
+
+        .messenger__item__date {
+            color:#78909c;
+        }
     }
     &:not([data-active="true"]):hover {
         // background-color:#f8fafb;
@@ -135,6 +139,33 @@
 
         &:first-letter {
             text-transform:uppercase;
+        }
+    }
+}
+
+@media screen and (max-width:$md-width){
+    .messenger__list__filters {
+        .select__current {
+            font-size:11px;
+        }
+    }
+    .messenger__item {
+        height:106px;
+
+        &__date {
+            top:8px;
+            right:10px;
+            font-size:11px;
+        }
+        &__header {
+            &__title {
+                font-size:15px;
+                max-width:75%;
+            }
+        }
+        &__text {
+            font-size:12px;
+            line-height:15px;
         }
     }
 }

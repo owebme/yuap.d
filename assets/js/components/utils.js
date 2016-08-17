@@ -135,13 +135,8 @@
 		};
 	};
 
-	utils.sortASC = function(data, name) {
-		var compare = function(a, b) {
-		  if (a[name] > b[name]) return 1;
-		  else if (a[name] < b[name]) return -1;
-		  return 0;
-		}
-		return data.sort(compare);
+	utils.cleanString = function(string) {
+		return string.replace(/<\/?[^>]+>/g,'');
 	}
 
 	// utils.extend = function(parent, child) {
@@ -163,19 +158,19 @@
 	// };
 
 
-	utils.clone = function(obj, req) {
-	  var newObj = !isObject(obj) && typeof obj.length !== 'undefined' ? [] : {};
-	  for (var i in obj) {
-	    if (/webkit/i.test(_ua) && (i == 'layerX' || i == 'layerY')) continue;
-	    if (req && typeof(obj[i]) === 'object' && i !== 'prototype') {
-	      newObj[i] = clone(obj[i]);
-	    } else {
-	      newObj[i] = obj[i];
-	    }
-
-	  }
-	  return newObj;
-	}
+	// utils.clone = function(obj, req) {
+	//   var newObj = !isObject(obj) && typeof obj.length !== 'undefined' ? [] : {};
+	//   for (var i in obj) {
+	//     if (/webkit/i.test(_ua) && (i == 'layerX' || i == 'layerY')) continue;
+	//     if (req && typeof(obj[i]) === 'object' && i !== 'prototype') {
+	//       newObj[i] = clone(obj[i]);
+	//     } else {
+	//       newObj[i] = obj[i];
+	//     }
+	//
+	//   }
+	//   return newObj;
+	// }
 
 	// function rand(mi, ma) { return Math.random() * (ma - mi + 1) + mi; }
 	// function irand(mi, ma) { return Math.floor(rand(mi, ma)); }

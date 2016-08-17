@@ -7,6 +7,14 @@
 .text-right {
     text-align:right !important;
 }
+.text-ellipsis {
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:100%;
+    vertical-align:middle;
+}
 .nowrap {
     display:inline-block;
     text-decoration:inherit;

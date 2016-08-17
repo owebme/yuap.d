@@ -32,10 +32,10 @@
     app.help.get = function($elem, data){
         var $container = {};
         if (SCREENS && SCREENS.state == "main"){
-            $container = app.$dom.content;
+            $container = app.$dom.scroll;
         }
         if (!$container.length) {
-            console.log("Not found container for halp");
+            console.log("Not found container for help");
             return;
         }
         var $node = $elem.clone(),

@@ -52,8 +52,8 @@
     @include accelerate(true);
 
     &__menu {
-        user-select:none;
         position:relative;
+        user-select:none;
 
         &__item {
             @include flex("row", "center", "center");

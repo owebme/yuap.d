@@ -1,4 +1,4 @@
-<section-data-sidebar>
+<section-data-sidebar class="data__sidebar col-md-5 col-lg-4">
 
     <div class="sidebar__filter__item open">
         <div class="sidebar__filter__title">Каналы</div>
@@ -38,7 +38,7 @@
 
     $.statusAll = true;
 
-    $.init = function(status){
+    $.init = function(){
         var chanels = [
             {
                 chanel: 'callback',
@@ -67,21 +67,7 @@
             item.active = true;
         });
 
-        // var status = [];
-		// for (var i = 1; i < 15; ++i){
-        //     status.push({
-        // 		_id: i,
-        // 		title: "Новый",
-        // 		color: i
-        // 	});
-		// }
-
-        _.each(status, function(item){
-            item.active = true;
-        });
-
         $store.chanels = new Baobab(chanels);
-        $store.status = new Baobab(status);
 
         $.refresh();
         $Data.list.update();
@@ -96,7 +82,7 @@
             );
         });
         $.update();
-    };    
+    };
 
     $.change = {
         chanel: function(e){

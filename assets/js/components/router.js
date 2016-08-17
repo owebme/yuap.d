@@ -4,16 +4,22 @@
 
         base: "#",
 
+        start: false,
+
         init: function(){
 
             riot.route('/', function(){
                 Nav.change("inbox");
-                Router.mount('section-data-content');
+                Router.mount('section-data');
             });
 
             riot.route('/contacts', function(){
                 Nav.change("contacts");
-                Router.mount('section-contacts-content');
+                Router.mount('section-contacts');
+            });
+
+            riot.route('/messenger', function(){
+                Router.mount('section-data');
             });
 
             riot.route.base(this.base);
@@ -21,17 +27,17 @@
         },
 
         mount: function(tag){
-            if (app.device.isMobile){
-                $Loader.show();
-                setTimeout(function(){
-                    CONTENT = riot.mount("section-content", tag)[0];
-                    CONTENT.on("updated", function(e, s){
+            if (Router.start){
+                $Loader.show().then(function(){
+                    var section = riot.mount("section-content", tag)[0];
+                    section.on("updated", function(){
                         $Loader.hide();
                     });
-                }, 50);
+                });
             }
             else {
                 riot.mount("section-content", tag)[0];
+                Router.start = true;
             }
         }
     };

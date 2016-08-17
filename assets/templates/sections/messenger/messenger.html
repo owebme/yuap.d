@@ -1,214 +1,15 @@
-<raw>
-  this.root.innerHTML = opts.content;
-</raw>
+<section-messenger>
 
-<section-messenger class="screen__messenger__inner">
-
-    <div class="messenger__header">
-        <div class="messenger__header__column messenger__header__column__search col-md-6 borderRight">
-            <div class="messenger__header__button__back">
-                <svg class="messenger__header__button__back__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve"><g display="none" enable-background="new    "><g display="inline"><g><polygon fill-rule="evenodd" clip-rule="evenodd" points="77.899,14.645 68,4.745 32.645,40.101 22.745,50 32.645,59.899      68,95.255 77.899,85.355 42.544,50    "></polygon></g></g></g><g enable-background="new    "><g><g><path class="messenger__header__button__back__icon__color" fill-rule="evenodd" clip-rule="evenodd" d="M42.544,50l30.405-30.405c2.734-2.734,2.734-7.166,0-9.899     c-2.732-2.734-7.166-2.734-9.898,0L27.695,45.05c-2.733,2.734-2.733,7.166,0,9.9l35.356,35.354c2.732,2.734,7.166,2.734,9.898,0     c2.734-2.733,2.734-7.165,0-9.899L42.544,50z"></path></g></g></g><g display="none" enable-background="new    "><g display="inline"><g><polygon fill-rule="evenodd" clip-rule="evenodd" points="74.535,8.28 71,4.745 25.745,50 71,95.255 74.535,91.72 32.816,50         "></polygon></g></g></g><g display="none" enable-background="new    "><g display="inline"><g><path class="messenger__header__button__back__icon__color" fill-rule="evenodd" clip-rule="evenodd" d="M32.816,50l39.952-39.951c0.977-0.977,0.977-2.56,0-3.536     c-0.977-0.976-2.559-0.976-3.535,0l-41.72,41.72c-0.976,0.977-0.976,2.559,0,3.535l41.72,41.72c0.977,0.976,2.559,0.976,3.535,0     c0.977-0.977,0.977-2.56,0-3.536L32.816,50z"></path></g></g></g></svg>
-                на главный экран
-            </div>
-            <div class="messenger__header__button__search"></div>
-        </div>
-        <div class="messenger__header__columns col-md-18 p0">
-            <div class="messenger__header__column col-md-17">
-                <div class="messenger__header__button messenger__header__button--transfer">Передать<span class="hidden-md"> диалог</span></div>
-                <div class="messenger__header__button messenger__header__button--spam">Блок / спам</div>
-                <div class="messenger__header__button messenger__header__button--clear">Очистить</div>
-                <div class="messenger__header__button messenger__header__button--unload">Выгрузить</div>
-            </div>
-            <div class="messenger__header__column messenger__header__column__status col-md-7">
-                <div class="messenger__header__status__operator">
-                    <span>статус</span><ui-switcher small green data={ $Messenger.config } value={ 'online' }></ui-switcher><span>онлайн</span>
-                </div>
-            </div>
-            <div class="messenger__header__button__settings"></div>
-            <div class="messenger__header__button__help"></div>
-        </div>
-    </div>
+    <messenger-header></messenger-header>
     <div class="messenger__body">
-        <div class="messenger__sidebar__left col-md-6 p0">
-            <div class="messenger__sidebar__left__tabs messenger__tabs">
-                <div class="messenger__tabs__item w50p text-center active">Посетители</div>
-                <div class="messenger__tabs__item w50p text-center">Операторы</div>
-            </div>
-            <div class="messenger__list" data-active="true">
-                <div class="messenger__list__filters">
-                    <ui-select items={ filterSitesList } align="right" data={ $Messenger.config } value={ ['filters', 'sitesList'] }></ui-select>
-                    <ui-select items={ filterUsersList } align="right" data={ $Messenger.config } value={ ['filters', 'usersList'] }></ui-select>
-                </div>
-                <div class="messenger__item" data-online="true">
-                    <!-- <div class="messenger__item__counter badge-circle">2</div> -->
-                    <div class="messenger__item__date">10:34</div>
-                    <div class="messenger__item__header">
-                        <div class="messenger__item__header__cover color__bg7">С<div class="messenger__item__site__name">Re</div></div>
-                        <div class="messenger__item__header__title">Сергей</div>
-                    </div>
-                    <div class="messenger__item__text">Добрый день, я рада приветствовать Вас, ожидаю ваших вопросов.</div>
-                </div>
-                <div class="messenger__item" data-online="true" data-active="true">
-                    <div class="messenger__item__date">12:17</div>
-                    <div class="messenger__item__header">
-                        <div class="messenger__item__header__cover color__bg2">М<div class="messenger__item__site__name">Le</div></div>
-                        <div class="messenger__item__header__title">Посетитель</div>
-                    </div>
-                    <div class="messenger__item__text">Вас интересует сделки по недвижимостью?</div>
-                </div>
-                <div class="messenger__item">
-                    <div class="messenger__item__date">11:34</div>
-                    <div class="messenger__item__header">
-                        <div class="messenger__item__header__cover color__bg11">ДА<div class="messenger__item__site__name">Le</div></div>
-                        <div class="messenger__item__header__title">Дмитрий Александрович</div>
-                    </div>
-                    <div class="messenger__item__text">Добрый день, я рада приветствовать Вас, ожидаю ваших вопросов.</div>
-                </div>
-                <div class="messenger__item">
-                    <div class="messenger__item__date">09:12</div>
-                    <div class="messenger__item__header">
-                        <div class="messenger__item__header__cover color__bg4">М<div class="messenger__item__site__name">Le</div></div>
-                        <div class="messenger__item__header__title">Посетитель</div>
-                    </div>
-                    <div class="messenger__item__text">Вас интересует сделки по недвижимостью?</div>
-                </div>
-            </div>
-        </div>
+        <messenger-list></messenger-list>
         <div class="messenger__room col-md-18 p0">
-            <div class="messenger__room__inner col-md-17">
-                <div class="messenger__room__content">
-                    <div class="messenger__msg__dateLine">Новый диалог</div>
-                    <div data-id="2" data-type="text" data-who="user" class="messenger__msg messenger__msg__user">
-                        <div class="messenger__msg__avatar messenger__msg__avatar--cover color__bg2">М</div>
-                        <div class="messenger__msg__text">Я могу задать вопрос?
-                        </div>
-                        <div class="messenger__msg__metadata">10:17</div>
-                    </div>
-                    <div data-id="1" data-type="text" data-who="operator" class="messenger__msg messenger__msg__operator">
-                        <div class="messenger__msg__avatar" style="background-image:url(https://randomuser.me/api/portraits/men/31.jpg)"></div>
-                        <div class="messenger__msg__text">Добрый день, я рада приветствовать Вас, ожидаю ваших вопросов.
-                        </div>
-                        <div class="messenger__msg__metadata">10:17</div>
-                    </div>
-                    <div data-id="2" data-type="text" data-who="user" class="messenger__msg messenger__msg__user">
-                        <div class="messenger__msg__avatar messenger__msg__avatar--cover color__bg2">М</div>
-                        <div class="messenger__msg__text">Вас интересует сделки по недвижимостью?
-                        </div>
-                        <div class="messenger__msg__metadata">10:17</div>
-                    </div>
-                    <div data-id="5" data-type="text" data-who="operator" class="messenger__msg messenger__msg__operator">
-                        <div class="messenger__msg__avatar" style="background-image:url(https://randomuser.me/api/portraits/men/31.jpg)"></div>
-                        <div class="messenger__msg__text">Все в порядке)!
-                        </div>
-                        <div class="messenger__msg__metadata">10:17</div>
-                    </div>
-                    <div data-id="2" data-type="text" data-who="user" class="messenger__msg messenger__msg__user messenger__msg__user--prev">
-                        <div class="messenger__msg__avatar messenger__msg__avatar--cover color__bg2">М</div>
-                        <div class="messenger__msg__text">Quick question – when’s our next charge coming through? Thanks!</div>
-                    </div>
-                    <div data-id="2" data-type="text" data-who="user" class="messenger__msg messenger__msg__user">
-                        <div class="messenger__msg__avatar messenger__msg__avatar--cover color__bg2">М</div>
-                        <div class="messenger__msg__text">Quick question – when’s our next charge coming through? Thanks!</div>
-                        <div class="messenger__msg__metadata">10:17</div>
-                    </div>
-                </div>
-                <div class="messenger__room__panel">
-                    <div class="messenger__pharses">
-                        <div class="messenger__pharses__item">Добрый день я могу вам чем то помочь</div>
-                        <div class="messenger__pharses__item">Как ваши дела?</div>
-                        <div class="messenger__pharses__item">Как вы поживаете?</div>
-                        <div class="messenger__pharses__button messenger__pharses__button--more"></div>
-                        <div class="messenger__pharses__button messenger__pharses__button--plus"></div>
-                    </div>
-                    <div class="messenger__form">
-                        <div class="messenger__form__header">
-                            <div class="messenger__tabs">
-                                <div class="messenger__tabs__item active">Ответить</div>
-                                <div class="messenger__tabs__item">Комментарий</div>
-                            </div>
-                            <div class="messenger__form__control">
-
-                            </div>
-                        </div>
-                        <div class="messenger__form__content" data-active="true">
-                            <textarea class="messenger__form__content__textarea" placeholder="Введите свое сообщение..."></textarea>
-                            <div class="disabled btn btn-upper btn-hover-fill btn-sm">Отправить</div>
-                        </div>
-                        <div class="messenger__form__content">
-                            <textarea class="messenger__form__content__textarea messenger__form__content__textarea--reply" placeholder="Оставьте комментарий к диалогу..."></textarea>
-                            <div class="disabled btn btn-upper btn-hover-fill btn-sm">Отправить</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="messenger__room__inner col-md-16 col-lg-17">
+                <messenger-room></messenger-room>
+                <messenger-panel></messenger-panel>
             </div>
-            <div class="messenger__sidebar__right col-md-7 p0">
-                <div class="messenger__metrika">
-                    <div class="messenger__metrika__header">
-                        <div class="messenger__metrika__header__cover color__bg2">М<div class="messenger__metrika__header__connect" data-status="online">онлайн</div></div>
-                        <div class="messenger__metrika__header__title">Посетитель</div>
-                        <div onClick={ open.changeStatus } class="messenger__metrika__header__status color__bg0">Новый</div>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__location"></i>
-                        <span class="messenger__metrika__string__title">Город</span>
-                        <span class="messenger__metrika__string__text">Москва</span>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__name"></i>
-                        <span class="messenger__metrika__string__title">Имя</span>
-                        <span class="messenger__metrika__string__text">....</span>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__email"></i>
-                        <span class="messenger__metrika__string__title">Email</span>
-                        <a href="#" class="messenger__metrika__string__text">inbox@resumekraft.ru</a>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__phone"></i>
-                        <span class="messenger__metrika__string__title">Телефон</span>
-                        <span class="messenger__metrika__string__text"><strong>9160172086</strong></span>
-                    </div>
-                    <div class="messenger__metrika__button">
-                        <div class="messenger__metrika__button__item">Редактировать</div>
-                    </div>
-                    <div class="messenger__metrika__title">Тэги</div>
-                    <div class="messenger__metrika__tags">
-                        <div class="messenger__metrika__addButton">Добавить...</div>
-                    </div>
-                    <div class="messenger__metrika__hr"></div>
-                    <div class="messenger__metrika__title">Метрика</div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__link"></i>
-                        <span class="messenger__metrika__string__title">Источник</span>
-                        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__link__source"></i>
-                        <span class="messenger__metrika__string__title">Переход</span>
-                        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__link__action"></i>
-                        <span class="messenger__metrika__string__title">Обращение</span>
-                        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__time"></i>
-                        <span class="messenger__metrika__string__title">Время</span>
-                        <span class="messenger__metrika__string__text">2 мин</span>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__visits"></i>
-                        <span class="messenger__metrika__string__title">визитов</span>
-                        <span class="messenger__metrika__string__text">+1</span>
-                    </div>
-                    <div class="messenger__metrika__string">
-                        <i class="messenger__metrika__icon messenger__metrika__icon__calendar"></i>
-                        <span class="messenger__metrika__string__title">последний визит</span>
-                        <span class="messenger__metrika__string__text">Сегодня</span>
-                    </div>
-                    <div class="messenger__metrika__hr"></div>
-                </div>
+            <div class="messenger__sidebar__right col-md-8 col-lg-7 p0">
+                <messenger-metrika></messenger-metrika>
             </div>
         </div>
     </div>
@@ -219,72 +20,26 @@
 
     var $ = this;
 
-    $.filterSitesList = new Baobab([
-        {
-            title: "Все сайты",
-            value: "all"
-        },
-        {
-            title: "resumekraft.ru",
-            value: "1"
-        },
-        {
-            title: "ledtop-shop.ru",
-            value: "2"
-        }
-    ]);
-
-    $.filterUsersList = new Baobab([
-        {
-            title: "Все статусы",
-            value: "all"
-        },
-        {
-            title: "Онлайн",
-            value: "online"
-        },
-        {
-            title: "Оффлайн",
-            value: "offline"
-        }
-    ]);
-
     $Messenger = {
         el: $$($.root),
+        header: $.tags["messenger-header"],
+        list: $.tags["messenger-list"],
+        room: $.tags["messenger-room"],
+        panel: $.tags["messenger-panel"],
+        metrika: $.tags["messenger-metrika"],
+        dropMenu: $.tags["ui-dropmenu"],
         config: new Baobab({
             online: true,
             filters: {
                 sitesList: "all",
-                usersList: "all"
+                statusList: "all"
             }
-        }),
-        dropMenu: $.tags["ui-dropmenu"]
+        })
     };
 
-    $.open = {
-        changeStatus: function(e){
-            var _this = this,
-                id = "2";
-
-            $Messenger.dropMenu.show({
-                id: id,
-                align: "down-left",
-                type: "status",
-                rootScroll: $Messenger.el,
-                elem: $$(e.currentTarget),
-                data: $store.status.get(),
-                value: 2,
-                callback: function(value){
-                    // app.request('setDataListStatus', {
-                    //     status: value,
-                    //     ids: [id]
-                    // });
-                    // $store.data.select({'_id': id}).set("status", value);
-                    // _this.update();
-                }
-            });
-        }
-    }
+    this.on("mount", function(){
+        // console.dir($Messenger);
+    });
 
 </script>
 

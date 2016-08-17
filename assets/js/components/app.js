@@ -4,7 +4,7 @@
 
     window.app = {};
 
-	window.DOMAIN = "http://192.168.1.65:3000";
+	window.DOMAIN = "http://192.168.1.64:3000";
 
 	app = {
         router: {},
@@ -39,6 +39,13 @@
 		url: function(url){
 			return DOMAIN + url;
 		},
+        getHash: function() {
+            return location.hash.replace('#/', '').replace('#!', '');
+        },
+        setUrl: function(url) {
+            app.prevUrl = app.getHash();
+            history.replaceState(null, null, app.url("/#/" + (url ? url : "")));
+        },
         setTitle: function(caption) {
             if (caption) {
                 var account = this.constant('account');

@@ -177,6 +177,7 @@
     this.on("unmount", function(){
         $.dateRangePicker.off();
         $.dateRangeCancel.off();
+        $.dateRangeButton.data('daterangepicker').remove();
     });
 
 </script>

@@ -1,0 +1,64 @@
+<contacts-filter-status class="dataTable__filterColumn">
+
+    <div onClick={ onShow } class="dataTable__filterColumn__button"></div>
+    <div class="dataTable__filterColumn__wrapper { active : active }">
+        <div class="dataTable__filterColumn__dropmenu">
+            <div onClick={ change.statusAll } class="filter__checkbox stAll { checked : statusAll }">
+                <label class="filter__checkbox__item">Все</label>
+            </div>
+            <virtual each={ item in $store.status.get() } no-reorder>
+                <div onClickUpdateAll={ change.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
+                    <label class="filter__checkbox__item">{ item.title }</label>
+                    <span class="filter__checkbox__color color__bg{ item.color }"></span>
+                </div>
+            </virtual>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.statusAll = true;
+
+    $.active = false;
+
+    this.on("mount", function(){
+        $.dropmenu = $scope.find(".dataTable__filterColumn__wrapper");
+    });
+
+    $.onShow = function(){
+        $.active = !$.active;
+    };
+
+    $.change = {
+        status: function(e){
+            $.statusAll = false;
+            $store.status.get(function(item) {
+                item.active = false;
+            });
+            this.item.active = !this.item.active;
+            $.active = false;
+            var status = this.item.title;
+            _.onEndTransition($.dropmenu[0], function(){
+                $Contacts.table.search.column(4, status);
+            });
+        },
+        statusAll: function(e){
+            if (!$.statusAll){
+                $store.status.get(function(item) {
+                    item.active = true;
+                });
+            }
+            $.statusAll = true;
+            $.active = false;
+            _.onEndTransition($.dropmenu[0], function(){
+                $Contacts.table.search.reset();
+            });
+        }
+    };
+
+</script>
+
+</contacts-filter-status>

@@ -1,0 +1,105 @@
+<messenger-metrika class="messenger__metrika">
+
+    <div class="messenger__metrika__header">
+        <div class="messenger__metrika__header__cover color__bg2">М<div class="messenger__metrika__header__connect" data-status="online"></div></div>
+        <div class="messenger__metrika__header__title">Посетитель</div>
+        <div onClick={ open.changeStatus } class="messenger__metrika__header__status color__bg0">Новый</div>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__location"></i>
+        <span class="messenger__metrika__string__title">Город</span>
+        <span class="messenger__metrika__string__text">Москва</span>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__name"></i>
+        <span class="messenger__metrika__string__title">Имя</span>
+        <span class="messenger__metrika__string__text">....</span>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__email"></i>
+        <span class="messenger__metrika__string__title">Email</span>
+        <a href="#" class="messenger__metrika__string__text">inbox@resumekraft.ru</a>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__phone"></i>
+        <span class="messenger__metrika__string__title">Телефон</span>
+        <span class="messenger__metrika__string__text"><strong>9160172086</strong></span>
+    </div>
+    <div class="messenger__metrika__button">
+        <div class="messenger__metrika__button__item">Редактировать</div>
+    </div>
+    <div class="messenger__metrika__title">Прикрепить тэг</div>
+    <div class="messenger__metrika__tags">
+        <div class="messenger__metrika__addButton">Добавить...</div>
+    </div>
+    <div class="messenger__metrika__hr"></div>
+    <div class="messenger__metrika__title">Метрика</div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__link"></i>
+        <span class="messenger__metrika__string__title">Источник</span>
+        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
+    </div>
+    <div class="messenger__metrika__string" data-balloon-pos="up" data-balloon-ellipsis="true" data-balloon="купить недвижимость в москве">
+        <i class="messenger__metrika__icon messenger__metrika__icon__keyword"></i>
+        <span class="messenger__metrika__string__title">Запрос</span>
+        <span class="messenger__metrika__string__text">купить недвижимость в москве</span>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__link__source"></i>
+        <span class="messenger__metrika__string__title">Переход</span>
+        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__link__action"></i>
+        <span class="messenger__metrika__string__title">Обращение</span>
+        <a href="#" class="messenger__metrika__string__text">lenta.ru/news/2016/08/13/klishina/</a>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__time"></i>
+        <span class="messenger__metrika__string__title">Время</span>
+        <span class="messenger__metrika__string__text">2 мин</span>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__visits"></i>
+        <span class="messenger__metrika__string__title">визитов</span>
+        <span class="messenger__metrika__string__text">+1</span>
+    </div>
+    <div class="messenger__metrika__string">
+        <i class="messenger__metrika__icon messenger__metrika__icon__calendar"></i>
+        <span class="messenger__metrika__string__title">последний визит</span>
+        <span class="messenger__metrika__string__text">Сегодня</span>
+    </div>
+    <div class="messenger__metrika__hr"></div>
+
+<script>
+
+    var $ = this;
+
+    $.open = {
+        changeStatus: function(e){
+            var _this = this,
+                id = "2";
+
+            $Messenger.dropMenu.show({
+                id: id,
+                align: "down-left",
+                type: "status",
+                rootScroll: $Messenger.el,
+                elem: $$(e.currentTarget),
+                data: $store.status.get(),
+                value: 2,
+                callback: function(value){
+                    // app.request('setDataListStatus', {
+                    //     status: value,
+                    //     ids: [id]
+                    // });
+                    // $store.data.select({'_id': id}).set("status", value);
+                    // _this.update();
+                }
+            });
+        }
+    }
+
+</script>
+
+</messenger-metrika>

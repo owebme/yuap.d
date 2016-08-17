@@ -43,13 +43,14 @@
     }
 }
 .filter__checkbox {
+    cursor:pointer;
+    padding-bottom:12px;
     position:relative;
 
     &__item {
         display:block;
         font-size:16px;
         padding-left:32px;
-        margin-bottom:12px;
         max-width:100%;
         white-space:nowrap;
         overflow:hidden;
@@ -65,7 +66,7 @@
         left:0;
         @include ui-icon(checkbox_gray, 22px, 22px);
         transform:scale(0);
-        transition:transform 0.2s $cubic215;
+        transition:transform 0.2s $cubic215 0s;
     }
     &.checked {
         color:$blue;
@@ -77,6 +78,7 @@
     &.checked:before,
     &:hover:before {
         transform:scale(1);
+        transition:transform 0.2s $cubic215 0.05s;
     }
     &[data-hidden="true"]{
         opacity:0.3;
@@ -90,6 +92,7 @@
     &.focus:not(.checked) {
         &:before {
             transform:scale(0);
+            transition:transform 0.2s $cubic215 0s;
         }
     }
     &__count {
@@ -117,7 +120,7 @@
         width:12px;
         height:12px;
         border-radius:50%;
-        transform:translate3d(0, -5px, 0);
+        transform:translate3d(0, -95%, 0);
         opacity:0.85;
     }
 }

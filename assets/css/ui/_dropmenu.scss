@@ -72,10 +72,8 @@
             position:absolute;
             top:50%;
             right:10px;
-            width:23px;
-            height:23px;
             margin-top:-11px;
-            background:url(/assets/images/ui/ui-select_active.svg) no-repeat 0 0 / cover;
+            @include ui-icon(check, 23px, 23px);
         }
         &.selected {
             color:$black;
@@ -107,13 +105,13 @@
                 display:block;
                 right:auto;
                 left:15px;
-                background-image:url(/assets/images/ui/ui-select.svg);
+                @include ui-icon(check_muted);
             }
             &:hover:after {
-                background-image:url(/assets/images/ui/ui-select_gray.svg);
+                @include ui-icon(check_gray);
             }
             &.selected:after {
-                background-image:url(/assets/images/ui/ui-select_active.svg);
+                @include ui-icon(check);
             }
         }
         &__color {

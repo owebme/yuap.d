@@ -35,25 +35,6 @@ body {
 		font-family:$default;
 	}
 }
-a, a:hover, input, textarea, button {
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	appearance:none;
-    outline:none;
-}
-a {
-	text-decoration:none;
-}
-h1, h2, h3, h4, h5, h6 {
-	color:$header;
-}
-div, a, p, span, th, td {
-	color:inherit;
-	font-size:inherit;
-	line-height:inherit;
-	font-family:inherit;
-}
 #page {
 	display:block;
 	position:absolute;
@@ -132,11 +113,6 @@ div, a, p, span, th, td {
         height:43px;
         background-color:#F4F6FA;
     }
-}
-.blured {
-	.screen--active {
-		filter:blur(10px);
-	}
 }
 .center-block {
 	float:none;

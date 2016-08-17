@@ -1,47 +1,249 @@
-<section-contacts-content>
+<section-contacts>
 
-    <!-- <div id="menu">
-        <div class="container menu__wrapper">
-            <section-data-menu>
-            </section>
+    <div id="menu">
+        <div class="container menu__wrapper"></div>
+    </div>
+    <section-contacts-options></section-contacts-options>
+    <div class="container">
+        <div class="row content__wrapper">
+            <section-contacts-table></section-contacts-table>
         </div>
     </div>
-    <section-data-options></section-data-options>
-    <div class="container">
-        <div class="row content__wrapper slide-right">
-            <section-data-sidebar class="data__sidebar col-md-5 col-lg-4">
-            </section-data-sidebar>
-            <div class="data__content">
-                <section-data-list class="data__list col-md-15 col-md-offset-1 col-lg-offset-0 col-lg-13">
-                </section-data-list>
-                <section-dashboard class="dashboard col-md-8 col-lg-11">
-                </section-dashboard>
-            </div>
-        </div>
-    </div> -->
 
 <script>
 
     var $ = this;
 
-    $Contacts = {
-        // menu: $.tags["section-data-menu"],
-        // sidebar: $.tags["section-data-sidebar"],
-        // options: $.tags["section-data-options"],
-        // list: $.tags["section-data-list"],
-        // dashboard: $.tags["section-dashboard"],
-        // config: new Baobab({
-        //     mode: "inbox",
-        //     itemsPage: 10,
-        //     currentPage: 1,
-        //     countPages: null
-        // }, { autoCommit: true })
-    };
-
     this.on("mount", function(){
-
+        if (!$store.data){
+            app.fetch("getDataInit").then(function(){
+                $Contacts.table.init($store.data.filter("state", "contact"));
+            });
+        }
+        else {
+            $Contacts.table.init($store.data.filter("state", "contact"));
+        }
     });
+
+    $Contacts = {
+        options: $.tags["section-contacts-options"],
+        table: $.tags["section-contacts-table"],
+        config: function($, data, complete){
+        return {
+            data: data,
+            stateSave: false,
+            autoWidth: true,
+            order: [[ 9, "desc" ]],
+            dom: '<"dataTable__filters__top"i<"addUser__button">CfplB>rt<"dataTable__filters__bottom"p>',
+            buttons: [
+            {
+                extend: "pdfHtml5",
+                exportOptions: {
+                    columns: ':visible:not(:first-child)'
+                },
+                className: "btn-sm btn-hover-fill"
+            },
+            {
+                extend: "excelHtml5",
+                exportOptions: {
+                    columns: ':visible:not(:first-child)'
+                },
+                className: "btn-sm btn-hover-fill"
+            },
+            {
+                extend: "csvHtml5",
+                exportOptions: {
+                    columns: ':visible:not(:first-child)'
+                },
+                className: "btn-sm btn-hover-fill"
+            },
+            {
+                text: 'JSON',
+                className: "btn-sm btn-hover-fill",
+                action: function (e, dt, button, config) {
+                    //var data = dt.buttons.exportData();
+                    var data = $store.data.get();
+                    $$.fn.dataTable.fileSave(
+                        new Blob([ JSON.stringify(data) ]),
+                        'CONTACTS.export.json'
+                    );
+                }
+            },
+            {
+                text: '',
+                extend: "print",
+                exportOptions: {
+                    columns: ':visible:not(:first-child)'
+                },
+                autoPrint: false,
+                className: "btn-sm btn-print btn-hover-fill",
+                customize: function(win){
+                     $$(win.document.body).addClass("dataTable--print");
+                }
+            }],
+            colVis: {
+                buttonText: "",
+                iOverlayFade: 200,
+                exclude: [ 0 ],
+                fnLabel: function(i, title, th){
+                    return _.cleanString(title);
+                }
+            },
+            columns: [
+                { data: null },
+                { data: 'photo' },
+                { data: 'name' },
+                { data: 'company' },
+                { data: 'status' },
+                { data: 'tag' },
+                { data: 'city' },
+                { data: 'email' },
+                { data: 'phone' },
+                { data: 'date' }
+            ],
+            columnDefs: [
+                {
+                    targets: [ 0 ],
+                    className: "col-check",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row){
+                        return '<span class="dataTable__checkbox"></span>';
+                    }
+                },
+                {
+                    targets: [ 1 ],
+                    className: "col-photo",
+                    orderable: false,
+                    searchable: false,
+                    // visible: false,
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<span style="background-image:url('+ data +')" class="dataTable__photo"></span>';
+                        }
+                        else {
+                            return data;
+                        }
+                    },
+                },
+                {
+                    targets: [ 2 ],
+                    className: "col-name",
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<span class="text-ellipsis">'+ data +'</span>';
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 3 ],
+                    className: "col-company",
+                    visible: false,
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<span class="text-ellipsis">'+ data +'</span>';
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 4 ],
+                    className: "col-status",
+                    orderable: false,
+                    render: function(data, type, row){
+                        if (data){
+                            return $.get.status(data);
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 5 ],
+                    className: "col-tag",
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<span class="text-ellipsis">'+ data +'</span>';
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 6 ],
+                    className: "col-city",
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<span class="text-ellipsis">'+ data +'</span>';
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 7 ],
+                    className: "col-email",
+                    render: function(data, type, row){
+                        if (data && data.length){
+                            return '<a href="mailto:'+ data +'" class="link text-ellipsis">'+ data +'</a>';
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    targets: [ 8 ],
+                    className: "col-phone"
+                },
+                {
+                    targets: [ 9 ],
+                    className: "col-date",
+                    searchable: false,
+                    // visible: false,
+                    render: function(data, type, row){
+                        return $.get.date(data);
+                    }
+                }
+            ],
+            language: {
+                "sProcessing":   "Подождите...",
+                "sLengthMenu":   "На странице: _MENU_",
+                "sZeroRecords":  '<div class="data__list__empty text-center"><h3>Нет подходящих результатов</h3><p class="mb20">попробуйте смягчить условия поиска</p><span class="data__list__reset btn btn-hover-fill">Сбросить фильтры</span></div>',
+                "sInfo":         '<span class="filter__label">Контактов: <span class="filter__label__number">_TOTAL_</span></span>',
+                "sInfoEmpty":    '<span class="filter__label">Контактов: <span class="filter__label__number">0</span></span>',
+                "sInfoFiltered": "",
+                "sInfoPostFix":  "",
+                "sSearch":       '<span class="search__icon"></span>',
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst": "Первая",
+                    "sPrevious": "Предыдущая",
+                    "sNext": "Следующая",
+                    "sLast": "Последняя"
+                },
+                "oAria": {
+                    "sSortAscending":  ": активировать для сортировки столбца по возрастанию",
+                    "sSortDescending": ": активировать для сортировки столбцов по убыванию"
+                }
+                // http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json
+            },
+            initComplete: function(){
+                setTimeout(function(){
+                    complete();
+                }, 100);
+            }
+        }}
+    };
 
 </script>
 
-</section-contacts-content>
+</section-contacts>

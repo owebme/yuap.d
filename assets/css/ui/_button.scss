@@ -79,7 +79,8 @@
                 transition:fill 0.2s $cubic645;
             }
         }
-        &:hover {
+        &:hover,
+        &.active {
             color:#fff;
             border-color:#2C93FF;
             background-color:#2C93FF;
@@ -102,4 +103,21 @@
     // &.hide {
     //     display:none;
     // }
+}
+.btn-group > .btn {
+    position:relative;
+}
+.btn-group > .btn:first-child:not(:last-child) {
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+}
+.btn-group > .btn:last-child:not(:first-child) {
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+}
+.btn-group > .btn:not(:first-child):not(:last-child) {
+    border-radius:0;
+}
+.btn-group .btn + .btn, .btn-group .btn + .btn-group, .btn-group .btn-group + .btn, .btn-group .btn-group + .btn-group {
+    margin-left:-1px;
 }

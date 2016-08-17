@@ -14,16 +14,6 @@
 		window: $(window)
 	};
 
-	/* --- AJAX settings --- */
-	// $.ajaxSetup({
-	// 	method:"POST",
-	// 	dataType:"json",
-	// 	error:function(XMLHttpRequest){
-	// 		console.log(XMLHttpRequest.responseText);
-	// 	},
-	// 	cache:false
-	// });
-
 	/* --- Urls --- */
 	app.locHost = location.host;
 	app.locProtocol = location.protocol;

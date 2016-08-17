@@ -216,3 +216,29 @@
 {"level":"error","message":"Connection error: connect ECONNREFUSED 127.0.0.1:27017","timestamp":"2016-08-10T11:09:08.864Z"}
 {"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-10T11:09:20.311Z"}
 {"level":"info","message":"Connected to DB!","timestamp":"2016-08-10T11:09:20.329Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-14T11:50:44.152Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-14T11:50:44.170Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-14T11:51:40.163Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-14T11:51:40.179Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-14T14:59:28.639Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-14T14:59:28.655Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T12:16:22.408Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T12:16:22.422Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T12:35:00.749Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T12:35:00.765Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T12:41:11.405Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T12:41:11.419Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T19:50:31.648Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T19:50:31.666Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:03:41.061Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:03:41.077Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:12:10.635Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:12:10.650Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:17:29.023Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:17:29.043Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:17:51.936Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:17:51.951Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:28:33.130Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:28:33.172Z"}
+{"level":"info","message":"Express server listening on port 8080","timestamp":"2016-08-17T20:34:34.266Z"}
+{"level":"info","message":"Connected to DB!","timestamp":"2016-08-17T20:34:34.285Z"}

@@ -20,22 +20,25 @@ MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 	db.collection('users').insert(user);
 
 	var data = [];
-	for (var i = 1; i < 1001; ++i){
+	for (var i = 1; i < 10001; ++i){
 		data.push(table.data(i));
 	}
 	var count1 = 0; var count2 = 0;
-	for (var i = 0; i < 1000; i++){
+	for (var i = 0; i < 10000; i++){
 		count1++; count2++;
 		var metrika = data[i].metrika[0];
 		if (count1 > 2){
-			data[i].name = null;
-			data[i].phone = null;
-			data[i].email = null;
-			data[i].status = 1;
 			count1 = 0;
 			if (count2 > 4){
 				data[i - 1].metrika.push(metrika);
 				count2 = 0;
+				data[i].state = "contact";
+			}
+			else {
+				data[i].name = null;
+				data[i].phone = null;
+				data[i].email = null;
+				data[i].status = 1;
 			}
 		}
 		var searchEngine = metrika.searchEngine;
@@ -88,8 +91,11 @@ var user = {
 var table = {
 	get: function(row){
 		var result = this[row]();
-			rand = Math.floor(Math.random() * result.length);
-		return result[rand];
+		return this.shuffle(result);
+	},
+	shuffle: function(data){
+		var rand = Math.floor(Math.random() * data.length);
+		return data[rand];
 	},
 	random: function(min,max){
 		return Math.floor(Math.random()*(max-min+1)+min);
@@ -103,6 +109,17 @@ var table = {
 	name: function(){
 		return ["Александр Викторович", "Алексей Владимирович", "Денис Евгеньевич", "Евгений Александрович", "Дмитрий Сергеевич", "Сергей Витальевич", "Виталий Андреевич", "Станислав Алексеевич", "Роман Игорьевич", "Артем Иванович", "Виктория Евгеньевна", "Ирина Андреевна", "Наталья Сергеевна", "Людмила Виктровна", "Любовь Владимировна", "Мария Витальевна", "Надежда Игоревна", "Вероника Генадьевна", "Светлана Романовна", "Юлия Григорьевна"];
 	},
+	company: function(){
+		return ["РАО ЭC Востока", "ФК Уралсиб", "Русэнергосбыт", "МРСК Центра", "МРСК Центра", "Волжская ТГК (ТГК-7)", "Тюменьэнерго", "Волга-Днепр", "ДСК-1", "Сильвинит", "Новоросцемент", "Каустик", "Эфко", "Центртелеком", "Фаворит моторс", "Тюменьэнерго", "Термосервис", "Спортмастер", "Рольф"];
+	},
+	photo: function(){
+		var sex = this.shuffle(["men", "women"]);
+		var data = [];
+		for (var i = 1; i < 100; ++i){
+			data.push('https://randomuser.me/api/portraits/'+ sex +'/'+ i +'.jpg');
+		}
+		return data;
+	},
 	email: function(){
 		return ["alex.u1986@mail.ru", "alexey.k1981@mail.ru", "denis.k1983@gmail.com", "denis.s1991@gmail.com", "dmitr.k1971@mail.ru", "sergey.s1986@mail.ru", "vitaly.i1981@gmail.com", "stas.e1982@gmail.com", "roman.n1974@mail.ru", "artem.a1962@mail.ru", "viktory.s1974@gmail.com", "irina.p1967@gmail.com", "nataly.l1976@mail.com", "luda.m1977@mail.ru", "love.s1967@gmail.com", "maria.d1978@gmail.com", "nadya.p1967@mail.ru", "veronika.h1987@mail.com", "sveta.a1974@gmail.com", "uliya.u1982@gmail.com"];
 	},
@@ -111,6 +128,9 @@ var table = {
 	},
 	status: function(){
 		return [2, 3, 4, 5];
+	},
+	tag: function(){
+		return ["$", "$$", "$$$", "$$$$", "$$$$$"];
 	},
 	visits: function(){
 		var data = [];
@@ -153,8 +173,9 @@ var table = {
 				url: "http://vk.com/moshamakeeva"
 			},
 			city: this.get("city"),
-			photo: "http://cs636430.vk.me/v636430862/5c50/DaXkBCLh0oM.jpg",
+			photo: this.get("photo"),
 			name: this.get("name"),
+			company: this.get("company"),
 			email: this.get("email"),
 			phone: this.get("phone"),
 			phones: [],
@@ -162,6 +183,7 @@ var table = {
 			alarm: false,
 			accepted: null,
 			status: this.get("status"),
+			tag: this.get("tag"),
 			date: validator.toDate(this.get("date")),
 			params: [],
 			visits: this.get("visits"),
