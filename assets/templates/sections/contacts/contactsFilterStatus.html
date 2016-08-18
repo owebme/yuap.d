@@ -2,16 +2,15 @@
 
     <div onClick={ onShow } class="dataTable__filterColumn__button"></div>
     <div class="dataTable__filterColumn__wrapper { active : active }">
-        <div class="dataTable__filterColumn__dropmenu">
-            <div onClick={ change.statusAll } class="filter__checkbox stAll { checked : statusAll }">
-                <label class="filter__checkbox__item">Все</label>
+        <div class="dropmenu__wrapper">
+            <div onClick={ change.statusAll } class="dropmenu__item stAll { selected : statusAll }">
+                Все
             </div>
-            <virtual each={ item in $store.status.get() } no-reorder>
-                <div onClickUpdateAll={ change.status } data-hidden="{true : item.hidden}" class="filter__checkbox st {checked: item.active & !statusAll, focus: item.focus}">
-                    <label class="filter__checkbox__item">{ item.title }</label>
-                    <span class="filter__checkbox__color color__bg{ item.color }"></span>
-                </div>
-            </virtual>
+            <div onClickUpdateAll={ change.status } each={ item in $store.status.get() } no-reorder class="dropmenu__item st {selected: item.active & !statusAll}">
+                <span class="dropmenu__item__color color__bg{ item.color }"></span>{ item.title }
+            </div>
+            <div class="dropmenu__item divider"></div>
+            <div onClick={ openStatusMenu } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
         </div>
     </div>
 
@@ -34,13 +33,19 @@
 
     $.change = {
         status: function(e){
+
             $.statusAll = false;
+
             $store.status.get(function(item) {
                 item.active = false;
             });
+
             this.item.active = !this.item.active;
+
             $.active = false;
+
             var status = this.item.title;
+
             _.onEndTransition($.dropmenu[0], function(){
                 $Contacts.table.search.column(4, status);
             });
@@ -52,7 +57,9 @@
                 });
             }
             $.statusAll = true;
+
             $.active = false;
+
             _.onEndTransition($.dropmenu[0], function(){
                 $Contacts.table.search.reset();
             });

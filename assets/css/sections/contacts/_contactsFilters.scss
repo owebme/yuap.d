@@ -68,24 +68,11 @@
         &__wrapper {
             @extend .dropmenu;
             top:100%;
+            text-transform:none;
             margin:8px 0 0 8px;
 
             &.active {
                 @extend .dropmenu--active;
-            }
-        }
-        &__dropmenu {
-            @extend .dropmenu__wrapper;
-            padding:12px 22px 7px 10px;
-            text-transform:none;
-        }
-        .filter__checkbox {
-            &:before {
-                top:0px;
-            }
-            &__item {
-                padding-left:29px;
-                padding-right:25px;
             }
         }
     }

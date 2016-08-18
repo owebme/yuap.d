@@ -17,18 +17,18 @@
     this.on("mount", function(){
         if (!$store.data){
             app.fetch("getDataInit").then(function(){
-                $Contacts.table.init($store.data.filter("state", "contact"));
+                $Contacts.table.init($store.filter("data", "state", "contact"));
             });
         }
         else {
-            $Contacts.table.init($store.data.filter("state", "contact"));
+            $Contacts.table.init($store.filter("data", "state", "contact"));
         }
     });
 
     $Contacts = {
         options: $.tags["section-contacts-options"],
         table: $.tags["section-contacts-table"],
-        config: function($, data, complete){
+        config: function($, data, callback){
         return {
             data: data,
             stateSave: false,
@@ -86,7 +86,8 @@
                 iOverlayFade: 200,
                 exclude: [ 0 ],
                 fnLabel: function(i, title, th){
-                    return _.cleanString(title);
+                    if (i === 4) return 'Статус';
+                    else return title;
                 }
             },
             columns: [
@@ -238,8 +239,8 @@
             },
             initComplete: function(){
                 setTimeout(function(){
-                    complete();
-                }, 100);
+                    callback();
+                }, 5);
             }
         }}
     };

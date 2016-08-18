@@ -1,33 +1,53 @@
 .messenger__launcher {
-    @include flex("row", "center", "center");
-    // display:none;
     position:absolute;
     bottom:20px;
     right:20px;
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    cursor:pointer;
-    box-shadow:0 1px 6px rgba(0,0,0,.06), 0 2px 32px rgba(0,0,0,.16);
+    perspective:800px;
     z-index:1000;
 
+    &__button {
+        @include flex("row", "center", "center");
+        width:62px;
+        height:62px;
+        border-radius:50%;
+        cursor:pointer;
+        user-select:none;
+        animation:messenger__launcher__button .25s ease;
+        box-shadow:0 1px 6px rgba(0,0,0,.06), 0 2px 32px rgba(0,0,0,.16);
+        transition:box-shadow 80ms ease-in-out;
+
+        &:before {
+            content:"";
+            display:block;
+            @include abs();
+            border-radius:50%;
+            background:$blue2; //#7B4CFF
+            @include accelerate();
+            transform:translate3d(0, 0, 0) rotate(0deg);
+            z-index:0;
+            pointer-events:none;
+        }
+        &:hover {
+            box-shadow:0 2px 8px rgba(0,0,0,.09), 0 4px 40px rgba(0,0,0,.24);
+        }
+    }
     &__icon {
         display:block;
         width:245px * 0.12;
         height:287px * 0.12;
+        @include accelerate();
+        cursor:pointer;
         transform:translate3d(0, 0, 0) rotate(-22deg) scale(1);
-        transition:transform 0.35s $bounce;
-        // animation:messenger__launcher__pulse2 5.5s ease-in-out infinite;
-        // animation:messenger__launcher__pulse1 1.3s linear infinite;
         z-index:1;
     }
-    &__bg {
-        display:none;
-        width:52px;
-        height:52px;
-        transform:translate3d(0, 3px, 0);
+    &__close {
+        opacity:0;
+        @include abs_50(30, 30);
+        @include ui-icon(close_strong_white);
+        @include accelerate();
+        cursor:pointer;
+        transform:translate3d(0, 0, 0) scale(0);
     }
-
     &:hover {
         .messenger__launcher__icon {
             transform:translate3d(0, 0, 0) rotate(3deg) scale(1.1);
@@ -54,110 +74,207 @@
         text-align:center;
         z-index:1;
     }
-}
-.messenger__launcher__blobs {
-    @include abs();
-    border-radius:50%;
-    @include accelerate();
-    transform:translateZ(0);
-    z-index:0;
-    will-change:transform;
-    transition:transform 0.15s $cubic215;
-    outline:90px solid transparent;
-    filter:url("#messenger__launcher__filter");
-}
-.messenger__launcher__blob {
-    display:block;
-    @include abs();
-    border-radius:50%;
-    background:$blue2;
-    @include accelerate(true);
-    z-index:-1;
-    pointer-events:none;
+    &__form {
+        opacity:0;
+        position:absolute;
+        bottom:100%;
+        right:10px;
+        width:370px;
+        height:57px;
+        // background:#fff;
+        border-radius:30px;
+        transform:translate3d(0, -20px, 0) scale3d(0, 0.3, 1);
 
-    // &:nth-child(1) {
-    //     animation:messenger__launcher__blob1 1.7s linear infinite alternate;
-    // }
-    // &:nth-child(2) {
-    //     animation:messenger__launcher__blob2 2.5s linear infinite alternate;
-    // }
-    // &:nth-child(3) {
-    //     animation:messenger__launcher__blob3 3.2s linear infinite alternate;
-    // }
-    // &:nth-child(4) {
-    //     animation:messenger__launcher__blob4 1.7s linear infinite alternate;
-    // }
+        &__textarea {
+            @include abs();
+            color:#565867;
+            font-family:$default;
+            font-size:16px;
+            font-weight:400;
+            line-height:1.33;
+            border-radius:30px;
+            padding:18px 100px 18px 30px;
+            // background:#f0f3f5;
+            background:#fff;
+            box-shadow:0 5px 40px rgba(#000,.16);
+            appearance:none;
+            border:none;
+            outline:none;
+            resize:none;
+            user-select:text;
+            white-space:pre;
+            white-space:pre-wrap;
+            word-wrap:break-word;
+            transition:background-color ease .2s, box-shadow ease .2s;
+            z-index:0;
+
+            &::-webkit-input-placeholder {
+                color:#a8b6c2;
+                font-family:$default;
+                font-size:16px;
+                font-weight:400;
+                line-height:1.33;
+                opacity:0.7;
+            }
+            &::-moz-placeholder {
+                color:#a8b6c2;
+                font-family:$default;
+                font-size:16px;
+                font-weight:400;
+                line-height:1.33;
+                opacity:0.7;
+            }
+            &:-ms-input-placeholder {
+                color:#a8b6c2;
+                font-family:$default;
+                font-size:16px;
+                font-weight:400;
+                line-height:1.33;
+                opacity:0.7;
+            }
+            // &:focus {
+            //     background:#fff;
+            //     box-shadow:0 0 100px 0 rgba(150,165,190,.24);
+            // }
+        }
+        &__buttonSend {
+            position:absolute;
+            top:50%;
+            right:11px;
+            width:38px;
+            height:38px;
+            margin-top:-16px;
+            transform:translate3d(0, 0, 0) scale(1);
+            cursor:pointer;
+            transition:transform 0.12s $cubic215;
+            z-index:1;
+
+            &__color {
+                fill:$blue;
+            }
+            &:active {
+                transform:translate3d(0, 1px, 0) scale(0.9);
+            }
+        }
+    }
+    .messenger__launcher__form,
+    .WD__messenger__item,
+    .messenger__launcher__icon,
+    .messenger__launcher__close {
+        will-change:transform, opacity;
+    }
+    .messenger__launcher__form {
+        transition:transform 0.32s $bounceSoft, opacity 0.25s $cubic2501;
+    }
+    .WD__messenger__item {
+        transition:transform 0.45s $bounceSoft 0.18s, opacity 0.35s $cubic2501 0.18s;
+    }
+    .messenger__launcher__icon,
+    .messenger__launcher__close {
+        transition:transform 0.35s $bounce, opacity 0.25s $cubic2501;
+    }
+    .messenger__launcher__button:before {
+        will-change:transform, border-radius;
+        transition:transform 0.25s $cubic25, border-radius 0.25s $cubic2501;
+    }
+    &[data-active="true"] {
+        .messenger__launcher__form {
+            opacity:1;
+            transform:translate3d(0, -30px, 0) scale3d(1, 1, 1);
+        }
+        .WD__messenger__item {
+            opacity:1;
+            transform:rotate3d(1, 0, 0, 0deg) translate3d(0, 0, 0) scale3d(1, 1, 1);
+            transition:transform 0.45s $bounceSoft 0.25s, opacity 0.35s $cubic2501 0.25s;
+        }
+        .messenger__launcher__button {
+            &:before {
+                border-radius:0 100% 100%;
+                transform:translate3d(0, 0, 0) rotate(45deg);
+            }
+        }
+        .messenger__launcher__icon {
+            opacity:0;
+            transform:translate3d(0, 0, 0) rotate(0deg) scale(0);
+        }
+        .messenger__launcher__close {
+            opacity:1;
+            transform:translate3d(0, 0, 0) scale(1);
+        }
+    }
 }
-@keyframes messenger__launcher__blob1 {
-    0% {
-        transform:translate3d(-3px, -4px, 0px);
-    }
-    100% {
-        transform:translate3d(4px, 3px, 0px);
-    }
+.WD__messenger__items {
+    position:absolute;
+    width:320px;
+    bottom:158px;
+    right:50px;
 }
-@keyframes messenger__launcher__blob2 {
-    0% {
-        transform:translate3d(3px, 4px, 0px);
+.WD__messenger__item {
+    opacity:0;
+    position:relative;
+    font-family:$default;
+    background-color:#fff;
+    border-radius:8px;
+    padding-bottom:12px;
+    box-shadow:0 1px 6px rgba(#000,.06), 0 2px 32px rgba(#000,.16);
+    transform:rotate3d(1, 0, 0, 90deg) translate3d(0, -10px, 0) scale3d(0, 0.3, 1);
+
+    &:after {
+        content:"";
+        position:absolute;
+        right:100%;
+        bottom:15px;
+        width:9px;
+        height:21px;
+        background-image:url(https://js.intercomcdn.com/images/chat-caret@2x.c94f492d.png);
+        background-size:9px 21px;
+        background-repeat:no-repeat;
     }
-    100% {
-        transform:translate3d(-4px, -3px, 0px);
+    &__avatar {
+        position:absolute;
+        bottom:21px;
+        left:-65px;
+        width:53px;
+        height:53px;
+        background-position:top center;
+        background-repeat:no-repeat;
+        background-size:cover;
+        box-shadow:0 1px 6px rgba(#000,0.06), 0 2px 32px rgba(#000,0.16);
+        border-radius:50%;
     }
-}
-@keyframes messenger__launcher__blob3 {
-    0% {
-        transform:translate3d(-6px, 0px, 0px);
+    &__title {
+        color:$blue;
+        font-size:15.5px;
+        line-height:1.2;
+        font-weight:bold;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        padding:12px 20px 8px;
+
+        &__post {
+            font-size:15px;
+            padding-left:5px;
+            color:#8f919d;
+            font-weight:400;
+        }
     }
-    100% {
-        transform:translate3d(6px, 0px, 0px);
-    }
-}
-@keyframes messenger__launcher__blob4 {
-    0% {
-        transform:translate3d(6px, 0px, 0px);
-    }
-    100% {
-        transform:translate3d(-6px, 0px, 0px);
+    &__body {
+        color:#6e7a89;
+        font-size:15px;
+        line-height:1.33;
+        margin:0 0 10px;
+        padding:0 20px;
     }
 }
 
-@keyframes messenger__launcher__pulse1 {
-     0% {
-        transform:scale(1.2) rotate(-32deg);
-     }
-     50% {
-        transform:scale(0.85) rotate(-32deg);
-     }
-     100% {
-        transform:scale(1) rotate(-32deg);
-     }
-}
-@keyframes messenger__launcher__pulse2 {
+@keyframes messenger__launcher__button {
     0% {
-        transform:rotate(0deg) translate3d(0, -3px, 0) skew(1deg);
+        opacity:0;
+        transform:scale(.5);
     }
-    2.5% {
-        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    5% {
-        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    7.5% {
-        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    10% {
-        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    12.5% {
-        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    15% {
-        transform:rotate(25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    17.5% {
-        transform:rotate(-25deg) translate3d(0, -3px, 0) skew(1deg);
-    }
-    100%, 20% {
-        transform:rotate(0deg) translate3d(0, -3px, 0) skew(1deg);
+    100% {
+        opacity:1;
+        transform:scale(1);
     }
 }

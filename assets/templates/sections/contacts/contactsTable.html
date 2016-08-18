@@ -65,7 +65,6 @@
 
             $row.toggleClass("selected");
             $store.data.select({'_id': id}).set("checked", !item.checked);
-            console.dir(item.checked);
         });
     };
 
@@ -117,7 +116,7 @@
         }
     };
 
-    this.on("onmount", function(){
+    this.on("unmount", function(){
         $.table.elem.off();
         $.table.destroy();
     });

@@ -10,7 +10,7 @@
             <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
         </div>
         <div class="dropmenu__item divider"></div>
-        <div onClick={ changeStatus } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
+        <div onClick={ openStatusMenu } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
     </div>
 
 <script>
@@ -88,7 +88,7 @@
         if ($.callback) $.callback(id);
     };
 
-    $.changeStatus = function(){
+    $.openStatusMenu = function(){
 
     };
 

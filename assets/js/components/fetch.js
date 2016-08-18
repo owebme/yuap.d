@@ -47,13 +47,6 @@ app.fetch.API.getDataInit = function(){
             $store.status = new Baobab(data.status);
             $store.data = new Baobab(data.list);
 
-            $store.data.filter = function(prop, value){
-                var items = _.filter($store.data.get(), function(item){
-                    return item[prop] === value
-                });
-                return items;
-            };
-
             resolve(data);
         });
     });
