@@ -1,23 +1,4 @@
-app.fetch = function(names){
-    var listMain = [],
-        listSecond = [],
-        parts = names.split(", ");
-
-    return new Promise(function(resolve, reject){
-        for (i = 0; i < parts.length; i++) {
-            if (_.isFunction(app.fetch.API[parts[i]])) {
-                listMain.push(parts[i]);
-            }
-        }
-        if (parts.length !== listMain.length){
-            listSecond = _.without(parts, listMain);
-        }
-        Promise.all(listMain.map(app.fetch.API).concat(listSecond.map(app.request)))
-        .then(function(results) {
-            resolve(results);
-        })
-    });
-};
+app.fetch = app.fetch || {};
 
 app.fetch.API = function(method){
     return app.fetch.API[method]();
@@ -36,6 +17,34 @@ app.fetch.API.getDataInit = function(){
                 }
             } catch(e){}
 
+            var chanels = [
+                {
+                    chanel: 'callback',
+                    title: 'Звонки'
+                },
+                {
+                    chanel: 'messenger',
+                    title: 'Онлайн-чат'
+                },
+                {
+                    chanel: 'reviews',
+                    title: 'Отзывы'
+                },
+                {
+                    chanel: 'tweet',
+                    title: 'Твиты'
+                },
+                {
+                    chanel: 'orders',
+                    title: 'Заявки'
+                }
+            ];
+
+            _.each(chanels, function(item){
+                item.count = 0;
+                item.active = true;
+            });
+
             _.each(data.list, function(item){
                 item.active = true;
             });
@@ -44,8 +53,10 @@ app.fetch.API.getDataInit = function(){
                 item.active = true;
             });
 
-            $store.status = new Baobab(data.status);
-            $store.data = new Baobab(data.list);
+            $store.chanels.set(chanels);
+            $store.status.set(data.status);
+            $store.data.set(data.list);
+            $store.tags.set(data.tags);
 
             resolve(data);
         });

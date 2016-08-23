@@ -5,9 +5,9 @@
         <p class="mb20">попробуйте смягчить условия поиска</p>
         <span onClick={ search.reset } class="data__list__reset btn btn-hover-fill">Сбросить фильтры</span>
     </div>
-    <div each={ item in get.data() } no-reorder class="data__item" data-num="{ item.num }" data-new="{ item.new }" data-checked="{ item.checked }" data-show="{ item.show }" data-status="{ get.statusColor(item.status) }">
+    <div each={ item in get.data() } no-reorder class="data__item" data-num="{ item.num }" data-new="{ item.new }" data-checked="{ item.checked }" data-show="{ item.show }" data-status="{ $store.status.getColor(item.status) }">
         <div if={ item.important } class="data__item__important"></div>
-        <div onClick={ open.changeStatus } data-help="date" class="data__item__date color__bg{ get.statusColor(item.status) }">{ get.date(item.date, item.status) }</div>
+        <div onClick={ open.changeStatus } data-help="date" class="data__item__date color__bg{ $store.status.getColor(item.status) }">{ get.date(item.date, item.status) }</div>
         <div onClick={ open.itemOptions } class="data__item__more__button"></div>
         <div class="data__item__wrapper">
             <div onClick={ open.details } class="data__item__header">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div data-help="cover" class="data__item__cell col-md-4">
-                    <div class="data__item__cover color__bg{ get.statusColor(item.status) }">{ get.cover(item.name, item.city) }</div>
+                    <div class="data__item__cover color__bg{ $store.status.getColor(item.status) }">{ $store.data.getCoverTitle(item) }</div>
                 </div>
                 <virtual if={ item.name }>
                     <div class="data__item__cell data__item__cell--text col-md-7">
@@ -57,7 +57,7 @@
                     </div>
                     <div data-help="time" class="data__item__cell col-md-5">
                         <span class="data__item__label data__item__label--hidden">время</span>
-                        <div class="data__item__time">{ get.timeVisit(item.metrikaLast.time) } <small if={ item.metrikaLast.time > 60 }>мин</small></div>
+                        <div class="data__item__time">{ $store.data.getTimeVisit(item.metrikaLast.time) } <small if={ item.metrikaLast.time > 60 }>мин</small></div>
                     </div>
                 </virtual>
             </div>
@@ -78,7 +78,7 @@
                     <div class="data__item__cell col-md-3">
                         <span class="data__item__label">время</span>
                         <div class="data__item__number">
-                            { get.timeVisit(item.metrikaLast.time) }
+                            { $store.data.getTimeVisit(item.metrikaLast.time) }
                             <small if={ item.metrikaLast.time > 60 }>мин</small>
                         </div>
                     </div>
@@ -420,11 +420,6 @@
             if (ids) return _.pluck(items, "_id");
             else return items;
         },
-        isChecked: function(ids){
-            var items = _.filter($store.data.get(), function(item){return item.checked === true});
-            if (ids) return _.pluck(items, "_id");
-            else return items;
-        },
         isShowed: function(){
             return _.filter($store.data.get(), function(item){return item.show === true});
         },
@@ -433,7 +428,7 @@
         },
         date: function(date, status){
             if (status > 1){
-                return $store.status.get({'_id': String(status)}, 'title');
+                return $store.status.getTitle(status);
             }
             else {
                 var days = moment(date).diff(moment(), 'days');
@@ -444,23 +439,8 @@
                 }
             }
         },
-        timeVisit: function(sec){
-            if (sec > 0 && sec < 60) return "0:" + sec;
-            else if (sec > 59) {
-                if (sec > 3600) return "> 60";
-                else return Math.ceil(sec / 60);
-            }
-        },
-        cover: function(name, city){
-            if (name) return name.substr(0, 1);
-            else if (city) return city.substr(0, 1);
-        },
         domain: function(url){
             return 'http://resumekraft.ru' + (url ? url : '');
-        },
-        statusColor: function(status){
-            if (status) return $store.status.get({'_id': String(status)}, 'color');
-            else return status;
         }
     };
 
@@ -468,12 +448,12 @@
         onChecked: function(){
             this.item.checked = !this.item.checked;
 
-            var counts = $.get.isChecked().length;
+            var counts = $store.data.isChecked($.config.mode).length;
 
             $Data.options.init(counts);
         },
         unChecked: function(){
-            _.each($.get.isChecked(), function(item){
+            _.each($store.data.isChecked($.config.mode), function(item){
                 item.checked = false;
             });
             $.update();

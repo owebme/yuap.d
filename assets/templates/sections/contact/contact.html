@@ -1,0 +1,173 @@
+<section-contact class="modal">
+
+    <div class="modal__text__close"><span class="modal__text__close__strong">Esc</span> отменить</div>
+    <div class="modal__panel__right">
+        <div class="modal__panel__item">
+            <span dgClick={ hide } class="modal__button__close"></span>
+        </div>
+        <div if={ item.state !== "contact" } class="modal__panel__item">
+            <span class="modal__button__user"></span>
+        </div>
+        <div data-balloon="Добавить напоминание" data-balloon-pos="down" class="modal__panel__item">
+            <span class="modal__button__alarm"></span>
+        </div>
+        <div class="modal__panel__item">
+            <span class="modal__button__print"></span>
+        </div>
+        <div data-balloon="Отправить контакт на почту" data-balloon-pos="down" class="modal__panel__item">
+            <span class="modal__button__sendEmail"></span>
+        </div>
+        <div class="modal__panel__item">
+            <span class="modal__button__remove"></span>
+        </div>
+        <div data-balloon="Количество визитов на сайт" data-balloon-pos="down" class="modal__panel__item modal__panel__item__count">+{ item.visits }</div>
+        <div data-balloon="Количество просмотренных страниц, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__count">{ item.metrikaLast.pages.length }</div>
+        <div data-balloon="Проведенное время на сайте до обращения, во время последнего визита" data-balloon-pos="down" data-balloon-length="large" class="modal__panel__item modal__panel__item__time">{ $store.data.getTimeVisit(item.metrikaLast.time) }<span if={ item.metrikaLast.time > 60 }>&nbsp;мин</span></div>
+    </div>
+
+    <div class="container">
+        <div class="modal__wrapper col-md-22 col-lg-18 center-block">
+            <div class="modal__contact__tags">
+                <section-contact-tags></section-contact-tags>
+            </div>
+            <section-contact-status></section-contact-status>
+            <div class="modal__container form">
+                <h2 class="modal__title">
+                    <div class="modal__title__inner">
+                        Редактирование
+                        <div if={ item.photo } class="modal__cover modal__cover--profile" style="background-image:url({ item.photo })">{ $store.data.getCoverTitle(item) }</div>
+                        <div if={ !item.photo } class="modal__cover color__bg{ $store.status.getColor(item.status) }">{ $store.data.getCoverTitle(item) }</div>
+                    </div>
+                </h2>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <fieldset>
+                            <legend><h4 class="form__header">Имя</h4></legend>
+                            <p>Представитель компании или физ. лицо</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <input type="text" class="form__control" placeholder="Введите имя" value="{ item.name }" autocomplete="off" spellcheck="off">
+                                    <span class="input__group__addon"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <fieldset>
+                            <legend><h4 class="form__header">Компания</h4></legend>
+                            <p>Название компании контакта</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <input type="text" class="form__control" placeholder="Введите название компании" value="{ item.company }" autocomplete="off" spellcheck="off">
+                                    <span class="input__group__addon"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <fieldset>
+                            <legend><h4 class="form__header">Email</h4></legend>
+                            <p>Укажите email для связи с клиентом</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <input type="text" class="form__control" placeholder="Введите email контакта" value="{ item.email }" autocomplete="off" spellcheck="off">
+                                    <span class="input__group__addon">
+                                        <a href="mailto:{ item.email }" class="input__group__addon__icon input__group__addon__icon__writeEmail"></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <fieldset>
+                            <legend><h4 class="form__header">Телефон</h4></legend>
+                            <p>Укажите один или несколько телефонов</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <input type="text" class="form__control" placeholder="Введите телефон" value="{ item.phone }" autocomplete="off" spellcheck="off">
+                                    <span class="input__group__addon"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 cell">
+                        <h4 class="form__header">История посещений</h4>
+                        <div class="contact__history">
+                            <div class="contact__history__item">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 cell">
+                        <fieldset>
+                            <legend><h4 class="form__header">Город</h4></legend>
+                            <p>Укажите город контакта</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <input type="text" class="form__control" placeholder="Введите город" value="{ item.city }" autocomplete="off" spellcheck="off">
+                                    <span class="input__group__addon"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row-space"></div>
+                        <fieldset>
+                            <legend><h4 class="form__header">Комментарий</h4></legend>
+                            <p>Оставьте комментарий к контакту</p>
+                            <div class="form__group">
+                                <div class="input__group">
+                                    <textarea class="form__control textarea-sm"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__footer">
+        <div class="modal__footer__wrapper">
+            <span class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
+            <span class="btn btn-md btn-upper btn-simple">Отменить</span>
+        </div>
+    </div>
+
+    <ui-dropmenu></ui-dropmenu>
+
+<script>
+
+    var $ = this;
+
+    $.el = $$($.root);
+    $.dropMenu = $.tags["ui-dropmenu"];
+    $.status = $.tags["section-contact-status"];
+    $.tagItems = $.tags["section-contact-tags"];
+
+    $.show = function(item){
+        $.item = _.clone(item);
+        $.status.init($.item);
+        $.tagItems.init($.item);
+
+        $.update();
+
+        $.el.attr("data-open", "true");
+
+        if (!app.device.isMobile){
+            app.$dom.document.on("keydown.closeModal", function(e){
+                if (e.which == KEY.ESC) $.hide();
+            });
+        }
+    };
+
+    $.hide = function(){
+        $.el.attr("data-open", "false");
+        app.$dom.document.off("keydown.closeModal");
+    };
+
+</script>
+
+</section-contact>

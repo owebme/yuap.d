@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src=' https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  <style>
+    #messages { height: 300px; width: 300px; overflow: hidden; border: #ccc solid 1px;}
+    section { margin-left: 20px; }
+  </style>
+</head>
+<body>
+
+<section>
+    <h1>Chat Client #2</h1>
+    <div id="messages"></div>
+    <textarea rows="2" cols="35" id="chat"></textarea>
+    <input type='button' value='Chat' id='fire' />
+</section>
+
+<script src="http://localhost:8080/faye/client.js"></script>
+<script>
+var profileID = 1,
+    siteID = 777,
+    userId = localStorage.userId || new Date().getTime() + (Math.round(Math.random() * 10000));
+
+if (!localStorage.userId) localStorage.userId = userId;
+
+    /* --- Faye --- */
+    $io = new Faye.Client('http://localhost:8080/faye');
+
+    $io.connect();
+
+    var $chat = $('#chat'),
+        $messages = $('#messages');
+
+    $io.subscribe('/rooms/' + profileID + '/' + siteID + '/' + userId, function(message) {
+        $messages.append('<p>' + message.text + '</p>');
+    });
+
+    $('#fire').on('click', function(){
+        var value = $chat.val();
+
+        if (value && value.length){
+            $io.publish('/rooms/' + profileID + '/' + siteID + '/' + userId, {
+                text: 'Client: ' + value
+            });
+            $chat.val("");
+        }
+    });
+
+</script>
+
+</body>
+</html>

@@ -38,11 +38,10 @@
         if (!app.device.isMobile && !counts) $.onScroll(true, true);
     };
 
-    $.onClear = function(update){
+    $.onClear = function(){
         $Data.list.set.unChecked();
         $.active = false;
         $.counts = 0;
-        if (update) $.update();
     };
 
     $.onCheckAll = function(){
@@ -56,25 +55,44 @@
     };
 
     $.onViewed = function(){
-        app.request('setDataListViewed', $Data.list.get.isChecked(true));
-        _.each($Data.list.get.isChecked(), function(item){
-            item.new = false;
+        var list = $.isChecked(true);
+        app.request('setDataListViewed', list).then(function(result){
+            if (result) $.checkedUpdate(list, "new", false);
         });
         $.onClear();
     };
 
     $.onImportant = function(){
-        _.each($Data.list.get.isChecked(), function(item){
-            if (item.important) {
-                item.important = false;
-                app.request('setDataListUnimportant', [item._id]);
-            }
-            else {
-                item.important = true;
-                app.request('setDataListImportant', [item._id]);
-            }
-        });
+        var list = $store.data.isChecked($Data.config.get("mode"));
+
+        if (list && !list.length) return;
+
+        var important = _.pluck(_.where(list, {"important": false}), "_id"),
+            unimportant = _.pluck(_.where(list, {"important": true}), "_id");
+
+        if (important && important.length){
+            app.request('setDataListImportant', important).then(function(result){
+                if (result) $.checkedUpdate(important, "important", true);
+            });
+        }
+        if (unimportant && unimportant.length){
+            app.request('setDataListUnimportant', unimportant).then(function(result){
+                if (result) $.checkedUpdate(unimportant, "important", false);
+            });
+        }
+
         $.onClear();
+    };
+
+    $.isChecked = function(getIds){
+        return $store.data.isChecked($Data.config.get("mode"), getIds);
+    };
+
+    $.checkedUpdate = function(list, prop, value){
+        _.each(list, function(id){
+            $store.data.select({'_id': id}).set(prop, value);
+        });
+        $Data.list.update();
     };
 
     $.onScroll = function(scroll, force){
@@ -88,7 +106,7 @@
 
     this.on("mount", function(){
 
-        if ($store.data) $.init($Data.list.get.isChecked().length);
+        if ($store.data) $.init($store.data.isChecked($Data.config.get("mode")).length);
 
         if (!app.device.isMobile){
             var top = 93;

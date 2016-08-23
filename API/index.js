@@ -2,15 +2,15 @@ var checkAuth = require('./auth/checkAuth');
 
 module.exports = function(app){
 
-	app.use('/parser', require('./parser'));
-
-	app.post('/auth', require('./auth').post);
-
 	// Data
-	app.get('/api/data/init', checkAuth, require('./data/dataInit').post);
+	app.get('/api/data/init', checkAuth, require('./data/dataInit')(app));
 
-	app.use('/api/dashboard', checkAuth, require('./data/dashboard'));
+	// app.use('/api/dashboard', checkAuth, require('./data/dashboard'));
 
-	app.use('/api/data/list', checkAuth, require('./data/dataList'));
+	// app.use('/api/data/list', checkAuth, require('./data/dataList'));
+
+	require('./data/dataList')(app, checkAuth, '/api/data/list');
+
+	require('./messenger')(app);
 
 }

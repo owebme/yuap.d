@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src=' https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  <style>
+    #messages { height: 300px; width: 300px; overflow: hidden; border: #ccc solid 1px;}
+    section { margin-left: 20px; }
+  </style>
+</head>
+<body>
+
+<section>
+    <h1>Chat Client #2</h1>
+    <div id="messages"></div>
+    <textarea rows="2" cols="35" id="chat"></textarea>
+    <input type='button' value='Chat' id='fire' />
+</section>
+
+<script src="/bayeux/client.js"></script>
+<script>
+    /* --- Faye --- */
+    $io = new Faye.Client('/bayeux', {
+        timeout: 120,
+        retry: 5
+    });
+
+    //$io.connect();
+
+    var $chat = $('#chat'),
+        $messages = $('#messages');
+
+    $io.subscribe('/messages', function(message) {
+        $messages.append('<p>' + message.text + '</p>');
+    });
+
+    $('#fire').on('click', function(){
+        var value = $chat.val();
+
+        if (value && value.length){
+            $io.publish('/messages', {
+                text: 'Client 2: ' + value
+            });
+            $chat.val("");
+        }
+    });
+
+</script>
+
+</body>
+</html>

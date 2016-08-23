@@ -139,6 +139,10 @@
 		return string.replace(/<\/?[^>]+>/g,'');
 	}
 
+	utils.trim = function(text) {
+		return (text || '').replace(/^\s+|\s+$/g, '');
+	}
+
 	// utils.extend = function(parent, child) {
 	//     var i;
 	//

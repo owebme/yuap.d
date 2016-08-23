@@ -1,13 +1,13 @@
 .popup {
-    opacity:0.001;
+    opacity:0.01;
     @include abs(fixed);
     @include flex("row", "center", "center");
     @include accelerate();
-    transform:translate3d(101%, 0, 0);
-    background:rgba($bg_color,.8);
+    visibility:hidden;
+    background:linear-gradient(135deg, rgba($bg_color,.76), rgba(40,47,51,.76));
     text-align:center;
     will-change:opacity;
-    transition:opacity 0.25s $cubic2501, transform 0s 0.25s;
+    transition:opacity 0.15s $cubic57, visibility 0s 0.15s;
     z-index:200;
 
     &__wrapper {
@@ -18,7 +18,7 @@
         min-width:540px;
         will-change:transform;
         transform:translate3d(0, 0, 0) scale3d(0.75, 0.75, 1);
-        transition:transform 0.2s $cubic57;
+        transition:transform 0.15s $cubic57;
     }
     &__title {
         color:$blue;
@@ -43,6 +43,13 @@
             transform:translate3d(0, 0, 0) scale3d(1, 1.2, 1);
         }
     }
+    &__close {
+        position:absolute;
+        top:20px;
+        right:20px;
+        @include ui-icon(close_strong, 29px, 29px);
+        cursor:pointer;
+    }
     &[data-align="center-right"]{
         @include flex("row", "flex-end", "center");
         text-align:left;
@@ -59,12 +66,12 @@
     }
     &[data-open="true"]{
         opacity:1;
-        transform:translate3d(0, 0, 0);
-        transition:opacity 0.25s $cubic345, transform 0s;
+        visibility:visible;
+        transition:opacity 0.25s $cubic2501, visibility 0s;
 
         .popup__wrapper {
             transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
-            transition:transform 0.25s $cubic345;
+            transition:transform 0.25s $cubic215;
         }
     }
 }

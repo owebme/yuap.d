@@ -75,7 +75,7 @@
         z-index:1;
     }
     &__form {
-        opacity:0;
+        opacity:0.01;
         position:absolute;
         bottom:100%;
         right:10px;
@@ -83,6 +83,7 @@
         height:57px;
         // background:#fff;
         border-radius:30px;
+        visibility:hidden;
         transform:translate3d(0, -20px, 0) scale3d(0, 0.3, 1);
 
         &__textarea {
@@ -164,7 +165,10 @@
         will-change:transform, opacity;
     }
     .messenger__launcher__form {
-        transition:transform 0.32s $bounceSoft, opacity 0.25s $cubic2501;
+        transition:transform 0.32s $bounceSoft, opacity 0.25s $cubic2501, visibility 0s 0.32s;
+    }
+    .WD__messenger__items {
+        transition:visibility 0s 0.45s;
     }
     .WD__messenger__item {
         transition:transform 0.45s $bounceSoft 0.18s, opacity 0.35s $cubic2501 0.18s;
@@ -177,15 +181,20 @@
         will-change:transform, border-radius;
         transition:transform 0.25s $cubic25, border-radius 0.25s $cubic2501;
     }
-    &[data-active="true"] {
+    &[data-firstOpen="true"] {
         .messenger__launcher__form {
             opacity:1;
+            visibility:visible;
             transform:translate3d(0, -30px, 0) scale3d(1, 1, 1);
+            transition:transform 0.32s $bounceSoft, opacity 0.25s $cubic2501, visibility 0s;
+        }
+        .WD__messenger__items {
+            visibility:visible;
+            transition:visibility 0s;
         }
         .WD__messenger__item {
             opacity:1;
             transform:rotate3d(1, 0, 0, 0deg) translate3d(0, 0, 0) scale3d(1, 1, 1);
-            transition:transform 0.45s $bounceSoft 0.25s, opacity 0.35s $cubic2501 0.25s;
         }
         .messenger__launcher__button {
             &:before {
@@ -208,15 +217,17 @@
     width:320px;
     bottom:158px;
     right:50px;
+    visibility:hidden;
 }
 .WD__messenger__item {
-    opacity:0;
+    opacity:0.01;
     position:relative;
     font-family:$default;
     background-color:#fff;
     border-radius:8px;
     padding-bottom:12px;
     box-shadow:0 1px 6px rgba(#000,.06), 0 2px 32px rgba(#000,.16);
+    // box-shadow:0 3px 32px 0 rgba(0,0,0,.14);
     transform:rotate3d(1, 0, 0, 90deg) translate3d(0, -10px, 0) scale3d(0, 0.3, 1);
 
     &:after {

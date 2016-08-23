@@ -5,6 +5,13 @@
 		return;
 	}
 
+	/* --- Faye --- */
+	$io = new Faye.Client('http://localhost:8080/faye');
+
+	/* --- API --- */
+	$fetch = app.fetch;
+	$request = app.request;
+
 	/* --- Root blocks --- */
 	app.$dom = {
 		root: $('#page'),

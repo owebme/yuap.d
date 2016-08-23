@@ -27,10 +27,10 @@
     $.show = function(params){
         if (params && params.elem){
             if ($._id && $._id === params.id && $.type === params.type){
-                $.onClose();
+                $.hide();
                 return;
             }
-            if ($.active) $.onClose();
+            if ($.active) $.hide();
             if (params.id) $._id = params.id;
             $.type = params.type;
             $.align = params.align ? params.align : "center";
@@ -57,7 +57,7 @@
 
             setTimeout(function(){
                 $.rootScroll.on(EV.click + ".dropdown", function(e){
-                    $.onClose();
+                    $.hide();
                 });
             }, 100);
 
@@ -72,7 +72,7 @@
         }
     };
 
-    $.onClose = function(){
+    $.hide = function(){
         $.rootScroll.off(EV.click + ".dropdown");
         $.active = false;
         if ($._id) $._id = null;

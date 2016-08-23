@@ -1,29 +1,34 @@
-var config = require('./libs/config');
-var log = require('./libs/log')(module);
-
-var express = require('express');
-var path = require('path');
-var fs = require('fs');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-//var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-//var errorHandler = require('errorhandler');
-var memoryStore = session.MemoryStore;
-var db = require('./libs/db/mongoose')(log, config);
+var config          = require('./libs/config'),
+    log             = require('./libs/log')(module),
+    faye            = require('faye'),
+    express         = require('express'),
+    http            = require('http'),
+    request         = require('request'),
+    path            = require('path'),
+    fs              = require('fs'),
+    favicon         = require('serve-favicon'),
+    logger          = require('morgan'),
+    bodyParser      = require('body-parser'),
+    session         = require('express-session'),
+    memoryStore     = session.MemoryStore,
+    deflate         = require('permessage-deflate');
 //var generate = require('./generate');
+
 var app = express();
+app.route = express.Router();
+app.async = require('async');
+app.db = require('./libs/db/mongoose')(log, config);
+app.utils = require('./libs/utils');
+app.log = log;
+app.errHandler = require('./libs/errHandler');
+app.ObjectId = require('mongodb').ObjectID;
 
-// view engine setup
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(favicon(path.join(__dirname, '/', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(cookieParser());
 app.use(session({
     secret: config.get('session:secret'),
 	key: config.get('session:key'),
@@ -34,36 +39,20 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, '/')));
 
-require('./api')(app);
+app.io = new faye.NodeAdapter({mount: '/faye'});
+app.io.addWebsocketExtension(deflate);
+app.publish = function(chanel, data){
+    app.io.getClient().publish(chanel, data);
+};
 
-// app.get('*', function(req, res, next) {
-//     res.statusCode = 200;
-//     return res.end(fs.readFileSync('index.html'));
-// });
+require('./router')(app);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
-// }
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -74,6 +63,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(config.get('port'), function(){
+var server = http.createServer(app);
+server.listen(config.get('port'), function(){
 	log.info('Express server listening on port ' + config.get('port'));
 });
+
+app.io.attach(server);

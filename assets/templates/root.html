@@ -12,12 +12,13 @@
         <section-messenger class="screen__messenger__inner"></section-messenger>
     </div>
 
-    <section-modal></section-modal>
+    <section-contact></section-contact>
     <section-popup></section-popup>
     <section-alert></section-alert>
     <section-loader></section-loader>
     <section-launcher></section-launcher>
     <section-auth></section-auth>
+    <popup-tags></popup-tags>
     <!-- <div class="tutorial">
         <div class="tutorial__shape"></div>
     </div> -->
@@ -33,8 +34,8 @@
         app.$dom.scroll = app.$dom.root.find(".screen__main__inner");
         app.$dom.content = app.$dom.scroll.find("#content");
 
-        $Modal = $root.tags["section-modal"];
-        $Popup = $root.tags["section-popup"];
+        $Contact = $root.tags["section-contact"];
+        $PopupTags = $root.tags["popup-tags"];
         $Alert = $root.tags["section-alert"];
         $DropMenu = $root.tags["ui-dropmenu"];
         $Loader = $root.tags["section-loader"];

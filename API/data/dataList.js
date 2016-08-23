@@ -1,162 +1,113 @@
-var express = require('express');
-var async = require('async');
-var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
-var app = express.Router();
+module.exports = function(app, checkAuth, url){
 
-var db = mongoose.connection;
+	app.route.put('/viewed', function(req, res) {
 
-app.get('/menu/init', function(req, res) {
-
-	db.collection('data').aggregate([
-
-	{$match: {"new": true}},
-
-	{$project: {"type":1, "count": {$add: [1]}}},
-
-	{$group: {_id: "$type", counts: {$sum: "$count"}}}
-
-	]).toArray(function(err, data){
-		if (!data) {
-			res.statusCode = 404;
-			return res.send({error: 'Not found'});
-		}
-		if (!err) {
-			return res.send({status: 'OK', result: data});
-		}
-		else {
-			res.statusCode = 500;
-			log.error('Internal error(%d): %s', res.statusCode, err.message);
-			return res.send({error: 'Server error'});
-		}
-	});
-});
-
-app.get('/menu/:select', function(req, res) {
-
-	var request = {};
-
-	request.sid = req.session.user.siteID;
-
-	if (req.params.select !== "all") request.type = req.params.select;
-
-	db.collection('data').find(request).sort({"date": -1}).limit(20).toArray(function(err, data){
-		if (!data) {
-			res.statusCode = 404;
-			return res.send({error: 'Not found'});
-		}
-		if (!err) {
-			return res.send({status: 'OK', result: data});
-		}
-		else {
-			res.statusCode = 500;
-			log.error('Internal error(%d): %s', res.statusCode, err.message);
-			return res.send({error: 'Server error'});
-		}
-	});
-});
-
-app.put('/viewed', function(req, res) {
-
-	if (!req.body.length) return;
-
-	req.body.forEach(function(item){
-		db.collection('data').update(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
-		},
-		{
-			$set: {
-				"new": false
-			}
+		req.body.forEach(function(item){
+			app.db.collection('data').update(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			},
+			{
+				$set: {
+					"new": false
+				}
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-app.put('/important', function(req, res) {
+	app.route.put('/important', function(req, res) {
 
-	if (!req.body.length) return;
-
-	req.body.forEach(function(item){
-		db.collection('data').update(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
-		},
-		{
-			$set: {
-				"important": true
-			}
+		req.body.forEach(function(item){
+			app.db.collection('data').update(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			},
+			{
+				$set: {
+					"important": true
+				}
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-app.put('/unimportant', function(req, res) {
+	app.route.put('/unimportant', function(req, res) {
 
-	if (!req.body.length) return;
-
-	req.body.forEach(function(item){
-		db.collection('data').update(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
-		},
-		{
-			$set: {
-				"important": false
-			}
+		req.body.forEach(function(item){
+			app.db.collection('data').update(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			},
+			{
+				$set: {
+					"important": false
+				}
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-app.put('/status', function(req, res) {
+	app.route.put('/status', function(req, res) {
 
-	if (!req.body || !req.body.ids || !req.body.status) return;
+		if (!req.body || !req.body.ids || !req.body.status) return;
 
-	req.body.ids.forEach(function(item){
-		db.collection('data').update(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
-		},
-		{
-			$set: {
-				"status": req.body.status
-			}
+		req.body.ids.forEach(function(item){
+			app.db.collection('data').update(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			},
+			{
+				$set: {
+					"status": req.body.status
+				}
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-app.put('/state', function(req, res) {
+	app.route.put('/state', function(req, res) {
 
-	if (!req.body || !req.body.ids || !req.body.state) return;
+		if (!req.body || !req.body.ids || !req.body.state) return;
 
-	req.body.ids.forEach(function(item){
-		db.collection('data').update(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
-		},
-		{
-			$set: {
-				"state": req.body.state
-			}
+		req.body.ids.forEach(function(item){
+			app.db.collection('data').update(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			},
+			{
+				$set: {
+					"state": req.body.state
+				}
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-app.delete('/remove', function(req, res) {
+	app.route.delete('/remove', function(req, res) {
 
-	if (!req.body.length) return;
+		if (!req.body.length) return;
 
-	req.body.forEach(function(item){
-		db.collection('data').remove(
-		{
-			"_id": ObjectId(item),
-			"siteID": req.session.user.siteID
+		req.body.forEach(function(item){
+			app.db.collection('data').remove(
+			{
+				"_id": app.ObjectId(item),
+				"siteID": req.session.user.siteID
+			}, function(err, data){
+				app.errHandler(res, err, data, app);
+			});
 		});
 	});
-});
 
-module.exports = app;
+	app.use(url, checkAuth, app.route);
+};

@@ -1,0 +1,35 @@
+<section-contact-status class="modal__contact__status">
+
+    <status-mark color={ $store.status.getColor(item.status) } iclass="modal__contact__status__icon"></status-mark>
+    <span onClick={ show } class="modal__contact__status__title">{ $store.status.getTitle(item.status) }</span>
+
+<script>
+
+    var $ = this;
+
+    $.init = function(item){
+        $.item = item;
+        $.update();
+    };
+
+    $.show = function(e){
+        var id = $.item._id;
+
+        $Contact.dropMenu.show({
+            id: id,
+            type: "status",
+            rootScroll: $Contact.el,
+            elem: $$(e.currentTarget),
+            data: $store.status.get(),
+            value: $.item.status,
+            callback: function(value){
+                $.item.status = value;
+                $.update();
+                $Contact.update();
+            }
+        });
+    };
+
+</script>
+
+</section-contact-status>

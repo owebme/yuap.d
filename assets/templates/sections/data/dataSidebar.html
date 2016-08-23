@@ -39,38 +39,7 @@
     $.statusAll = true;
 
     $.init = function(){
-        var chanels = [
-            {
-                chanel: 'callback',
-                title: 'Звонки'
-            },
-            {
-                chanel: 'messenger',
-                title: 'Онлайн-чат'
-            },
-            {
-                chanel: 'reviews',
-                title: 'Отзывы'
-            },
-            {
-                chanel: 'tweet',
-                title: 'Твиты'
-            },
-            {
-                chanel: 'orders',
-                title: 'Заявки'
-            }
-        ];
-
-        _.each(chanels, function(item){
-            item.count = 0;
-            item.active = true;
-        });
-
-        $store.chanels = new Baobab(chanels);
-
         $.refresh();
-        $Data.list.update();
         $Data.menu.set.countAll();
     };
 

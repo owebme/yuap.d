@@ -1,0 +1,147 @@
+<popup-tags class="popup" data-open="{ active }">
+
+    <div class="popup__wrapper">
+        <div onClick={ hide } class="popup__close"></div>
+        <h3 class="popup__title text-left">
+            Тэги
+            <p class="subtitle">{ isEmpty ? 'Для создание тэга введите текст в поле ниже и нажмите Enter ' : 'Для добавления тэга вы можете выбрать из списка ниже' }</p>
+        </h3>
+        <div class="row">
+            <div class="popup__tag__list tag__list">
+                <div dgClick={ onFocus } class="tag__list__control">
+                    <div each={ item in items } no-reorder class="tag">
+                        { item }<span onClickUpdateAll={ removeTag } class="tag__remove"></span>
+                    </div>
+                    <input onKeydown={ onKeydown } onInput={ search } class="tag__list__input { short : items.length }" type="text" placeholder="{ 'введите название тэга' : !items.length }" autocomplete="off">
+                </div>
+                <div class="tag__list__container">
+                    <div if={ item.active } onClickUpdateAll={ addTag } each={ item in storeItems } no-reorder class="tag tag-sm">
+                        { item.title }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row popup__footer text-right">
+            <span dgClick={ onSave } class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length }">Сохранить</span>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+    $.isEmpty = false;
+    $.storeItems = [];
+
+    this.on("mount", function(){
+        $.input = $scope.find(".tag__list__input");
+        $.listControl = $scope.find(".tag__list__control");
+    });
+
+    $.show = function(item){
+        $.active = true;
+        $.item = item;
+        $.items = [];
+
+        _.each(_.clone(item.tags), function(item){
+            $.items.push($store.tags.getTitle(item));
+        });
+
+        if ($.items.length) $.isEmpty = false;
+        else $.isEmpty = true;
+
+        $.storeItems = _.clone($store.tags.get());
+
+        $.search();
+        $.update();
+        $.onFocus();
+    };
+
+    $.onFocus = function(){
+        $.input.focus();
+    };
+
+    $.search = function(){
+        var value = $.input[0].value,
+            _value = value.toLowerCase(),
+            _items = _.intersection(_.pluck($.storeItems, "title"), $.items);
+
+        _items = _.map($.items, function(item){
+            return item.toLowerCase();
+        });
+
+        _.each($.storeItems, function(item){
+            var title = item.title.toLowerCase();
+            if (title.indexOf(_value) > -1 && !_.inArray(_items, title)){
+                item.active = true;
+            }
+            else {
+                item.active = false;
+            }
+        });
+    };
+
+    $.removeTag = function(){
+        $.items.splice($.items.indexOf(this.item), 1);
+        $.input.val("");
+        $.search();
+    };
+
+    $.addTag = function(){
+        $.items.push(this.item.title);
+        $.input.val("");
+        $.search();
+    };
+
+    $.onKeydown = function(e){
+        var value = $.input[0].value,
+            length = value.length;
+
+        if (e.which === KEY.ENTER && length){
+    		e.preventDefault();
+            var _value = value.toLowerCase(),
+                _items = _.map($.items, function(item){
+                    return item.toLowerCase();
+                });
+            if (_.inArray(_items, _value)){
+                $.listControl.find(".tag").each(function(){
+                    var $tag = $$(this);
+                    if ($tag.text().toLowerCase().trim() == _value){
+                        $tag.addClass("isAvail");
+                        _.onEndAnimation(this, function(){
+                            $tag.removeClass("isAvail");
+                        });
+                    }
+                });
+            }
+            else {
+                var _storeItems = _.map(_.pluck($.storeItems, "title"), function(item){
+                    return item.toLowerCase();
+                });
+                if (_.inArray(_storeItems, _value)){
+                    value = $.storeItems[_storeItems.indexOf(_value)].title;
+                }
+                $.items.push(value);
+                $.input.val("");
+                $.search();
+            }
+    	}
+        return true;
+    };
+
+    $.onSave = function(e){
+        if ($.items.length){
+            $.hide();
+            $.update();
+        }
+    };
+
+    $.hide = function(){
+        $.active = false;
+    };
+
+</script>
+
+</popup-tags>

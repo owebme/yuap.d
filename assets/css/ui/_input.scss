@@ -40,16 +40,33 @@
     outline:none;
     transition:border-color ease-in-out .15s;
 
-    .m-no-touch &:hover {
-        border-color:$blue_lighten;
+    &:hover {
+        border-color:#c0ccda;
     }
-    .m-touch &:focus {
-        border-color:$blue_lighten;
+    &:focus {
+        border-color:#1fb6ff;
     }
 }
 textarea.form__control {
-    min-height:180px;
-    padding:11px 16px 15px;
+    padding:8px 16px 15px;
+    resize:none;
+}
+.textarea {
+    &-lg {
+        min-height:200px;
+    }
+    &-md {
+        min-height:180px;
+    }
+    &-sm {
+        min-height:140px;
+    }
+    &-xs {
+        min-height:120px;
+    }
+    &-xxs {
+        min-height:90px;
+    }
 }
 %caret {
     &:after {

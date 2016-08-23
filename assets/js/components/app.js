@@ -16,6 +16,7 @@
         effects: {},
 		device: {},
         help: {},
+        constants: {},
         constant: function(name, value) {
             var i;
 
@@ -30,11 +31,11 @@
                 if (typeof value === 'string') {
                     try { value = JSON.parse(value); } catch (e) {}
                 }
-                    constants[name] = value;
+                    app.constants[name] = value;
                     return true;
             }
 
-            return constants[name];
+            return app.constants[name];
         },
 		url: function(url){
 			return DOMAIN + url;
@@ -52,9 +53,28 @@
                 document.title = 'Yuap: ' + caption + ', ' + account.name;
             }
         },
+        fetch: function(methods){
+            var listMain = [],
+                listSecond = [],
+                parts = methods.split(", ");
+
+            return new Promise(function(resolve, reject){
+                for (i = 0; i < parts.length; i++) {
+                    if (_.isFunction(app.fetch.API[parts[i]])) {
+                        listMain.push(parts[i]);
+                    }
+                }
+                if (parts.length !== listMain.length){
+                    listSecond = _.without(parts, listMain);
+                }
+                Promise.all(listMain.map(app.fetch.API).concat(listSecond.map(app.request)))
+                .then(function(results) {
+                    resolve(results);
+                })
+            });
+        },
     	request: function(method, params){
         	return new Promise(function(resolve, reject){
-
                 var url = _.underscored(method)
                             .replace(/^(get|set|add|del)/g, "")
                             .replace(/_/g, "/"),
@@ -71,30 +91,33 @@
                 }
 
         		var xhr = new XMLHttpRequest();
+                xhr.open(type, app.url("/api") + url, true);
+        		xhr.setRequestHeader("Accept", "application/json");
+        		xhr.setRequestHeader("Content-Type", "application/json");
 
                 try {
                     if (app.request.list && app.request.list.method === method && app.request.list.params == JSON.stringify(params)) {
                         app.request.list.xhr.abort();
                     }
+                    xhr.send(params ? JSON.stringify(params) : {});
                 } catch(e){}
 
-        		xhr.open(type, app.url("/api") + url, true);
-        		xhr.setRequestHeader("Accept", "application/json");
-        		xhr.setRequestHeader("Content-Type", "application/json");
-
-        		xhr.send(params ? JSON.stringify(params) : {});
-
         		xhr.onload = function(e) {
-        			if (this.status == 200) {
-        				var data = JSON.parse(this.response);
-        				if (data.result) resolve(data.result);
-        				else resolve(data);
-        			}
-        			else {
-        				var error = new Error(this.statusText);
-        				error.code = this.status;
-        				reject(error);
-        			}
+                    try {
+            			if (this.status == 200) {
+            				var data = JSON.parse(this.response);
+            				if (data.status === "OK" && data.result){
+                                resolve(data.result);
+                            }
+            				else resolve(data);
+            			}
+            			else {
+                            app.errHandler(this.status);
+            				var error = new Error(this.statusText);
+            				error.code = this.status;
+            				reject(error);
+            			}
+                    } catch(e){}
                     app.request.list = {};
         		};
 
@@ -110,7 +133,15 @@
                     };
                 } catch(e){}
         	});
-    	}
+    	},
+        errHandler: function(status){
+            if (status == 401){
+                alert("Авторизируйтесь снова");
+            }
+            else {
+                alert("Ошибка проведения операции повторите ее чуть позже");
+            }
+        }
 	};
 
     window.onerror = function(msg, url, line) {

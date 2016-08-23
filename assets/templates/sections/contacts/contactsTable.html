@@ -31,10 +31,12 @@
         );
         $.table.elem = $$($.table.context[0].nTable);
 
+        // Reset search result
         $.table.elem.on(EV.click, ".data__list__reset", function(){
             $.search.resetAll();
         });
 
+        // Change status item
         $.table.elem.on(EV.click, ".dataTable__status", function(e){
             var _this = this;
                 item = $.get.item(this);
@@ -58,6 +60,7 @@
             });
         });
 
+        // Checked item
         $.table.elem.on(EV.click, ".dataTable__checkbox", function(){
             var $row = $$(this).closest("tr"),
                 item = $.table.row($row[0]).data(),
@@ -66,6 +69,22 @@
             $row.toggleClass("selected");
             $store.data.select({'_id': id}).set("checked", !item.checked);
         });
+
+        // Edit item
+        // $.table.elem.on(EV.click, ".dataTable__button__edit", function(){
+        //     $Contact.show($.get.item(this));
+        // });
+
+        $.table.elem.on(EV.click, "tbody > tr", function(e){
+            var item = e.target,
+                cl = item.getAttribute("class");
+
+            if (cl && !cl.match(/status/) && !cl.match(/checkbox/) && !cl.match(/link/)){
+                $Contact.show($.get.item(this));
+            }
+        });
+
+        $.table.elem.find(".dataTable__button__edit:first").trigger("click");
     };
 
     $.search = {
@@ -94,19 +113,14 @@
         },
         status: function(status){
             if (status > 1){
-                var title = $store.status.get({'_id': String(status)}, 'title'),
-                    color = $store.status.get({'_id': String(status)}, 'color');
+                var title = $store.status.getTitle(status),
+                    color = $store.status.getColor(status);
             }
             else {
                 var title = "новый",
                     color = 0;
             }
             return '<span class="dataTable__status text-ellipsis color__bg'+ color +'">'+ title +'</span>';
-        },
-        isChecked: function(ids){
-            var items = _.filter($store.data.filter("status", "contact"), function(item){return item.checked === true});
-            if (ids) return _.pluck(items, "_id");
-            else return items;
         }
     };
 

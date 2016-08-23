@@ -1,4 +1,4 @@
-<section-launcher class="messenger__launcher" data-active="{ state.active }" data-open="{ state.open }">
+<section-launcher class="messenger__launcher" data-firstOpen="{ state.firstOpen }" data-active="{ state.active }">
 
         <div class="WD__messenger__items">
             <div class="WD__messenger__item">
@@ -25,12 +25,20 @@
     $scope = $$($.root);
 
     $.state = {
-        active: false,
-        open: false
+        firstOpen: false,
+        active: false
     }
 
+    this.on("mount", function(){
+        $.form = $scope.find(".messenger__launcher__form");
+        $.textarea = $.form.find(".messenger__launcher__form__textarea");
+    });
+
     $.onShow = function(){
-        $.state.active = !$.state.active;
+        $.state.firstOpen = !$.state.firstOpen;
+        _.onEndTransition($.form[0], function(){
+            $.textarea.focus();
+        });
     };
 
 </script>

@@ -6,8 +6,6 @@
 @import 'base/mixins';
 @import 'base/responsive';
 @import 'base/main';
-@import 'base/typo';
-@import 'base/form';
 
 // UI elements
 @import 'ui/icons';
@@ -16,6 +14,7 @@
 @import 'ui/checkbox';
 @import 'ui/switcher';
 @import 'ui/input';
+@import 'ui/tags';
 @import 'ui/dropmenu';
 @import 'ui/select';
 @import 'ui/datepicker';
@@ -23,6 +22,8 @@
 @import 'ui/pagination';
 @import 'ui/balloon';
 @import 'ui/balloonError';
+@import 'ui/typo';
+@import 'ui/form';
 
 // partials
 @import 'partials/nav';
@@ -71,8 +72,10 @@
 @import 'partials/screens';
 
 // modules
-@import 'modules/modal';
-@import 'modules/popup';
+@import 'modules/modal/modal';
+@import 'modules/modal/modalContact';
+@import 'modules/popup/popup';
+@import 'modules/popup/popupTags';
 @import 'modules/alert';
 @import 'modules/loader';
 @import 'modules/helpObject';
@@ -83,7 +86,6 @@
 // states
 @import 'states/states';
 @import 'states/color';
-@import 'states/status';
 @import 'states/sizes';
 @import 'states/text';
 @import 'states/padding';

@@ -1,7 +1,9 @@
 (function(){
 
     app.$dom.window.on('load', function(){
-        riot.mount("*");
+        app.fetch("getDataInit").then(function(){
+            riot.mount("*");
+        });
     });
 
     if (app.device.isMobile){

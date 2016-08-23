@@ -15,17 +15,11 @@
     var $ = this;
 
     this.on("mount", function(){
-        if (!$store.data){
-            app.fetch("getDataInit").then(function(){
-                $Contacts.table.init($store.filter("data", "state", "contact"));
-            });
-        }
-        else {
-            $Contacts.table.init($store.filter("data", "state", "contact"));
-        }
+        $Contacts.table.init($store.filter("data", "state", "contact"));
     });
 
     $Contacts = {
+        el: $$($.root),
         options: $.tags["section-contacts-options"],
         table: $.tags["section-contacts-table"],
         config: function($, data, callback){
@@ -96,7 +90,7 @@
                 { data: 'name' },
                 { data: 'company' },
                 { data: 'status' },
-                { data: 'tag' },
+                { data: 'tags' },
                 { data: 'city' },
                 { data: 'email' },
                 { data: 'phone' },
@@ -109,7 +103,7 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row){
-                        return '<span class="dataTable__checkbox"></span>';
+                        return '<span class="dataTable__checkbox"></span><span class="dataTable__button__edit"></span>';
                     }
                 },
                 {
@@ -170,7 +164,8 @@
                     className: "col-tag",
                     render: function(data, type, row){
                         if (data && data.length){
-                            return '<span class="text-ellipsis">'+ data +'</span>';
+                            var tag = $store.tags.get({'_id': String(data[0])}, 'title');
+                            return '<span class="badge text-ellipsis">'+ tag +'</span>';
                         }
                         else {
                             return data;

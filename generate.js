@@ -9,22 +9,24 @@ var tempus = require('tempusjs');
 MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 
 	db.collection('status').drop();
+	db.collection('tags').drop();
 	db.collection('accounts').drop();
 	db.collection('sites').drop();
 	db.collection('users').drop();
 	db.collection('data').drop();
 
 	db.collection('status').insert(status);
+	db.collection('tags').insert(tags);
 	db.collection('accounts').insert(accounts);
 	db.collection('sites').insert(sites);
 	db.collection('users').insert(user);
 
 	var data = [];
-	for (var i = 1; i < 10001; ++i){
+	for (var i = 1; i < 101; ++i){
 		data.push(table.data(i));
 	}
 	var count1 = 0; var count2 = 0;
-	for (var i = 0; i < 10000; i++){
+	for (var i = 0; i < 100; i++){
 		count1++; count2++;
 		var metrika = data[i].metrika[0];
 		if (count1 > 2){
@@ -130,7 +132,11 @@ var table = {
 		return [2, 3, 4, 5];
 	},
 	tag: function(){
-		return ["$", "$$", "$$$", "$$$$", "$$$$$"];
+		var data = [];
+		for (var i = 0; i < tags.length; ++i){
+			data.push(tags[i]._id);
+		}
+		return data;
 	},
 	visits: function(){
 		var data = [];
@@ -183,7 +189,7 @@ var table = {
 			alarm: false,
 			accepted: null,
 			status: this.get("status"),
-			tag: this.get("tag"),
+			tags: [this.get("tag")],
 			date: validator.toDate(this.get("date")),
 			params: [],
 			visits: this.get("visits"),
@@ -254,5 +260,58 @@ var status = [
 		accountID: ACCOUNT_ID,
 		title: "Оплачен",
 		color: 14
+	}
+];
+
+var tags = [
+	{
+		_id: "1",
+		accountID: ACCOUNT_ID,
+		title: "БР"
+	},
+	{
+		_id: "2",
+		accountID: ACCOUNT_ID,
+		title: "БРВ"
+	},
+	{
+		_id: "3",
+		accountID: ACCOUNT_ID,
+		title: "БУТ"
+	},
+	{
+		_id: "4",
+		accountID: ACCOUNT_ID,
+		title: "ВП"
+	},
+	{
+		_id: "5",
+		accountID: ACCOUNT_ID,
+		title: "ВПП"
+	},
+	{
+		_id: "6",
+		accountID: ACCOUNT_ID,
+		title: "ДГ"
+	},
+	{
+		_id: "7",
+		accountID: ACCOUNT_ID,
+		title: "ДЕР"
+	},
+	{
+		_id: "8",
+		accountID: ACCOUNT_ID,
+		title: "ЖКУ"
+	},
+	{
+		_id: "9",
+		accountID: ACCOUNT_ID,
+		title: "ИНД"
+	},
+	{
+		_id: "10",
+		accountID: ACCOUNT_ID,
+		title: "КАМ"
 	}
 ];

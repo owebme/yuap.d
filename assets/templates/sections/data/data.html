@@ -37,16 +37,8 @@
     };
 
     this.on("mount", function(){
-        if (!$store.data){
-            app.fetch("getDataInit").then(function(){
-                $Data.list.init();
-                $Data.sidebar.init();
-            });
-        }
-        else {
-            $Data.list.init();
-            $Data.sidebar.init($store.status.get());
-        }
+        $Data.list.init();
+        $Data.sidebar.init($store.status.get());
         $Data.menu.change.sidebarState($Data.config.get('sidebarExpand'));
     });
 

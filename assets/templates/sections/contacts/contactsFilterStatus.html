@@ -6,8 +6,8 @@
             <div onClick={ change.statusAll } class="dropmenu__item stAll { selected : statusAll }">
                 Все
             </div>
-            <div onClickUpdateAll={ change.status } each={ item in $store.status.get() } no-reorder class="dropmenu__item st {selected: item.active & !statusAll}">
-                <span class="dropmenu__item__color color__bg{ item.color }"></span>{ item.title }
+            <div onClickUpdateAll={ change.status } each={ $store.status.get() } no-reorder class="dropmenu__item st {selected: active & !statusAll}">
+                <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
             </div>
             <div class="dropmenu__item divider"></div>
             <div onClick={ openStatusMenu } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
@@ -40,11 +40,11 @@
                 item.active = false;
             });
 
-            this.item.active = !this.item.active;
+            this._item.active = !this._item.active;
 
             $.active = false;
 
-            var status = this.item.title;
+            var status = this._item.title;
 
             _.onEndTransition($.dropmenu[0], function(){
                 $Contacts.table.search.column(4, status);

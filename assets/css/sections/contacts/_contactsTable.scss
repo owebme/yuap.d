@@ -106,10 +106,23 @@
                 max-width:10em;
             }
         }
+        &tag {
+            padding-right:0;
+
+            .text-ellipsis {
+                max-width:10em;
+            }
+        }
+    }
+    td.col-check {
+        font-size:0;
     }
     td.col-photo {
         padding:0;
     }
+    // td.col-tag {
+    //     color:$blue;
+    // }
     &__photo {
         display:inline-block;
         width:34px;
@@ -137,14 +150,17 @@
     }
     tbody {
         background-color:rgba(#fff,.35);
+
+        tr {
+            cursor:pointer;
+        }
     }
     &__highlight,
     tr:hover td {
         background-color:rgba(#fff,.56);
     }
     &__checkbox {
-        display:block;
-        position:relative;
+        display:inline-block;
         cursor:pointer;
         @include ui-icon(check_muted, 20px, 20px);
 
@@ -152,10 +168,16 @@
         .selected & {
             @include ui-icon(check);
         }
-        &:after {
-            content:"";
-            @include abs();
-            transform:translate3d(0, 0, 0) scale(2.25);
+    }
+    &__button__edit {
+        display:inline-block;
+        cursor:pointer;
+        @include ui-icon(edit, 19px, 19px);
+        margin-left:6px;
+        opacity:0.8;
+
+        &:hover {
+            opacity:1;
         }
     }
     tr.selected {
