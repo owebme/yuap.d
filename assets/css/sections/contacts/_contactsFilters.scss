@@ -70,6 +70,7 @@
             top:100%;
             text-transform:none;
             margin:4px 0 0 8px;
+            font-family:$default;
 
             &.active {
                 @extend .dropmenu--active;

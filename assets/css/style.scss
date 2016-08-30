@@ -52,6 +52,13 @@
 @import 'sections/contacts/contactsFilters';
 @import 'sections/contacts/contactsPrint';
 
+// events
+@import 'sections/events/eventsCalendar';
+@import 'sections/events/eventsCalendarList';
+@import 'sections/events/eventsList';
+@import 'sections/events/eventsEditable';
+@import 'sections/events/eventsColor';
+
 // messenger
 @import 'sections/messenger/messenger';
 @import 'sections/messenger/messengerHeader';
@@ -75,7 +82,8 @@
 @import 'modules/modal/modal';
 @import 'modules/modal/modalContact';
 @import 'modules/popup/popup';
-@import 'modules/popup/popupTags';
+@import 'modules/popup/popupTable';
+@import 'modules/popup/popupCustom';
 @import 'modules/alert';
 @import 'modules/loader';
 @import 'modules/helpObject';

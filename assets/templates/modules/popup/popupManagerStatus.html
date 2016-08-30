@@ -1,0 +1,248 @@
+<popup-manager-status class="popup__wrapper">
+
+    <div class="popup__container">
+        <div dgClick={ hide } class="popup__close"></div>
+        <h3 class="popup__title text-left">
+            Управление статусами
+        </h3>
+        <div class="row">
+            <div class="popup__table__wrapper">
+                <div class="popup__table__container">
+                    <table class="popup__table popup__table--middle">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Цвет</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="cell__text">
+                                    <input onKeydown={ onKeydownAdd } class="form__control" type="text" autocomplete="off" placeholder="Новый статус"><span onClick={ onAdd } class="button button__add"></span></td>
+                                <td><span onClick={ onColor } class="button button__color color__bg{ colorSelect }"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr class="visible" each={ item in items } no-reorder>
+                                <td class="cell__text" if={ item.editable }>
+                                    <input onKeydown={ onKeydownApply } class="form__control" type="text" autocomplete="off" value={ item.title }><span onClickUpdate={ onApply } class="button button__apply"></span>
+                                </td>
+                                <td class="cell__text" if={ !item.editable }>
+                                    <p>{ item.title }</p><span onClickUpdate={ onEdit } class="button button__edit"></span>
+                                </td>
+                                <td>
+                                    <span onClick={ onColor } class="button button__color color__bg{ item.color }"></span>
+                                </td>
+                                <td>
+                                    <span if={ item._id != 1 } onClick={ onRemove } class="button button__remove"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row popup__footer text-right">
+            <span dgClick={ onCancel } id="popup-manager-status-onCancel" class="btn btn-md btn-upper btn-hover-fill">Отменить</span>
+            <span dgClick={ onSave } id="popup-manager-status-onSave" class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length } { btn-loading : saving }">Сохранить</span>
+        </div>
+    </div>
+
+    <ui-dropmenu></ui-dropmenu>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+    $.saving = false;
+    $.colorDefault = 8;
+    $.colorSelect = null;
+    $.name = "manager-status";
+    $.dropMenu = $.tags["ui-dropmenu"];
+    $.items = [];
+
+    this.on("mount", function(){
+        $.init();
+    });
+
+    $.init = function(){
+        $.colorSelect = $.colorDefault;
+        $.items = _.copyArray($store.status.get());
+        $.update();
+    };
+
+    $.onAdd = function(e){
+        var $input = $$(e.currentTarget).prev(),
+            value = $input.val();
+
+        if (value.length) $.addItem($input, value);
+    };
+
+    $.onKeydownAdd = function(e){
+        var $input = $$(e.currentTarget),
+            value = $input.val();
+
+        if (e.which === KEY.ENTER && value.length){
+            e.preventDefault();
+            $.addItem($input, value);
+        }
+        return true;
+    };
+
+    $.onEdit = function(){
+        this.item.editable = true;
+    };
+
+    $.onApply = function(e){
+        var value = $$(e.currentTarget).prev().val();
+        if (value.length) $.setItem(this.item, value);
+    };
+
+    $.onKeydownApply = function(e){
+        var value = $$(e.currentTarget).val();
+
+        if (e.which === KEY.ENTER && value.length){
+            e.preventDefault();
+            $.setItem(this.item, value);
+        }
+        return true;
+    };
+
+    $.onColor = function(e){
+        var $this = this,
+            item = this.item;
+
+        if (!item) {
+            item = {
+                _id: null,
+                color: $.colorSelect
+            }
+        }
+        $.dropMenu.show({
+            id: item._id,
+            type: "palette",
+            rootScroll: $scope,
+            elem: $$(e.currentTarget),
+            data: _.range(15),
+            value: item.color,
+            callback: function(value){
+                if (item._id){
+                    $this.item.color = value;
+                    $this.update();
+                }
+                else {
+                    $.colorSelect = value;
+                    $.update();
+                }
+            }
+        });
+    };
+
+    $.onRemove = function(){
+        $.items.splice($.items.indexOf(this.item), 1);
+        $.update();
+    };
+
+    $.onCancel = function(e){
+        $.hide();
+    };
+
+    $.onSave = function(e){
+        $.saving = true;
+        $.update();
+
+        var removeStatus = _.difference(
+            _.pluck($store.status.get(), "_id"),
+            _.pluck($.items, "_id")
+        );
+
+        var removeList = [];
+        if (removeStatus.length){
+            _.each($store.data.get(), function(item){
+                if (_.inArray(removeStatus, item.status)){
+                    removeList.push(item._id);
+                }
+            });
+        }
+
+        if (removeList.length){
+            $Alert.show({
+                title: "Среди удаленных статусов найдены " + removeList.length + " относящиеся к ним записи",
+                subtitle: 'все они перейдут в статус "новый"?',
+                success: {
+                    callback: function(){
+                        _.each(removeList, function(id){
+                            $store.data.select({'_id': id}).set("status", "1");
+                        });
+                        $.setData(removeList);
+                    }
+                },
+                cancel: {
+                    callback: function(){
+                        $.saving = false;
+                        $.update();
+                    }
+                }
+            });
+        }
+        else {
+            $.setData();
+        }
+    };
+
+    $.setData = function(removeList){
+        app.request("setDataStatus", {
+            status: $.clearData(),
+            removeList: removeList ? removeList : []
+        })
+        .then(function(data){
+            if (data && data.length){
+                $.saveStore(data);
+            }
+            $.hide();
+        },
+        function(){
+            $.saving = false;
+            $.update();
+        });
+    };
+
+    $.clearData = function(){
+        _.each($.items, function(item){
+            if (item._id.match(/new/)){
+                item._id = null;
+            }
+            delete item.editable;
+        });
+        return $.items;
+    };
+
+    $.saveStore = function(data){
+        $store.status.set(data);
+    };
+
+    $.setItem = function(item, value){
+        item.title = value;
+        item.editable = false;
+    };
+
+    $.addItem = function(input, value){
+        $.items.unshift({
+            _id: "new" + _.random(10, 1000),
+            title: value,
+            color: $.colorSelect
+        });
+        input.val('');
+        $.colorSelect = $.colorDefault;
+    };
+
+    $.hide = function(){
+        if ($.saving) $.saving = false;
+        $Popup.hide();
+    };
+
+</script>
+
+</popup-manager-status>

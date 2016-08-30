@@ -1,0 +1,28 @@
+<section-events>
+
+    <div id="menu">
+        <div class="container menu__wrapper"></div>
+    </div>
+    <!-- <section-events-options></section-events-options> -->
+    <div class="container">
+        <div class="row content__wrapper">
+            <section-events-calendar></section-events-calendar>
+        </div>
+    </div>
+
+    <section-events-calendar-list></section-events-calendar-list>
+
+<script>
+
+    var $ = this;
+
+    $Events = {
+        tag: $,
+        el: $$($.root),
+        calendar: $.tags["section-events-calendar"],
+        list: $.tags["section-events-calendar-list"]
+    };
+
+</script>
+
+</section-events>

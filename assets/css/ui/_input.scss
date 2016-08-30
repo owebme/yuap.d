@@ -22,6 +22,11 @@
             cursor:pointer;
             @include ui-icon(writeEmail, 32px, 32px);
         }
+        &__close {
+            display:block;
+            cursor:pointer;
+            @include ui-icon(close_strong, 28px, 28px);
+        }
     }
 }
 .form__control {
@@ -40,11 +45,24 @@
     outline:none;
     transition:border-color ease-in-out .15s;
 
+    &.sm {
+        padding:5px 11px;
+        border-radius:2px;
+        height:30px;
+    }
     &:hover {
         border-color:#c0ccda;
     }
     &:focus {
         border-color:#1fb6ff;
+    }
+    &--hovered {
+        border-color:#c0ccda;
+
+        &:hover,
+        &:focus {
+            border-color:#1fb6ff;
+        }
     }
 }
 textarea.form__control {

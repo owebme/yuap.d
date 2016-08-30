@@ -5,26 +5,20 @@ module.exports = function(app) {
 		app.async.parallel([
 
 			function(callback){
+				app.db.collection('accounts').findOne({
+					"_id": req.session.user.accountID
+				},
+				function(err, data){
+					app.errHandler(res, err, data, callback);
+				});
+			},
+
+			function(callback){
 				app.db.collection('data').find({
-					"siteID": req.session.user.siteID
-				}).sort({"date": -1}).limit(100).toArray(function(err, data){
-					app.errHandler(res, err, data, app, callback);
-				});
-			},
-
-			function(callback){
-				app.db.collection('status').find({
-					"profileID": req.session.user.profileID
-				}).toArray(function(err, data){
-					app.errHandler(res, err, data, app, callback);
-				});
-			},
-
-			function(callback){
-				app.db.collection('tags').find({
-					"profileID": req.session.user.profileID
-				}).toArray(function(err, data){
-					app.errHandler(res, err, data, app, callback);
+					"accountID": req.session.user.accountID
+				})
+				.sort({"date": -1}).limit(100).toArray(function(err, data){
+					app.errHandler(res, err, data, callback);
 				});
 			},
 		],
@@ -32,12 +26,12 @@ module.exports = function(app) {
 		function(err, data){
 			if (data && data.length){
 				data = {
-					list: data[0],
-					status: data[1],
-					tags: data[2]
+					account: data[0],
+					user: req.session.user,
+					list: data[1]
 				}
 			}
-			app.errHandler(res, err, data, app);
+			app.errHandler(res, err, data);
 		});
 
 	}

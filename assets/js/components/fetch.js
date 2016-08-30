@@ -49,14 +49,19 @@ app.fetch.API.getDataInit = function(){
                 item.active = true;
             });
 
-            _.each(data.status, function(item){
+            _.each(data.account && data.account.status, function(item){
                 item.active = true;
             });
 
+            $store.data.set(data.list ? data.list : {});
             $store.chanels.set(chanels);
-            $store.status.set(data.status);
-            $store.data.set(data.list);
-            $store.tags.set(data.tags);
+            $store.status.set(data.account && data.account.status ? data.account.status : {});
+            $store.tags.set(data.account && data.account.tags ? data.account.tags : {});
+
+            if (data.account) {
+                app.const("account", data.account);
+                if (data.user) app.const("user", data.user);
+            }
 
             resolve(data);
         });

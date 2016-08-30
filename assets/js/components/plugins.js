@@ -110,7 +110,7 @@ app.plugins.marquee = function($frame, settings){
 	// scroll
 	var scroll = new IScroll($frame[0], {
 		marquee: true,
-		disableMouse: false,
+		disableMouse: settings.disableMouse ? true : false,
 		mouseWheel: settings.mousewheel,
 		scrollX: !settings.vertical,
 		scrollY: settings.vertical,

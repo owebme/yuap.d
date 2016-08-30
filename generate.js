@@ -10,16 +10,11 @@ MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 
 	db.collection('status').drop();
 	db.collection('tags').drop();
-	db.collection('accounts').drop();
 	db.collection('sites').drop();
 	db.collection('users').drop();
-	db.collection('data').drop();
 
-	db.collection('status').insert(status);
-	db.collection('tags').insert(tags);
-	db.collection('accounts').insert(accounts);
-	db.collection('sites').insert(sites);
-	db.collection('users').insert(user);
+	db.collection('accounts').drop();
+	db.collection('data').drop();
 
 	var data = [];
 	for (var i = 1; i < 101; ++i){
@@ -48,47 +43,16 @@ MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 			metrika.adv = true;
 		}
 	}
+	db.collection('accounts').insert(accounts);
 	db.collection('data').insert(data);
 
-	db.collection('status').ensureIndex({accountID: 1});
-	db.collection('users').ensureIndex({accountID: 1});
 	db.collection('data').ensureIndex({siteID: 1});
 	db.collection('data').ensureIndex({siteID: 1, clientID: 1}, {unique: true});
 });
 
-var ACCOUNT_ID = ObjectId(),
+var ACCOUNT_ID = "1",
 	USER_ID = ObjectId(),
 	SITE_ID = "777";
-
-var accounts = [
-	{
-		_id: ACCOUNT_ID,
-		users: [USER_ID],
-		sites: [SITE_ID]
-	}
-];
-
-var sites = [
-	{
-		_id: SITE_ID,
-		domain: "resumekraft.ru"
-	}
-];
-
-var user = {
-	_id: USER_ID,
-	accountID: ACCOUNT_ID,
-	siteID: SITE_ID,
-	admin: true,
-	photo: "https://pp.vk.me/c631525/v631525862/31fa6/wGLCQfdOO4g.jpg",
-	name: "Александр",
-	city: "Москва",
-	username: "admin",
-	password: utils.cryptoPass("1234"),
-	balance: 4750.00,
-	create: validator.toDate("2016-04-22 11:21"),
-	visite: validator.toDate("2016-04-22 11:21")
-}
 
 var table = {
 	get: function(row){
@@ -132,7 +96,8 @@ var table = {
 		return [2, 3, 4, 5];
 	},
 	tag: function(){
-		var data = [];
+		var tags = accounts[0].tags,
+			data = [];
 		for (var i = 0; i < tags.length; ++i){
 			data.push(tags[i]._id);
 		}
@@ -230,88 +195,107 @@ var table = {
 	}
 }
 
-var status = [
+var accounts = [
 	{
-		_id: "1",
-		accountID: ACCOUNT_ID,
-		title: "Новый",
-		color: 0
-	},
-	{
-		_id: "2",
-		accountID: ACCOUNT_ID,
-		title: "В работе",
-		color: 6
-	},
-	{
-		_id: "3",
-		accountID: ACCOUNT_ID,
-		title: "Думает",
-		color: 3
-	},
-	{
-		_id: "4",
-		accountID: ACCOUNT_ID,
-		title: "Согласование",
-		color: 9
-	},
-	{
-		_id: "5",
-		accountID: ACCOUNT_ID,
-		title: "Оплачен",
-		color: 14
-	}
-];
-
-var tags = [
-	{
-		_id: "1",
-		accountID: ACCOUNT_ID,
-		title: "БР"
-	},
-	{
-		_id: "2",
-		accountID: ACCOUNT_ID,
-		title: "БРВ"
-	},
-	{
-		_id: "3",
-		accountID: ACCOUNT_ID,
-		title: "БУТ"
-	},
-	{
-		_id: "4",
-		accountID: ACCOUNT_ID,
-		title: "ВП"
-	},
-	{
-		_id: "5",
-		accountID: ACCOUNT_ID,
-		title: "ВПП"
-	},
-	{
-		_id: "6",
-		accountID: ACCOUNT_ID,
-		title: "ДГ"
-	},
-	{
-		_id: "7",
-		accountID: ACCOUNT_ID,
-		title: "ДЕР"
-	},
-	{
-		_id: "8",
-		accountID: ACCOUNT_ID,
-		title: "ЖКУ"
-	},
-	{
-		_id: "9",
-		accountID: ACCOUNT_ID,
-		title: "ИНД"
-	},
-	{
-		_id: "10",
-		accountID: ACCOUNT_ID,
-		title: "КАМ"
+		_id: ACCOUNT_ID,
+		users: [
+			{
+				_id: USER_ID,
+				admin: true,
+				photo: "https://pp.vk.me/c631525/v631525862/31fa6/wGLCQfdOO4g.jpg",
+				name: "Александр",
+				city: "Москва",
+				username: "admin",
+				password: utils.cryptoPass("1234"),
+				balance: 4750.00,
+				create: validator.toDate("2016-04-22 11:21"),
+				visite: validator.toDate("2016-04-22 11:21")
+			}
+		],
+		sites: [
+			{
+				_id: SITE_ID,
+				domain: "resumekraft.ru"
+			}
+		],
+		status: [
+			{
+				_id: "1",
+				title: "Новый",
+				color: 0
+			},
+			{
+				_id: "2",
+				title: "В работе",
+				color: 6
+			},
+			{
+				_id: "3",
+				title: "Думает",
+				color: 3
+			},
+			{
+				_id: "4",
+				title: "Согласование",
+				color: 9
+			},
+			{
+				_id: "5",
+				title: "Оплачен",
+				color: 14
+			}
+		],
+		tags: [
+			{
+				_id: "1",
+				title: "БР",
+				visible: true
+			},
+			{
+				_id: "2",
+				title: "БРВ",
+				visible: true
+			},
+			{
+				_id: "3",
+				title: "БУТ",
+				visible: true
+			},
+			{
+				_id: "4",
+				title: "ВП",
+				visible: true
+			},
+			{
+				_id: "5",
+				title: "ВПП",
+				visible: true
+			},
+			{
+				_id: "6",
+				title: "ДГ",
+				visible: true
+			},
+			{
+				_id: "7",
+				title: "ДЕР",
+				visible: true
+			},
+			{
+				_id: "8",
+				title: "ЖКУ",
+				visible: true
+			},
+			{
+				_id: "9",
+				title: "ИНД",
+				visible: true
+			},
+			{
+				_id: "10",
+				title: "КАМ",
+				visible: true
+			}
+		]
 	}
 ];

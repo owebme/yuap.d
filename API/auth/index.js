@@ -8,13 +8,20 @@ module.exports = function(app) {
 
 		if (!username || !password) return res.sendStatus(401);
 
-		app.db.collection('users').find({"username": username}).toArray(function(err, data){
+		app.db.collection('accounts').find({
+			"users": {
+				$elemMatch: { "username": username }
+			}
+		}).toArray(function(err, data){
 			if (err) {
 				return next(err);
 			}
 			else {
 				if (data.length){
-					var user = data[0];
+
+					var user = app.utils.findWhere(data[0].users, { "username": username });
+					user.accountID = data[0]._id;
+
 					if (logined === "false" && user.password !== app.utils.cryptoPass(password) || logined === "true" && user.password !== password){
 						res.send('<script language="Javascript" type="text/javascript">' +
 							'window.parent.postMessage({error: \'Не верный пароль\'}, "*");' +

@@ -1,0 +1,655 @@
+#fullCalendar {
+	display:block;
+    width:100%;
+    max-width:100%;
+	font-family:$helvetica;
+	user-select:none;
+    margin:-65px 0 35px;
+
+	table {
+		border-collapse:collapse;
+	}
+	th {
+		color:$gray_lighten;
+		font-family:$roboto;
+		font-weight:300;
+		font-size:16px;
+		padding:12px 8px 5px;
+		border:none;
+		text-transform:uppercase;
+	}
+	td {
+		color:rgba($black_lighten,.78);
+		font-size:18px;
+		font-weight:300;
+		border-color:#dae2e8;
+	}
+	.fc-day-grid-container {
+		cursor:pointer;
+		overflow:visible !important;
+	}
+	.fc-head-container {
+		border:none;
+		cursor:default;
+	}
+	.fc-day-header-hover {
+		color:$blue;
+		font-weight:400;
+	}
+	.fc-row-hover,
+	.fc-row-hover .fc-bg {
+		z-index:10;
+		overflow:visible;
+	}
+	.fc-day-number {
+		border:none;
+	}
+	.fc-day-event-hover {
+		background:rgba($azure,.04);
+	}
+	.fc-day-hover {
+		&.fc-day:not(.fc-state-highlight) {
+			position:relative;
+			background:rgba($blue,.02);
+
+			&:after {
+				content:"";
+				@include abs();
+				@include accelerate();
+				border:1px solid rgba($blue,.7);
+				border-radius:3px;
+				transform:translate3d(-1px, -1px, 0);
+			}
+		}
+		&.fc-day-number:not(.fc-state-highlight) {
+			color:$blue;
+		}
+	}
+	.fc-state-highlight {
+		position:relative;
+		font-weight:bold;
+		@include accelerate();
+	}
+	.fc-highlight {
+		background:rgba($azure,.08);
+		z-index:-1;
+	}
+}
+.fc-today {
+	background:rgba(#fff,.55);
+}
+.fc-time {
+	font-weight:bold;
+}
+.fc-title {
+	font-weight:400;
+}
+.fc-event {
+	position:relative;
+	display:block;
+	font-size:15px;
+	border-radius:3px;
+	border:1px solid;
+	font-weight:normal;
+}
+.fc-important {
+	position:absolute;
+	bottom:2px;
+	right:2px;
+	@include ui-icon(fire, 20px, 20px);
+}
+a.fc-more {
+	color:$black_lighten;
+	font-weight:400;
+	margin:1px 3px;
+	font-size:15px;
+	cursor:pointer;
+	text-decoration:none;
+}
+a.fc-more:hover {
+	color:$blue;
+	text-decoration:none;
+}
+.fc-limited {
+	display:none;
+}
+.fc-day-grid-event {
+	margin:1px 2px 0;
+	padding:0 5px;
+}
+
+/* Toolbar
+--------------------------------------------------------------------------------------------------*/
+
+.fc-toolbar {
+	position:relative;
+	width:100%;
+	height:44px;
+
+	.fc-titleHelp-button {
+		border:none;
+		padding:0;
+		font-family:$helvetica;
+		color:$gray_darken;
+		font-weight:300;
+		font-size:15px;
+		padding-top:5px;
+	}
+	.fc-left {
+		float:left;
+		@include flex("row", "flex-start", "center");
+		height:44px;
+	}
+	.fc-right {
+		position:relative;
+		float:right;
+		@include flex("row", "flex-end", "center");
+		height:44px;
+		z-index:1;
+
+		.fc-button-group {
+			@include flex("row", "flex-end", "center");
+		}
+		.fc-button {
+			height:29px;
+			padding:0 7px;
+			overflow:hidden;
+
+			&:after {
+				width:16px;
+				height:16px;
+			}
+		}
+		.fc-prev-button {
+			&:hover {
+				&:after {
+					@include ui-icon(arrowLeft_white);
+				}
+			}
+		}
+		.fc-next-button {
+			&:hover {
+				&:after {
+					@include ui-icon(arrowRight_white);
+				}
+			}
+		}
+	}
+	.fc-center {
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:44px;
+		@include flex("row", "center", "center");
+	}
+	h2 {
+		color:$blue_gray;
+		font-family:$helvetica;
+		font-size:23.5px;
+		line-height:24px;
+		font-weight:400;
+		margin:0;
+
+		&:first-letter {
+			text-transform:uppercase;
+		}
+	}
+}
+.fc-button-group {
+	display:inline-block;
+	@extend .btn-group;
+}
+.fc-button {
+	@extend .btn;
+	@extend .btn-sm;
+	@extend .btn-hover-fill;
+}
+.fc-prev-button {
+	@extend .paginate_button.previous;
+}
+.fc-next-button {
+	@extend .paginate_button.next;
+}
+.fc {
+	direction:ltr;
+	text-align:left;
+}
+.fc-rtl {
+	text-align:right;
+}
+.fc-unthemed .fc-popover {
+	background-color:#fff;
+}
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover .fc-header {
+	background:#eee;
+}
+.fc-unthemed .fc-popover .fc-header .fc-close {
+	color:#666;
+}
+
+/* Popover
+--------------------------------------------------------------------------------------------------*/
+
+.fc-popover {
+	position:absolute;
+	box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+
+.fc-popover .fc-header { /* TODO:be more consistent with fc-head/fc-body */
+	padding:2px 4px;
+}
+
+.fc-popover .fc-header .fc-title {
+	margin:0 2px;
+}
+
+.fc-popover .fc-header .fc-close {
+	cursor:pointer;
+}
+
+.fc-ltr .fc-popover .fc-header .fc-title,
+.fc-rtl .fc-popover .fc-header .fc-close {
+	float:left;
+}
+
+.fc-rtl .fc-popover .fc-header .fc-title,
+.fc-ltr .fc-popover .fc-header .fc-close {
+	float:right;
+}
+
+/* unthemed */
+
+.fc-unthemed .fc-popover {
+	border-width:1px;
+	border-style:solid;
+}
+
+.fc-unthemed .fc-popover .fc-header .fc-close {
+	font-size:.9em;
+	margin-top:2px;
+}
+
+/* jqui themed */
+
+.fc-popover > .ui-widget-header + .ui-widget-content {
+	border-top:0; /* where they meet, let the header have the border */
+}
+
+
+/* Misc Reusable Components
+--------------------------------------------------------------------------------------------------*/
+
+.fc-divider {
+	border-style:solid;
+	border-width:1px;
+}
+
+hr.fc-divider {
+	height:0;
+	margin:0;
+	padding:0 0 2px; /* height is unreliable across browsers, so use padding */
+	border-width:1px 0;
+}
+
+.fc-clear {
+	clear:both;
+}
+
+.fc-bg,
+.fc-bgevent-skeleton,
+.fc-highlight-skeleton,
+.fc-helper-skeleton {
+	/* these element should always cling to top-left/right corners */
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+}
+
+.fc-bg {
+	bottom:0; /* strech bg to bottom edge */
+}
+
+.fc-bg table {
+	height:100%; /* strech bg to bottom edge */
+}
+
+
+/* Tables
+--------------------------------------------------------------------------------------------------*/
+
+.fc table {
+	width:100%;
+	box-sizing:border-box; /* fix scrollbar issue in firefox */
+	table-layout:fixed;
+	border-collapse:collapse;
+	border-spacing:0;
+	font-size:1em; /* normalize cross-browser */
+}
+
+.fc th {
+	text-align:center;
+}
+
+.fc th,
+.fc td {
+	border-style:solid;
+	border-width:1px;
+	padding:0;
+	vertical-align:top;
+}
+
+.fc td.fc-today {
+	border-style:double; /* overcome neighboring borders */
+}
+
+
+/* Fake Table Rows
+--------------------------------------------------------------------------------------------------*/
+
+.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */
+	/* no visible border by default. but make available if need be (scrollbar width compensation) */
+	border-style:solid;
+	border-width:0;
+}
+
+.fc-row table {
+	/* don't put left/right border on anything within a fake row.
+	   the outer tbody will worry about this */
+	border-left:0 hidden transparent;
+	border-right:0 hidden transparent;
+
+	/* no bottom borders on rows */
+	border-bottom:0 hidden transparent;
+}
+
+.fc-row:first-child table {
+	border-top:0 hidden transparent; /* no top border on first row */
+}
+
+
+/* Day Row (used within the header and the DayGrid)
+--------------------------------------------------------------------------------------------------*/
+
+.fc-row {
+	position:relative;
+}
+
+.fc-row .fc-bg {
+	z-index:1;
+}
+
+/* highlighting cells & background event skeleton */
+
+.fc-row .fc-bgevent-skeleton,
+.fc-row .fc-highlight-skeleton {
+	bottom:0; /* stretch skeleton to bottom of row */
+}
+
+.fc-row .fc-bgevent-skeleton table,
+.fc-row .fc-highlight-skeleton table {
+	height:100%; /* stretch skeleton to bottom of row */
+}
+
+.fc-row .fc-highlight-skeleton td,
+.fc-row .fc-bgevent-skeleton td {
+	border-color:transparent;
+}
+
+.fc-row .fc-bgevent-skeleton {
+	z-index:2;
+
+}
+
+.fc-row .fc-highlight-skeleton {
+	z-index:3;
+}
+
+/*
+row content (which contains day/week numbers and events) as well as "helper" (which contains
+temporary rendered events).
+*/
+
+.fc-row .fc-content-skeleton {
+	position:relative;
+	z-index:4;
+	padding-bottom:2px; /* matches the space above the events */
+}
+
+.fc-row .fc-helper-skeleton {
+	z-index:5;
+}
+
+.fc-row .fc-content-skeleton td,
+.fc-row .fc-helper-skeleton td {
+	/* see-through to the background below */
+	background:none; /* in case <td>s are globally styled */
+	border-color:transparent;
+
+	/* don't put a border between events and/or the day number */
+	border-bottom:0;
+}
+
+.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */
+.fc-row .fc-helper-skeleton tbody td {
+	/* don't put a border between event cells */
+	border-top:0;
+}
+
+
+/* Scrolling Container
+--------------------------------------------------------------------------------------------------*/
+
+.fc-scroller {
+	-webkit-overflow-scrolling:touch;
+}
+
+/* TODO:move to agenda/basic */
+.fc-scroller > .fc-day-grid,
+.fc-scroller > .fc-time-grid {
+	position:relative; /* re-scope all positions */
+	width:100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */
+}
+
+
+/* Global Event Styles
+--------------------------------------------------------------------------------------------------*/
+
+/* overpower some of bootstrap's and jqui's styles on <a> tags */
+.fc-event,
+.ui-widget .fc-event {
+	color:$black_lighten; /* default TEXT color */
+	text-decoration:none; /* if <a> has an href */
+}
+.fc-event:hover {
+	color:$black;
+	text-decoration:none;
+}
+.fc-event.fc-selected {
+	color:$blue;
+}
+
+.fc-event[href],
+.fc-event.fc-draggable {
+	cursor:pointer; /* give events with links and draggable events a hand mouse pointer */
+}
+
+.fc-not-allowed, /* causes a "warning" cursor. applied on body */
+.fc-not-allowed .fc-event { /* to override an event's custom cursor */
+	cursor:not-allowed;
+}
+
+.fc-event .fc-bg { /* the generic .fc-bg already does position */
+	z-index:1;
+	background:#fff;
+	opacity:.25;
+	filter:alpha(opacity=25); /* for IE */
+}
+
+.fc-event .fc-content {
+	position:relative;
+	z-index:2;
+}
+
+/* resizer (cursor AND touch devices) */
+
+.fc-event .fc-resizer {
+	position:absolute;
+	z-index:4;
+}
+
+/* resizer (touch devices) */
+
+.fc-event .fc-resizer {
+	display:none;
+}
+
+.fc-event.fc-allow-mouse-resize .fc-resizer,
+.fc-event.fc-selected .fc-resizer {
+	/* only show when hovering or selected (with touch) */
+	display:block;
+}
+
+/* hit area */
+
+.fc-event.fc-selected .fc-resizer:before {
+	/* 40x40 touch area */
+	content:"";
+	position:absolute;
+	z-index:9999; /* user of this util can scope within a lower z-index */
+	top:50%;
+	left:50%;
+	width:40px;
+	height:40px;
+	margin-left:-20px;
+	margin-top:-20px;
+}
+
+
+/* Event Selection (only for touch devices)
+--------------------------------------------------------------------------------------------------*/
+
+.fc-event.fc-selected {
+	z-index:9999 !important; /* overcomes inline z-index */
+	box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.fc-event.fc-selected.fc-dragging {
+	box-shadow:0 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+/* popover that appears when "more" link is clicked */
+
+.fc-day-grid .fc-row {
+	z-index:1; /* make the "more" popover one higher than this */
+}
+
+.fc-more-popover {
+	z-index:2;
+	width:220px;
+}
+
+.fc-more-popover .fc-event-container {
+	padding:10px;
+}
+
+/* Utilities
+--------------------------------------------------------------------------------------------------*/
+
+.fc-unselectable {
+	-webkit-user-select:none;
+	 -khtml-user-select:none;
+	   -moz-user-select:none;
+	    -ms-user-select:none;
+	        user-select:none;
+	-webkit-touch-callout:none;
+	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
+
+/* View Structure
+--------------------------------------------------------------------------------------------------*/
+
+/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */
+/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */
+.fc-view-container *,
+.fc-view-container *:before,
+.fc-view-container *:after {
+	-webkit-box-sizing:content-box;
+	   -moz-box-sizing:content-box;
+	        box-sizing:content-box;
+}
+
+.fc-view, /* scope positioning and z-index's for everything within the view */
+.fc-view > table { /* so dragged elements can be above the view's main element */
+	position:relative;
+	z-index:1;
+}
+
+/* BasicView
+--------------------------------------------------------------------------------------------------*/
+
+/* day row structure */
+
+.fc-basicWeek-view .fc-content-skeleton,
+.fc-basicDay-view .fc-content-skeleton {
+	/* we are sure there are no day numbers in these views, so... */
+	padding-top:1px; /* add a pixel to make sure there are 2px padding above events */
+	padding-bottom:1em; /* ensure a space at bottom of cell for user selecting/clicking */
+}
+
+.fc-basic-view .fc-body .fc-row {
+	min-height:4em; /* ensure that all rows are at least this tall */
+}
+
+/* a "rigid" row will take up a constant amount of height because content-skeleton is absolute */
+
+.fc-row.fc-rigid {
+	overflow:hidden;
+}
+
+.fc-row.fc-rigid .fc-content-skeleton {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+}
+
+/* week and day number styling */
+
+.fc-basic-view .fc-week-number,
+.fc-basic-view .fc-day-number {
+	padding:8px;
+}
+
+.fc-basic-view td.fc-week-number span,
+.fc-basic-view td.fc-day-number {
+	padding-bottom:2px;
+}
+
+.fc-basic-view .fc-week-number {
+	text-align:center;
+}
+
+.fc-basic-view .fc-week-number span {
+	/* work around the way we do column resizing and ensure a minimum width */
+	display:inline-block;
+	min-width:1.25em;
+}
+
+.fc-ltr .fc-basic-view .fc-day-number {
+	text-align:right;
+}
+
+.fc-rtl .fc-basic-view .fc-day-number {
+	text-align:left;
+}
+
+.fc-day-number.fc-other-month {
+	opacity:0.3;
+	filter:alpha(opacity=30); /* for IE */
+	/* opacity with small font can sometimes look too faded
+	   might want to set the 'color' property instead
+	   making day-numbers bold also fixes the problem */
+}

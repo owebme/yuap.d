@@ -1,0 +1,195 @@
+<popup-manager-tags class="popup__wrapper">
+
+    <div class="popup__container">
+        <div dgClick={ hide } class="popup__close"></div>
+        <h3 class="popup__title text-left">
+            Менеджер тэгов
+        </h3>
+        <div class="row">
+            <div class="popup__table__wrapper">
+                <div class="popup__table__container">
+                    <table class="popup__table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Видимость</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="cell__text">
+                                    <input onKeydown={ onKeydownAdd } class="form__control sm" type="text" autocomplete="off" placeholder="Новый тэг"><span onClick={ onAdd } class="button button__add"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="{ 'visible' : item.visible }" each={ item in items } no-reorder>
+                                <td class="cell__text" if={ item.editable }>
+                                    <input onKeydown={ onKeydownApply } class="form__control sm" type="text" autocomplete="off" value={ item.title }><span onClickUpdate={ onApply } class="button button__apply"></span>
+                                </td>
+                                <td class="cell__text" if={ !item.editable }>
+                                    <p>{ item.title }</p><span onClickUpdate={ onEdit } class="button button__edit"></span>
+                                </td>
+                                <td>
+                                    <span onClickUpdate={ onVisible } class="button button__visible__control { item.visible ? 'button__visible' : 'button__unvisible' }"></span>
+                                </td>
+                                <td>
+                                    <span onClick={ onRemove } class="button button__remove"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row popup__footer text-right">
+            <span dgClick={ onCancel } id="popup-manager-tags-onCancel" class="btn btn-md btn-upper btn-hover-fill">Отменить</span>
+            <span dgClick={ onSave } id="popup-manager-tags-onSave" class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length } { btn-loading : saving }">Сохранить</span>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.active = false;
+    $.saving = false;
+    $.name = "manager-tags";
+    $.items = [];
+
+    this.on("mount", function(){
+        $.init();
+    });
+
+    $.init = function(){
+        $.items = _.copyArray($store.tags.get());
+        $.update();
+    };
+
+    $.onAdd = function(e){
+        var $input = $$(e.currentTarget).prev(),
+            value = $input.val();
+
+        if (value.length) $.addItem($input, value);
+    };
+
+    $.onKeydownAdd = function(e){
+        var $input = $$(e.currentTarget),
+            value = $input.val();
+
+        if (e.which === KEY.ENTER && value.length){
+            e.preventDefault();
+            $.addItem($input, value);
+        }
+        return true;
+    };
+
+    $.onEdit = function(){
+        this.item.editable = true;
+    };
+
+    $.onApply = function(e){
+        var value = $$(e.currentTarget).prev().val();
+        if (value.length) $.setItem(this.item, value);
+    };
+
+    $.onKeydownApply = function(e){
+        var value = $$(e.currentTarget).val();
+
+        if (e.which === KEY.ENTER && value.length){
+            e.preventDefault();
+            $.setItem(this.item, value);
+        }
+        return true;
+    };
+
+    $.onVisible = function(){
+        this.item.visible = !this.item.visible;
+    };
+
+    $.onRemove = function(){
+        $.items.splice($.items.indexOf(this.item), 1);
+        $.update();
+    };
+
+    $.onCancel = function(e){
+        $.hide();
+    };
+
+    $.onSave = function(e){
+        $.saving = true;
+        $.update();
+
+        var removeTags = _.difference(
+            _.pluck($store.tags.get(), "_id"),
+            _.pluck($.items, "_id")
+        );
+
+        var removeList = null;
+        if (removeTags.length){
+            removeList = {
+                ids: [],
+                tags: removeTags
+            };
+            _.each($store.data.get(), function(item){
+                _.each(item.tags, function(tag){
+                    if (_.inArray(removeTags, tag)){
+                        removeList.ids.push(item._id);
+                        item.tags.splice(item.tags.indexOf(tag), 1);
+                        $store.data.select({'_id': item._id})
+                        .set("tags", item.tags);
+                    }
+                });
+            });
+        }
+
+        app.request("setDataTags", {
+            tags: $.clearData(),
+            removeList: removeList
+        })
+        .then(function(data){
+            if (data && data.length){
+                $.saveStore(data);
+            }
+            $.hide();
+        },
+        function(){
+            $.saving = false;
+            $.update();
+        });
+    };
+
+    $.clearData = function(){
+        _.each($.items, function(item){
+            delete item.editable;
+        });
+        return $.items;
+    };
+
+    $.saveStore = function(data){
+        $store.tags.set(data);
+    };
+
+    $.setItem = function(item, value){
+        item.title = value;
+        item.editable = false;
+    };
+
+    $.addItem = function(input, value){
+        $.items.unshift({
+            _id: null,
+            title: value,
+            visible: true
+        });
+        input.val('');
+    };
+
+    $.hide = function(){
+        if ($.saving) $.saving = false;
+        $Popup.hide();
+    };
+
+</script>
+
+</popup-manager-tags>

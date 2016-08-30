@@ -1,25 +1,14 @@
 .popup {
     opacity:0.01;
     @include abs(fixed);
-    @include flex("row", "center", "center");
     @include accelerate();
     visibility:hidden;
     background:linear-gradient(135deg, rgba($bg_color,.76), rgba(40,47,51,.76));
     text-align:center;
     will-change:opacity;
     transition:opacity 0.15s $cubic57, visibility 0s 0.15s;
-    z-index:200;
+    z-index:101;
 
-    &__wrapper {
-        position:relative;
-        padding:40px 50px;
-        background-color:#fff;
-        border-radius:9px;
-        min-width:540px;
-        will-change:transform;
-        transform:translate3d(0, 0, 0) scale3d(0.75, 0.75, 1);
-        transition:transform 0.15s $cubic57;
-    }
     &__title {
         color:$blue;
         margin-bottom:25px;
@@ -29,7 +18,12 @@
         }
     }
     &__footer {
+        font-size:0;
         padding-top:45px;
+
+        .btn {
+            margin-left:10px;
+        }
     }
     &__icon {
         display:block;
@@ -50,11 +44,26 @@
         @include ui-icon(close_strong, 29px, 29px);
         cursor:pointer;
     }
-    &[data-align="center-right"]{
+    &__wrapper {
+        @include abs();
+        @include flex("row", "center", "center");
+    }
+    &__container {
+        opacity:0.001;
+        position:relative;
+        padding:40px 50px;
+        background-color:#fff;
+        border-radius:9px;
+        min-width:540px;
+        will-change:transform, opacity;
+        transform:translate3d(0, 0, 0) scale3d(0.75, 0.75, 1);
+        transition:transform 0.15s $cubic57, opacity 0.15s $cubic57;
+    }
+    &__wrapper[data-align="center-right"]{
         @include flex("row", "flex-end", "center");
         text-align:left;
 
-        .popup__wrapper {
+        .popup__container {
             min-width:480px;
             padding:30px 40px 40px;
             border-radius:9px 0 0 9px;
@@ -69,9 +78,21 @@
         visibility:visible;
         transition:opacity 0.25s $cubic2501, visibility 0s;
 
-        .popup__wrapper {
-            transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
-            transition:transform 0.25s $cubic215;
+        .popup__wrapper[data-active="true"] {
+            z-index:1;
+
+            .popup__container {
+                opacity:1;
+                transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
+                transition:transform 0.25s $cubic215, opacity 0.25s $cubic2501;
+            }
         }
+    }
+}
+
+@keyframes popup__active {
+    100% {
+        opacity:1;
+        transform:translate3d(0, 0, 0) scale3d(1, 1, 1);
     }
 }

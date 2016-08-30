@@ -40,6 +40,7 @@
                 screens: '.screen',
                 effect: 'space',
                 mousewheel: false,
+                disableMouse: true,
                 spaceClass: 'horizontal__space',
                 activeClass: 'screen--active',
                 duration: app.device.isMobile ? 375 : 450
@@ -58,8 +59,8 @@
             scroll.on('scrollEnd', function(){
                 if (WD.index !== WD.marquee.index){
                     WD.state = WD.marquee.section;
-                    if (WD.state === "main") app.setUrl(app.prevUrl);
-                    else if (WD.state === "messenger") app.setUrl("messenger");
+                    if (WD.state === "main") $Router.back();
+                    else if (WD.state === "messenger") $Router.set("/messenger");
                 }
             });
 

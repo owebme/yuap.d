@@ -1,0 +1,154 @@
+<section-events-calendar-list class="event__calendar__list" data-align="{ align }" data-active="{ active }" style="top: { top }px; left: { left }px;">
+
+    <div if={ editable } class="event__editable">
+        <div class="event__header">
+            <div class="event__header__title">
+                <input class="event__header__input form__control form__control--hovered" type="text" value="{ item.title }" placeholder="Название события" autocomplete="off">
+            </div>
+            <div class="event__header__color">
+                <div class="event__header__color__item fc-event-color-bg{ item.color }"></div>
+            </div>
+            <div class="event__header__important">
+                <div onClick={ set.onImportant } class="event__header__important__item { active : item.fire }"></div>
+            </div>
+        </div>
+        <!-- <div class="event__tags">
+            <div class="event__tags__item">Позвонить</div>
+            <div class="event__tags__item">Отпр. email</div>
+            <div class="event__tags__item">Встреча</div>
+        </div> -->
+        <div class="event__date">
+            <div class="event__date__item event__date__value">01/09 - 03/09</div>
+            <div onClick={ set.offAllDay } class="event__date__item event__date__time { active : !item.allDay }">10:00</div>
+            <div><input onClick={ set.swAllDay } type="checkbox" class="switcher small" checked="{ item.allDay }"></div>
+            <div onClick={ set.onAllDay } class="event__date__item event__date__allday { active : item.allDay }">весь день</div>
+        </div>
+        <div class="event__attach">
+            <div class="event__attach__icon event__attach__icon--email"></div>
+            <div if={ item.email } class="input__group">
+                <input class="form__control form__control--hovered sm" type="text" value="{ item.email }" autocomplete="off">
+            </div>
+            <div if={ !item.email } class="event__attach__button"><span class="event__attach__button__plus">+</span>Добавить</div>
+        </div>
+        <div class="event__attach">
+            <div class="event__attach__icon event__attach__icon--phone"></div>
+            <div if={ item.phone } class="input__group">
+                <input class="form__control form__control--hovered sm" type="text" value="{ item.phone }" autocomplete="off">
+            </div>
+            <div if={ !item.phone } class="event__attach__button"><span class="event__attach__button__plus">+</span>Добавить</div>
+        </div>
+        <!-- <div class="event__attach">
+            <div class="event__attach__icon event__attach__icon--location"></div>
+            <div class="event__attach__button"><span class="event__attach__button__plus">+</span>Местоположение</div>
+        </div> -->
+        <div class="event__attach">
+            <div class="event__attach__icon event__attach__icon--comments"></div>
+            <div if={ item.comments } class="input__group">
+                <textarea class="form__control sm form__control--hovered textarea-xxs">{ item.comments }</textarea>
+            </div>
+            <div if={ !item.comments } class="event__attach__button"><span class="event__attach__button__plus">+</span>Комментарий</div>
+        </div>
+        <div class="event__buttons">
+            <div class="btn-group">
+                <div class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
+                <div onClick={ onHide } class="btn btn-hover-fill btn-md">Отменить</div>
+                <div class="btn btn-hover-fill btn-md">Сохранить</div>
+            </div>
+        </div>
+    </div>
+    <div if={ !editable }>
+        <div class="event__list__timeline"></div>
+        <div class="event__list__item">
+            <div if={ item.fire } class="event__list__item__important"></div>
+            <div class="event__list__item__time { event__list__item__time--allday : item.allDay }">{ item.allDay ? 'Весь день' : get.time(item.start._d) }</div>
+            <div class="event__list__item__color">
+                <div class="event__list__item__color__item fc-event-color-border{ item.color }"></div>
+            </div>
+            <div class="event__list__item__container">
+                <div class="event__list__item__title">{ item.title }</div>
+                <div if={ item.type === "callphone" } class="event__list__item__strong">{ item.phone }</div>
+                <a if={ item.type === "sendmail" } href="mailto:{ item.email }" class="event__list__item__link">{ item.email }</a>
+                <div if={ item.comments } class="event__list__item__text">{ item.comments }</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this;
+    $.top = 0;
+    $.left = 0;
+    $.align = "down-right";
+    $.item = null;
+    $.editable = false;
+    $.callback = null;
+    $.active = false;
+
+    $.edit = function(item, cords, callback){
+        if (item && callback){
+            if ($.editable && $.item && $.item._id == item._id){
+                $.editable = false;
+                $.hide();
+            }
+            else {
+                $.callback = callback;
+                $.editable = true;
+                $.onShow(item, cords);
+            }
+        }
+    };
+
+    $.show = function(item, cords){
+        if ($.editable) return;
+        $.onShow(item, cords);
+    };
+
+    $.onShow = function(item, cords){
+        $.item = item;
+        $.top = cords.pageY - cords.offsetY;
+        $.left = $$(cords.currentTarget).offset().left + cords.currentTarget.clientWidth;
+        $.active = true;
+        $.update();
+    };
+
+    $.onSave = function(){
+        $.callback($.item);
+        $.hide();
+    };
+
+    $.get = {
+        time: function(date){
+            if (date) return moment(date).format('h:mm');
+        }
+    };
+
+    $.set = {
+        onImportant: function(){
+            $.item.fire = !$.item.fire;
+        },
+        swAllDay: function(e){
+            $.item.allDay = !$.item.allDay;
+        },
+        onAllDay: function(e){
+            $.item.allDay = true;
+        },
+        offAllDay: function(e){
+            $.item.allDay = false;
+        }
+    };
+
+    $.hide = function(){
+        if ($.editable) return;
+        $.onHide();
+        $.update();
+    };
+
+    $.onHide = function(){
+        $.editable = false;
+        $.active = false;
+        $.callback = null;
+    };
+
+</script>
+
+</section-events-calendar-list>

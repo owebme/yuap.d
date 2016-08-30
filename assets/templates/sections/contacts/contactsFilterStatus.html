@@ -6,11 +6,11 @@
             <div onClick={ change.statusAll } class="dropmenu__item stAll { selected : statusAll }">
                 Все
             </div>
-            <div onClickUpdateAll={ change.status } each={ $store.status.get() } no-reorder class="dropmenu__item st {selected: active & !statusAll}">
-                <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
+            <div onClickUpdateAll={ change.status } each={ item in $store.status.get() } no-reorder class="dropmenu__item st {selected: item.active & !statusAll}">
+                <span class="dropmenu__item__color color__bg{ item.color }"></span>{ item.title }
             </div>
             <div class="dropmenu__item divider"></div>
-            <div onClick={ openStatusMenu } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
+            <a onClick={ onHide } href="#/control/status" class="dropmenu__item dropmenu__item__button edit">Изменить статусы</a>
         </div>
     </div>
 
@@ -31,6 +31,11 @@
         $.active = !$.active;
     };
 
+    $.onHide = function(){
+        $.active = false;
+        return true;
+    };
+
     $.change = {
         status: function(e){
 
@@ -40,11 +45,11 @@
                 item.active = false;
             });
 
-            this._item.active = !this._item.active;
+            this.item.active = !this.item.active;
 
             $.active = false;
 
-            var status = this._item.title;
+            var status = this.item.title;
 
             _.onEndTransition($.dropmenu[0], function(){
                 $Contacts.table.search.column(4, status);

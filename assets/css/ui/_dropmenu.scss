@@ -27,6 +27,9 @@
         .modal & {
             margin-top:10px;
         }
+        .popup & {
+            margin-top:10px;
+        }
         &:before {
             border-bottom: 11px solid rgba(0, 0, 0, 0.2);
             border-left: 11px solid rgba(0, 0, 0, 0);
@@ -137,6 +140,45 @@
                 transform:translate3d(-3px, -2px, 0);
                 margin-right:6px;
                 @include ui-icon(edit, 18px, 18px);
+            }
+        }
+    }
+    &__palette__wrapper {
+        width:288px;
+        font-size:0;
+        padding:10px 15px;
+        text-align:left;
+        box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
+    }
+    &__palette__item {
+        position:relative;
+        display:inline-block;
+        width:22px;
+        height:22px;
+        border-radius:4px;
+        margin:6px 5px;
+        cursor:pointer;
+
+        &:after {
+            opacity:0;
+            content:"";
+            position:absolute;
+            top:-4px;
+            left:-4px;
+            width:calc(100% + 8px);
+            height:calc(100% + 8px);
+            border:1px solid rgba($blue,.8);
+            border-radius:6px;
+        }
+        &:hover:after {
+            opacity:1;
+        }
+        &.selected {
+            cursor:default;
+
+            &:after {
+                opacity:1;
+                border-color:$gray_lighten;
             }
         }
     }

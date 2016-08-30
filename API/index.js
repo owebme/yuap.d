@@ -2,15 +2,19 @@ var checkAuth = require('./auth/checkAuth');
 
 module.exports = function(app){
 
-	// Data
+	// Initialize
 	app.get('/api/data/init', checkAuth, require('./data/dataInit')(app));
 
-	// app.use('/api/dashboard', checkAuth, require('./data/dashboard'));
-
-	// app.use('/api/data/list', checkAuth, require('./data/dataList'));
-
+	// Data
 	require('./data/dataList')(app, checkAuth, '/api/data/list');
 
+	// Status
+	require('./data/dataStatus')(app, checkAuth, '/api/data/status');
+
+	// Tags
+	require('./data/dataTags')(app, checkAuth, '/api/data/tags');
+
+	// Messenger
 	require('./messenger')(app);
 
 }

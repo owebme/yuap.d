@@ -1,16 +1,21 @@
 <ui-dropmenu class="dropmenu { dropmenu--active : active }" data-align="{ align }">
 
     <div if={ !type } class="dropmenu__wrapper">
-        <div onClick={ onSelect } native="true" each={ items } no-reorder class="dropmenu__item">
-            { title }
+        <div onClick={ onSelect } native="true" each={ item in items } no-reorder class="dropmenu__item">
+            { item.title }
         </div>
     </div>
+
     <div if={ type === "status" } class="dropmenu__wrapper">
-        <div onClick={ onSelect } native="true" each={ items } no-reorder class="dropmenu__item { selected : _id == value }">
-            <span class="dropmenu__item__color color__bg{ color }"></span>{ title }
+        <div onClick={ onSelect } native="true" each={ item in items } no-reorder class="dropmenu__item { selected : item._id == value }">
+            <span class="dropmenu__item__color color__bg{ item.color }"></span>{ item.title }
         </div>
         <div class="dropmenu__item divider"></div>
-        <div onClick={ openStatusMenu } class="dropmenu__item dropmenu__item__button edit">Изменить статусы</div>
+        <a href="#/control/status" class="dropmenu__item dropmenu__item__button edit">Изменить статусы</a>
+    </div>
+
+    <div if={ type === "palette" } class="dropmenu__wrapper dropmenu__palette__wrapper">
+        <div onClick={ onSelect } native="true" each={ item in items } no-reorder class="dropmenu__palette__item { selected : item == value } color__bg{ item }"></div>
     </div>
 
 <script>
@@ -20,7 +25,7 @@
 
     $.active = false;
 
-    $.items = {};
+    $.items = [];
 
     $.rootScroll = null;
 
@@ -56,10 +61,10 @@
             $.rootScroll = params.rootScroll ? params.rootScroll : app.$dom.scroll;
 
             setTimeout(function(){
-                $.rootScroll.on(EV.click + ".dropdown", function(e){
+                app.$dom.body.on(EV.click + ".dropdown", function(e){
                     $.hide();
                 });
-            }, 100);
+            }, 5);
 
             $.update();
 
@@ -73,23 +78,19 @@
     };
 
     $.hide = function(){
-        $.rootScroll.off(EV.click + ".dropdown");
+        app.$dom.body.off(EV.click + ".dropdown");
         $.active = false;
         if ($._id) $._id = null;
         $.update();
     };
 
     $.onSelect = function(){
-        var id = this._id;
+        var id = this.item._id || this.item;
         $.value = id;
-        if (this._item && _.isFunction(this._item.callback)) {
-            this._item.callback();
+        if (this.item && _.isFunction(this.item.callback)) {
+            this.item.callback();
         }
         if ($.callback) $.callback(id);
-    };
-
-    $.openStatusMenu = function(){
-
     };
 
 </script>

@@ -1,113 +1,73 @@
 module.exports = function(app, checkAuth, url){
 
-	app.route.put('/viewed', function(req, res) {
+	var route = app.express.Router();
 
-		req.body.forEach(function(item){
-			app.db.collection('data').update(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
+	var handlerUpdate = function(req, res, ids, update){
+
+		app.db.collection('data').update({
+			"_id": {
+				$in: ids.map(app.ObjectId)
 			},
-			{
-				$set: {
-					"new": false
-				}
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
+			"accountID": req.session.user.accountID
+		},{
+			$set: update
+		},{
+			multi: true
+		},
+		function(err, data){
+			app.errHandler(res, err, data);
+		});
+	};
+
+	route.put('/viewed', function(req, res) {
+		handlerUpdate(req, res, req.body, {"new": false});
+	});
+
+	route.put('/important', function(req, res) {
+		handlerUpdate(req, res, req.body, {"important": true});
+	});
+
+	route.put('/unimportant', function(req, res) {
+		handlerUpdate(req, res, req.body, {"important": false});
+	});
+
+	route.put('/status', function(req, res) {
+		handlerUpdate(req, res, req.body.ids, {"status": req.body.status});
+	});
+
+	route.put('/state', function(req, res) {
+		handlerUpdate(req, res, req.body.ids, {"state": req.body.state});
+	});
+
+	route.put('/tags', function(req, res) {
+		handlerUpdate(req, res, req.body.ids, {"tags": req.body.tags});
+	});
+
+	route.get('/item/:id', function(req, res) {
+
+		app.db.collection('data').findOne({
+			"_id": app.ObjectId(req.params.id),
+			"accountID": req.session.user.accountID
+		},
+		function(err, data){
+			app.errHandler(res, err, data);
 		});
 	});
 
-	app.route.put('/important', function(req, res) {
+	route.delete('/remove', function(req, res) {
 
-		req.body.forEach(function(item){
-			app.db.collection('data').update(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
+		app.db.collection('data').remove({
+			"_id": {
+				$in: ids.map(app.ObjectId)
 			},
-			{
-				$set: {
-					"important": true
-				}
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
+			"accountID": req.session.user.accountID
+		},{
+			multi: true
+		},
+		function(err, data){
+			app.errHandler(res, err, data);
 		});
 	});
 
-	app.route.put('/unimportant', function(req, res) {
-
-		req.body.forEach(function(item){
-			app.db.collection('data').update(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
-			},
-			{
-				$set: {
-					"important": false
-				}
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
-		});
-	});
-
-	app.route.put('/status', function(req, res) {
-
-		if (!req.body || !req.body.ids || !req.body.status) return;
-
-		req.body.ids.forEach(function(item){
-			app.db.collection('data').update(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
-			},
-			{
-				$set: {
-					"status": req.body.status
-				}
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
-		});
-	});
-
-	app.route.put('/state', function(req, res) {
-
-		if (!req.body || !req.body.ids || !req.body.state) return;
-
-		req.body.ids.forEach(function(item){
-			app.db.collection('data').update(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
-			},
-			{
-				$set: {
-					"state": req.body.state
-				}
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
-		});
-	});
-
-	app.route.delete('/remove', function(req, res) {
-
-		if (!req.body.length) return;
-
-		req.body.forEach(function(item){
-			app.db.collection('data').remove(
-			{
-				"_id": app.ObjectId(item),
-				"siteID": req.session.user.siteID
-			}, function(err, data){
-				app.errHandler(res, err, data, app);
-			});
-		});
-	});
-
-	app.use(url, checkAuth, app.route);
+	app.use(url, checkAuth, route);
 };

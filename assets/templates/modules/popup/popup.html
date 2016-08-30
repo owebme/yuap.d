@@ -1,30 +1,120 @@
-<section-popup class="popup" data-align="center-right">
-
-    <div class="popup__wrapper">
-        <div class="popup__icon popup__icon__sendEmail"></div>
-        <h3 class="popup__title">
-            Отправить
-            <p class="subtitle">Карточку клиента на email</p>
-        </h3>
-        <div class="row">
-            <div class="input__group">
-                <input type="text" class="form__control" placeholder="Куда отправляем? E-mail">
-            </div>
-        </div>
-        <div class="row popup__footer">
-            <span class="btn btn-md btn-upper btn-hover-fill">Отправить</span>
-            <span class="btn btn-md btn-upper btn-simple popup__close">Отменить</span>
-        </div>
-    </div>
+<section-popup class="popup" data-open={ active }>
 
 <script>
 
-    var $ = this;
+    var $ = this,
+    $scope = $$($.root);
 
-    this.on("mount", function(){
+    $.active = false;
+    $.activePopup = null;
+    $.tags = {};
 
+    $.add = function(name, data, callback){
+        if (!$.tags[name]){
 
-    });
+            var $elem = $$('<popup-' + name + '>').appendTo($scope);
+
+            $.tags[name] = riot.mount($elem, 'popup-' + name, {data: data})[0];
+
+            if (callback && $.tags[name]){
+                $.tags[name].one("updated", function(){
+                    $.tags[name].el = $$($.tags[name].root);
+                    callback();
+                });
+            }
+        }
+    };
+
+    $.remove = function(name){
+        if (!$.tags[name]){
+            $.tags[name].unmount();
+            delete $.tags[name];
+        }
+    };
+
+    $.show = function(name, data){
+        $.activePopup
+        if ($.tags[name]){
+            $.hideActive(name);
+            $.tags[name].init(data);
+            $.inShow(name);
+        }
+        else {
+            $.add(name, data, function(){
+                $.hideActive(name);
+                setTimeout(function(){
+                    $.inShow(name);
+                }, 5);
+            });
+        }
+    };
+
+    $.inShow = function(popup){
+        if (popup && $.tags[popup] && !$.tags[popup].active){
+            $.popupShow($.tags[popup]);
+            if (!$.active) $.tags[popup].update();
+        }
+        if (!$.active){
+            $.active = true;
+            $.update();
+        }
+    };
+
+    $.inHide = function(){
+        if ($.active){
+            $.active = false;
+            $.activePopup = null;
+            $.update();
+        }
+    };
+
+    $.popupShow = function(popup){
+        if (!popup.active){
+            popup.active = true;
+            popup.el.attr("data-active", "true");
+            $.activePopup = popup.name;
+        }
+    };
+
+    $.popupHide = function(popup){
+        if (popup.active){
+            popup.active = false;
+            popup.el.attr("data-active", "false");
+        }
+    };
+
+    $.isActive = function(){
+        return _.where($.tags, {"active": true}).length;
+    };
+
+    $.hideActive = function(popup){
+        var prevPopup = _.findWhere($.tags, {"popupOpen": popup});
+
+        if (prevPopup){
+            $.popupHide($.tags[popup]);
+            $.popupShow(prevPopup);
+            delete prevPopup.popupOpen;
+        }
+        else {
+            _.each($.tags, function(item){
+                if (item.active) {
+                    if ($.tags[popup] && !$.tags[popup].active){
+                        item.popupOpen = popup;
+                    }
+                    $.popupHide(item);
+                }
+            });
+        }
+
+        setTimeout(function(){
+            if (!$.isActive()) $.inHide();
+        }, 20);
+    };
+
+    $.hide = function(){
+        $.hideActive($.activePopup);
+        $Router.back();
+    };
 
 </script>
 

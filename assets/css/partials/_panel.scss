@@ -43,12 +43,13 @@
                 vertical-align:middle;
                 margin-right:15px;
             }
-            &--callback {
+            &--events {
                 .panel__item__button__badge {
                     left:19px;
                 }
                 &:before {
-                    @include ui-icon(callback);
+                    @include ui-icon(events, 34px, 34px);
+                    transform:translate3d(0, -1px, 0);
                 }
             }
             &--messenger {

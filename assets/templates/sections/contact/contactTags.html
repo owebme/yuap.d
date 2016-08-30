@@ -15,12 +15,12 @@
     var $ = this;
 
     $.init = function(item){
-        $.item = item;
+        $.item = item ? item : (!item && $.item ? $store.data.get({"_id": $.item._id}) : null);
         $.update();
     };
 
     $.onEdit = function(){
-        $PopupTags.show($.item);
+        $Router.nav("/contact/" + $.item._id + "/tags");
     };
 
 </script>

@@ -50,7 +50,18 @@ $store.status = _.extend(new Baobab(), {
 });
 
 $store.tags = _.extend(new Baobab(), {
+    isVisible: function(){
+        var items = _.filter($store.tags.get(), function(item){
+            return item.visible === true
+        });
+        return items;
+    },
     getTitle: function(id){
         return $store.tags.get({'_id': String(id)}, 'title');
+    },
+    getIdByTitle: function(titles){
+        return _.map(titles, function(title){
+            return $store.tags.get({'title': title}, '_id');
+        });
     }
 });

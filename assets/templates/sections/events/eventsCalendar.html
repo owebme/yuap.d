@@ -1,0 +1,219 @@
+<section-events-calendar id="fullCalendar">
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    this.on("mount", function(){
+
+        $scope.on("mouseenter mouseleave", ".fc-day", function(e){
+            var $elem = $$(this),
+                index = $elem.index(),
+                $bg = $elem.closest(".fc-bg"),
+                $row = $bg.parent(),
+                $number = $bg
+                .next()
+                .find(".fc-day-number")
+                .eq(index),
+                $weekday = $.calendarHeader.find(".fc-day-header").eq(index);
+
+            if ($bg.next().find("tbody").find("td").eq(index).hasClass("fc-event-container")){
+                if (e.type === "mouseenter"){
+                    $elem.addClass("fc-day-event-hover");
+                    $number.addClass("fc-day-hover");
+                    $weekday.addClass("fc-day-header-hover");
+                }
+                else {
+                    $elem.removeClass("fc-day-event-hover");
+                    $number.removeClass("fc-day-hover");
+                    $weekday.removeClass("fc-day-header-hover");
+                }
+            }
+            else {
+                if (e.type === "mouseenter"){
+                    $row.addClass("fc-row-hover");
+                    $elem.addClass("fc-day-hover");
+                    $number.addClass("fc-day-hover");
+                    $weekday.addClass("fc-day-header-hover");
+                }
+                else {
+                    $row.removeClass("fc-row-hover");
+                    $elem.removeClass("fc-day-hover");
+                    $number.removeClass("fc-day-hover");
+                    $weekday.removeClass("fc-day-header-hover");
+                }
+            }
+        });
+
+        $scope.on("mouseenter mouseleave", ".fc-content-skeleton tbody tr:first td", function(e){
+            var $elem = $$(this),
+                index = $elem.index(),
+                $skeleton = $elem.closest(".fc-content-skeleton"),
+                $bg = $skeleton.prev(),
+                $number = $skeleton
+                .find("thead > .fc-day-number")
+                .eq(index),
+                $day = $bg
+                .find(".fc-day")
+                .eq(index),
+                $weekday = $.calendarHeader.find(".fc-day-header").eq(index);
+
+            if (e.type === "mouseenter"){
+                $day.addClass("fc-day-event-hover");
+                $number.addClass("fc-day-hover");
+                $weekday.addClass("fc-day-header-hover");
+            }
+            else {
+                $day.removeClass("fc-day-event-hover");
+                $number.removeClass("fc-day-hover");
+                $weekday.removeClass("fc-day-header-hover");
+            }
+        });
+
+        var today = new Date(),
+            y = today.getFullYear(),
+            m = today.getMonth(),
+            d = today.getDate();
+
+        $scope.fullCalendar({
+            customButtons: {
+                titleHelp: {
+                    text: 'Нажмите на день для доб. события'
+                }
+            },
+			header: {
+				left: 'titleHelp',
+				center: 'title',
+				right: 'prev,next,today'
+			},
+			defaultDate: today,
+			selectable: true,
+			selectHelper: true,
+            editable: true,
+			eventLimit: true, // allow "more" link when too many events
+            // color classes: [ event-blue | event-azure | event-green | event-orange | event-red ]
+			titleFormat: {
+                month: 'MMMM YYYY', // September 2015
+                week: "MMMM D YYYY", // September 2015
+                day: 'D MMM, YYYY'  // Tuesday, Sep 8, 2015
+            },
+            eventAfterAllRender: function(){
+                $.calendarHeader = $scope.find(".fc-head-container");
+            },
+            eventRender: function(item, element) {
+                if (item.fire){
+                    element.append('<div class="fc-important"></div>');
+                }
+            },
+            eventMouseover: function(item, jsEvent, view) {
+                $Events.list.show(item, jsEvent);
+            },
+            eventMouseout: function(item, jsEvent, view) {
+                $Events.list.hide();
+            },
+			select: function(start, end, jsEvent, view) {
+                //console.dir("1");
+                // if (event_title) {
+				// 	var eventData = {
+				// 		title: event_title,
+				// 		start: start,
+				// 		end: end
+				// 	};
+				// 	$scope.fullCalendar('renderEvent', eventData, true); // stick? = true
+				// }
+				$scope.fullCalendar('unselect');
+			},
+            eventClick: function(item, jsEvent, view) {
+console.dir(item);
+                $Events.list.edit(item, jsEvent, function(item){
+                    $scope.fullCalendar('renderEvent', item, true);
+                });
+
+                //console.dir(calEvent);
+
+                // alert('Event: ' + calEvent.title);
+                // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                // alert('View: ' + view.name);
+                //
+                // // change the border color just for fun
+                // $$(this).css('border-color', 'red');
+
+            },
+            // dayClick: function(date, jsEvent, view) {
+            //
+            //     console.dir(date);
+            //
+            //     // alert('Clicked on: ' + date.format());
+            //
+            //     //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+            //
+            //     // alert('Current view: ' + view.name);
+            //     //
+            //     // // change the day's background color just for fun
+            //     // $$(this).css('background-color', 'blue');
+            //
+            // },
+            events: [
+				{
+					_id: 1,
+					title: 'Позвонить',
+                    type: 'callphone',
+					start: new Date(y, m, d - 27, 10, 0),
+                    end: new Date(y, m, d - 27, 14, 0),
+                    phone: "89160172086",
+                    comments:'Поинтересоваться намерениями клиента по поводу суммы закупки товара',
+					allDay: true,
+                    fire: true,
+                    color: '1',
+					className: 'fc-event-color1'
+				},
+				{
+					_id: 2,
+					title: 'Отпр. email',
+                    type: 'sendmail',
+					start: new Date(y, m, d - 26, 11, 30),
+                    email: "index@resumekraft.ru",
+					allDay: false,
+                    color: '4',
+					className: 'fc-event-color4'
+				},
+                {
+					_id: 3,
+					title: 'Отпр. email',
+                    type: 'sendmail',
+					start: new Date(y, m, d - 26, 12, 30),
+					allDay: false,
+                    color: '3',
+					className: 'fc-event-color3'
+				},
+                {
+					_id: 4,
+					title: 'Позвонить',
+                    type: 'sendmail',
+					start: new Date(y, m, d - 25, 14, 00),
+					allDay: false,
+                    color: '4',
+					className: 'fc-event-color4'
+				},
+                {
+					_id: 5,
+					title: 'Позвонить',
+                    type: 'sendmail',
+					start: new Date(y, m, d - 24, 12, 00),
+					allDay: false,
+                    color: '5',
+					className: 'fc-event-color5'
+				}
+			],
+            timeFormat: 'h:mm'
+		});
+    });
+
+    this.on("unmount", function(){
+        $scope.fullCalendar('destroy');
+    });
+
+</script>
+
+</section-events-calendar>

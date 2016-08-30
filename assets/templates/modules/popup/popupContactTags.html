@@ -1,7 +1,7 @@
-<popup-tags class="popup" data-open="{ active }">
+<popup-contact-tags class="popup__wrapper">
 
-    <div class="popup__wrapper">
-        <div onClick={ hide } class="popup__close"></div>
+    <div class="popup__container">
+        <div dgClick={ hide } class="popup__close"></div>
         <h3 class="popup__title text-left">
             Тэги
             <p class="subtitle">{ isEmpty ? 'Для создание тэга введите текст в поле ниже и нажмите Enter ' : 'Для добавления тэга вы можете выбрать из списка ниже' }</p>
@@ -22,7 +22,8 @@
             </div>
         </div>
         <div class="row popup__footer text-right">
-            <span dgClick={ onSave } class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length }">Сохранить</span>
+            <span dgClick={ managerTags } id="popup-contact-tags-managerTags" class="btn btn-md btn-upper btn-hover-fill">Менеджер тегов</span>
+            <span dgClick={ onSave } id="popup-contact-tags-onSave" class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length } { btn-loading : saving }">Сохранить</span>
         </div>
     </div>
 
@@ -32,31 +33,44 @@
     $scope = $$($.root);
 
     $.active = false;
+    $.saving = false;
     $.isEmpty = false;
+    $.name = "contact-tags";
     $.storeItems = [];
 
     this.on("mount", function(){
         $.input = $scope.find(".tag__list__input");
         $.listControl = $scope.find(".tag__list__control");
+        if ($.opts.data) $.init($.opts.data);
     });
 
-    $.show = function(item){
-        $.active = true;
-        $.item = item;
+    $.init = function(data){
+        $.item = data ? data : $.item;
         $.items = [];
 
-        _.each(_.clone(item.tags), function(item){
+        _.each($.item.tags, function(item){
             $.items.push($store.tags.getTitle(item));
         });
 
         if ($.items.length) $.isEmpty = false;
         else $.isEmpty = true;
 
-        $.storeItems = _.clone($store.tags.get());
-
+        $.storeItems = _.copyArray($store.tags.isVisible());
         $.search();
-        $.update();
         $.onFocus();
+    };
+
+    $.refresh = function(){
+        if ($.item){
+            app.request("getDataListItem", $.item._id)
+            .then(function(data){
+                if (data){
+                    $.item.tags = data.tags;
+                    $.init();
+                    $.update();
+                }
+            });
+        }
     };
 
     $.onFocus = function(){
@@ -131,17 +145,62 @@
         return true;
     };
 
+    $.managerTags = function(){
+        $Router.nav("/control/tags");
+    };
+
     $.onSave = function(e){
         if ($.items.length){
-            $.hide();
+            $.saving = true;
             $.update();
+
+            var newTags = _.difference(
+                $.items,
+                _.pluck($store.tags.get(), "title")
+            );
+
+            if (newTags.length){
+                app.request("addDataTags", newTags)
+                .then(function(data){
+                    return data;
+                },
+                function(){
+                    $.saving = false;
+                    $.update();
+                })
+                .then(function(data){
+                    $.saveTags(data);
+                });
+            }
+            else {
+                $.saveTags();
+            }
         }
     };
 
+    $.saveTags = function(data){
+        if (data) $store.tags.concat(data);
+        var tags = $store.tags.getIdByTitle($.items);
+
+        app.request("setDataListTags", {
+            ids: [$.item._id],
+            tags: tags
+        })
+        .then(function(data){
+            $store.data.select({"_id": $.item._id}).set("tags", tags);
+            $.hide();
+        },
+        function(){
+            $.saving = false;
+            $.update();
+        });
+    };
+
     $.hide = function(){
-        $.active = false;
+        if ($.saving) $.saving = false;
+        $Popup.hide();
     };
 
 </script>
 
-</popup-tags>
+</popup-contact-tags>

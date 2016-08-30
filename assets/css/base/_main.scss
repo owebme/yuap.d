@@ -34,6 +34,12 @@ body {
 	.d-no-macOS & {
 		font-family:$default;
 	}
+	&:before {
+		content:"";
+		@include abs_50(245, 287);
+		transform:scale(0.52);
+		background:url(/assets/images/logotype.svg) no-repeat 0 0 / cover;
+	}
 }
 #page {
 	display:block;

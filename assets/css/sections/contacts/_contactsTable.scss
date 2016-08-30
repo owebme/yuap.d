@@ -160,6 +160,7 @@
         background-color:rgba(#fff,.56);
     }
     &__checkbox {
+        position:relative;
         display:inline-block;
         cursor:pointer;
         @include ui-icon(check_muted, 20px, 20px);
@@ -167,6 +168,11 @@
         &:hover,
         .selected & {
             @include ui-icon(check);
+        }
+        &:after {
+            content:"";
+            @include abs();
+            transform:translate3d(-2px, 0, 0) scale3d(1.5, 2.1, 1);
         }
     }
     &__button__edit {

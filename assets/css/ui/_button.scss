@@ -26,8 +26,8 @@
         border-radius:6px;
     }
     &-md {
-        font-size:16px;
-        padding:11px 25px;
+        font-size:15px;
+        padding:8px 20px;
         border-radius:5px;
     }
     &-sm {
@@ -46,7 +46,7 @@
         text-transform:uppercase;
 
         &.btn-md {
-            font-size:15px;
+            padding:11px 25px;
         }
         &.btn-sm {
             font-size:13px;
@@ -100,9 +100,41 @@
         cursor:default;
         opacity:0.8;
     }
-    // &.hide {
-    //     display:none;
-    // }
+    &-loading {
+        opacity:0.8 !important;
+        background:none !important;
+        position:relative;
+        cursor:default;
+        color:#fff;
+
+        &:after {
+            content:"";
+            @include abs_50(16, 16);
+            transform:rotate(0deg);
+            animation:loading_mini 0.55s linear infinite;
+            @include ui-icon("loading_mini", 16px, 16px);
+        }
+    }
+    &-hide {
+        display:none;
+    }
+    &-danger {
+        color:$red;
+        border:1px solid $red;
+
+        &.btn-fill {
+            color:#fff;
+            border-color:$red;
+            background-color:$red;
+        }
+        &.btn-hover-fill {
+            &:hover,
+            &.active {
+                border-color:$red;
+                background-color:$red;
+            }
+        }
+    }
 }
 .btn-group > .btn {
     position:relative;
@@ -120,4 +152,10 @@
 }
 .btn-group .btn + .btn, .btn-group .btn + .btn-group, .btn-group .btn-group + .btn, .btn-group .btn-group + .btn-group {
     margin-left:-1px;
+}
+
+@keyframes loading_mini {
+    100% {
+        transform:rotate(360deg);
+    }
 }

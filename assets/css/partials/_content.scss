@@ -13,7 +13,8 @@
             transition:transform 0.4s $cubic25 0.1s, opacity 0.4s $cubic25 0.1s;
         }
     }
-    #content[data-is="section-contacts"] & {
+    #content[data-is="section-contacts"] &,
+    #content[data-is="section-events"] & {
         z-index:2;
     }
 }

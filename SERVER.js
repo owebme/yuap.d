@@ -11,17 +11,19 @@ var config          = require('./libs/config'),
     bodyParser      = require('body-parser'),
     session         = require('express-session'),
     memoryStore     = session.MemoryStore,
-    deflate         = require('permessage-deflate');
+    deflate         = require('permessage-deflate'),
+    underscore      = require('underscore');
 //var generate = require('./generate');
 
 var app = express();
-app.route = express.Router();
+app.express = express;
 app.async = require('async');
 app.db = require('./libs/db/mongoose')(log, config);
-app.utils = require('./libs/utils');
 app.log = log;
 app.errHandler = require('./libs/errHandler');
 app.ObjectId = require('mongodb').ObjectID;
+app.utils = require('./libs/utils');
+underscore.extend(app.utils, underscore);
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +56,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+  app.log.error('Internal error(%d): %s', (err.status || 500), err.message);
   res.status(err.status || 500);
   res.render('error', {
     message: err.status,
@@ -65,7 +68,7 @@ app.use(function(err, req, res, next) {
 
 var server = http.createServer(app);
 server.listen(config.get('port'), function(){
-	log.info('Express server listening on port ' + config.get('port'));
+	app.log.info('Express server listening on port ' + config.get('port'));
 });
 
 app.io.attach(server);

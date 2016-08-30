@@ -104,9 +104,7 @@
     }
     &__link__email {
         display:block;
-        width:32px;
-        height:32px;
-        background:url(/assets/images/tile/tile_link_email.svg) no-repeat 0 0 / cover;
+        @include ui-icon(email, 32px, 32px);
         margin-top:6px;
     }
     &__links__equal {

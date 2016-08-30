@@ -8,7 +8,7 @@
     var $ = this;
 
     $.init = function(item){
-        $.item = item;
+        $.item = item ? item : (!item && $.item ? $store.data.get({"_id": $.item._id}) : null);
         $.update();
     };
 

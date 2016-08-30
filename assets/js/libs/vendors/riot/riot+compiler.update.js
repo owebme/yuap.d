@@ -4,7 +4,7 @@
   'use strict';
 var riot = { version: 'v2.5.0', settings: {}, touchClick: "click",
     debug: {
-        delegate: false,
+        delegate: true,
         update: false
     }
  },
@@ -1672,7 +1672,7 @@ function Tag(impl, conf, innerHTML) {
 
   defineProperty(this, 'unmount', function(keepRootTag) {
     var el = root,
-      _tagName = el.tagName.toLowerCase(),
+      _tagName = el.tagName && el.tagName.toLowerCase(),
       p = el.parentNode,
       ptag,
       tagIndex = __virtualDom.indexOf(self)
@@ -1778,7 +1778,7 @@ function setEventHandlerClick(handler, dom, tag, update) {
 	dom["_tag"] = tag;
 	dom["_handler"] = handler;
 
-	var rootTag = !tag.item && !tag._item && tag.root.tagName.match(/-/) ? tag.root : tag.parent.root,
+	var rootTag = !tag.item && !tag._item && tag.root.tagName.match(/-/) ? tag.root : (tag.parent ? tag.parent.root : tag.root),
         rootTagName = rootTag.tagName.toLowerCase(),
         clickNode = null;
 

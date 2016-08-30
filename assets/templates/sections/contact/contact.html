@@ -98,7 +98,7 @@
                         <h4 class="form__header">История посещений</h4>
                         <div class="contact__history">
                             <div class="contact__history__item">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -131,8 +131,8 @@
 
     <div class="modal__footer">
         <div class="modal__footer__wrapper">
-            <span class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
-            <span class="btn btn-md btn-upper btn-simple">Отменить</span>
+            <span dgClick={ onSave } id="section-contact-onSave" class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
+            <span dgClick={ onCancel } id="section-contact-onCancel" class="btn btn-md btn-upper btn-simple">Отменить</span>
         </div>
     </div>
 
@@ -143,29 +143,43 @@
     var $ = this;
 
     $.el = $$($.root);
+    $.active = false;
     $.dropMenu = $.tags["ui-dropmenu"];
     $.status = $.tags["section-contact-status"];
     $.tagItems = $.tags["section-contact-tags"];
 
-    $.show = function(item){
-        $.item = _.clone(item);
+    $.show = function(id){
+        if ($.active) return;
+        $.item = _.copyArray($store.data.get({"_id": id}));
         $.status.init($.item);
         $.tagItems.init($.item);
 
         $.update();
 
+        $.active = true;
         $.el.attr("data-open", "true");
 
         if (!app.device.isMobile){
             app.$dom.document.on("keydown.closeModal", function(e){
-                if (e.which == KEY.ESC) $.hide();
+                if (e.which == KEY.ESC && !$Popup.active) $.hide();
             });
         }
     };
 
+    $.onSave = function(){
+        $.hide();
+    };
+
+    $.onCancel = function(){
+        $.hide();
+    };
+
     $.hide = function(){
+        if (!$.active) return;
+        $.active = false;
         $.el.attr("data-open", "false");
         app.$dom.document.off("keydown.closeModal");
+        $Router.back();
     };
 
 </script>

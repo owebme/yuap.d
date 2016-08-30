@@ -16,13 +16,13 @@
         effects: {},
 		device: {},
         help: {},
-        constants: {},
-        constant: function(name, value) {
+        consts: {},
+        const: function(name, value) {
             var i;
 
             if (typeof name === 'object') {
                 for (i in name) {
-                    this.constant(i, name[i]);
+                    this.const(i, name[i]);
                 }
                 return true;
             }
@@ -31,11 +31,11 @@
                 if (typeof value === 'string') {
                     try { value = JSON.parse(value); } catch (e) {}
                 }
-                    app.constants[name] = value;
+                    app.consts[name] = value;
                     return true;
             }
 
-            return app.constants[name];
+            return app.consts[name];
         },
 		url: function(url){
 			return DOMAIN + url;
@@ -65,7 +65,7 @@
                     }
                 }
                 if (parts.length !== listMain.length){
-                    listSecond = _.without(parts, listMain);
+                    listSecond = _.difference(parts, listMain);
                 }
                 Promise.all(listMain.map(app.fetch.API).concat(listSecond.map(app.request)))
                 .then(function(results) {
@@ -88,6 +88,10 @@
                 if (!type) {
                     reject('Error type request: ' + method);
                     return;
+                }
+                if (type === "GET" && params){
+                    url += "/" + params;
+                    params = null;
                 }
 
         		var xhr = new XMLHttpRequest();

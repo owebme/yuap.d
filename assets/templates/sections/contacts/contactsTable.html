@@ -23,7 +23,6 @@
     $scope = $$($.root);
 
     $.init = function(data){
-
         $.table = $scope.find(".dataTable").DataTable(
             $Contacts.config($, data, function(){
                 // Initialize dataTable
@@ -55,7 +54,6 @@
                         ids: [id]
                     });
                     $store.data.select({'_id': id}).set("status", value);
-                    $.set.item(_this, item);
                 }
             });
         });
@@ -70,21 +68,34 @@
             $store.data.select({'_id': id}).set("checked", !item.checked);
         });
 
-        // Edit item
-        // $.table.elem.on(EV.click, ".dataTable__button__edit", function(){
-        //     $Contact.show($.get.item(this));
-        // });
-
         $.table.elem.on(EV.click, "tbody > tr", function(e){
             var item = e.target,
                 cl = item.getAttribute("class");
 
             if (cl && !cl.match(/status/) && !cl.match(/checkbox/) && !cl.match(/link/)){
-                $Contact.show($.get.item(this));
+                $Router.nav("/contact/" + $.get.id(this));
             }
         });
 
-        $.table.elem.find(".dataTable__button__edit:first").trigger("click");
+        // Edit item
+        // $.table.elem.on(EV.click, ".dataTable__button__edit", function(){
+        //     $Contact.show($.get.item(this));
+        // });
+
+        //$.table.elem.find(".dataTable__button__edit:first").trigger("click");
+    };
+
+    $.refresh = {
+        item: function(id){
+            var row = $.table.row('#' + id);
+            if (row && row[0] && row[0].length){
+                row.data($store.data.get({"_id": id})).draw("page");
+            }
+        },
+        all: function(){
+            $.table.clear().draw();
+            $.table.rows.add($store.filter("data", "state", "contact")).draw();
+        }
     };
 
     $.search = {
@@ -106,6 +117,9 @@
         item: function(cursor){
             return this.row(cursor).data();
         },
+        id: function(cursor){
+            return this.row(cursor).data()._id;
+        },
         date: function(date){
             return moment(date).format('D/MM');
             // return moment(date).format('D MMM YYYY');
@@ -120,13 +134,12 @@
                 var title = "новый",
                     color = 0;
             }
-            return '<span class="dataTable__status text-ellipsis color__bg'+ color +'">'+ title +'</span>';
-        }
-    };
-
-    $.set = {
-        item: function(cursor, item){
-            $.get.row(cursor).data(item).draw("page");
+            if ((color || color == 0) && title){
+                return '<span class="dataTable__status text-ellipsis color__bg'+ color +'">'+ title +'</span>';
+            }
+            else {
+                return null;
+            }
         }
     };
 

@@ -15,21 +15,63 @@
     var $ = this;
 
     this.on("mount", function(){
+
         $Contacts.table.init($store.filter("data", "state", "contact"));
+
+        // Auto update data items
+        $store.data.on('write', function(e){
+            if (e && e.data && e.data.path && e.data.path.length){
+                var item = $store.data.get(e.data.path[0]),
+                    prop = e.data.path[1];
+
+                $Contacts.table.refresh.item(item._id);
+
+                if (prop == "tags"){
+                    $Contact.tagItems.init();
+                }
+            }
+        });
+
+        $store.status.on('write', function(e){
+            $Contacts.table.refresh.all();
+            if ($Contact && $Contact.active && $Contact.status){
+                $Contact.status.init();
+            }
+        });
+
+        $store.tags.on('write', function(e){
+            $Contacts.table.refresh.all();
+            if ($Popup.tags["contact-tags"]){
+                $Popup.tags["contact-tags"].refresh();
+            }
+        });
     });
 
     $Contacts = {
+        tag: $,
         el: $$($.root),
         options: $.tags["section-contacts-options"],
         table: $.tags["section-contacts-table"],
         config: function($, data, callback){
         return {
             data: data,
-            stateSave: false,
+            rowId: "_id",
+            pageLength : 10,
+            stateSave: true,
+            stateSaveParams: function(settings, data){
+                data.search.search = "";
+            },
             autoWidth: true,
             order: [[ 9, "desc" ]],
             dom: '<"dataTable__filters__top"i<"addUser__button">CfplB>rt<"dataTable__filters__bottom"p>',
             buttons: [
+            // {
+            //     text: 'Выгрузить данные',
+            //     className: "btn-sm btn-hover-fill",
+            //     action: function (e, dt, button, config) {
+            //         $.table.buttons('.btn-print').trigger();
+            //     }
+            // },
             {
                 extend: "pdfHtml5",
                 exportOptions: {
@@ -84,21 +126,10 @@
                     else return title;
                 }
             },
-            columns: [
-                { data: null },
-                { data: 'photo' },
-                { data: 'name' },
-                { data: 'company' },
-                { data: 'status' },
-                { data: 'tags' },
-                { data: 'city' },
-                { data: 'email' },
-                { data: 'phone' },
-                { data: 'date' }
-            ],
             columnDefs: [
                 {
-                    targets: [ 0 ],
+                    targets: 0,
+                    data: null,
                     className: "col-check",
                     orderable: false,
                     searchable: false,
@@ -107,7 +138,8 @@
                     }
                 },
                 {
-                    targets: [ 1 ],
+                    targets: 1,
+                    data: 'photo',
                     className: "col-photo",
                     orderable: false,
                     searchable: false,
@@ -122,7 +154,8 @@
                     },
                 },
                 {
-                    targets: [ 2 ],
+                    targets: 2,
+                    data: 'name',
                     className: "col-name",
                     render: function(data, type, row){
                         if (data && data.length){
@@ -134,7 +167,8 @@
                     }
                 },
                 {
-                    targets: [ 3 ],
+                    targets: 3,
+                    data: 'company',
                     className: "col-company",
                     visible: false,
                     render: function(data, type, row){
@@ -147,7 +181,8 @@
                     }
                 },
                 {
-                    targets: [ 4 ],
+                    targets: 4,
+                    data: 'status',
                     className: "col-status",
                     orderable: false,
                     render: function(data, type, row){
@@ -160,12 +195,18 @@
                     }
                 },
                 {
-                    targets: [ 5 ],
+                    targets: 5,
+                    data: 'tags',
                     className: "col-tag",
                     render: function(data, type, row){
                         if (data && data.length){
                             var tag = $store.tags.get({'_id': String(data[0])}, 'title');
-                            return '<span class="badge text-ellipsis">'+ tag +'</span>';
+                            if (tag){
+                                return '<span class="badge text-ellipsis">'+ tag +'</span>';
+                            }
+                            else {
+                                return null;
+                            }
                         }
                         else {
                             return data;
@@ -173,7 +214,8 @@
                     }
                 },
                 {
-                    targets: [ 6 ],
+                    targets: 6,
+                    data: 'city',
                     className: "col-city",
                     render: function(data, type, row){
                         if (data && data.length){
@@ -185,11 +227,13 @@
                     }
                 },
                 {
-                    targets: [ 7 ],
+                    targets: 7,
+                    data: 'email',
                     className: "col-email",
                     render: function(data, type, row){
                         if (data && data.length){
-                            return '<a href="mailto:'+ data +'" class="link text-ellipsis">'+ data +'</a>';
+                            return '<a target="_blank" href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to='+ data +'" class="link text-ellipsis">'+ data +'</a>';
+                            // return '<a href="mailto:'+ data +'" class="link text-ellipsis">'+ data +'</a>';
                         }
                         else {
                             return data;
@@ -197,16 +241,22 @@
                     }
                 },
                 {
-                    targets: [ 8 ],
+                    targets: 8,
+                    data: 'phone',
                     className: "col-phone"
                 },
                 {
-                    targets: [ 9 ],
+                    targets: 9,
+                    data: 'date',
                     className: "col-date",
                     searchable: false,
-                    // visible: false,
                     render: function(data, type, row){
-                        return $.get.date(data);
+                        if (type === "sort"){
+                            return moment(data).unix();
+                        }
+                        else {
+                            return $.get.date(data);
+                        }
                     }
                 }
             ],
@@ -239,6 +289,12 @@
             }
         }}
     };
+
+    this.on("unmount", function(){
+        $store.data.off('write');
+        $store.status.off('write');
+        $store.tags.off('write');
+    });
 
 </script>
 
