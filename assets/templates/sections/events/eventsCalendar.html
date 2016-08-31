@@ -125,13 +125,11 @@
 				$scope.fullCalendar('unselect');
 			},
             eventClick: function(item, jsEvent, view) {
-console.dir(item);
+
                 $Events.list.edit(item, jsEvent, function(item){
                     $scope.fullCalendar('renderEvent', item, true);
                 });
-
-                //console.dir(calEvent);
-
+                console.dir(item);
                 // alert('Event: ' + calEvent.title);
                 // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
                 // alert('View: ' + view.name);
@@ -159,8 +157,8 @@ console.dir(item);
 					_id: 1,
 					title: 'Позвонить',
                     type: 'callphone',
-					start: new Date(y, m, d - 27, 10, 0),
-                    end: new Date(y, m, d - 27, 14, 0),
+					start: new Date(y, m, 3, 10, 0),
+                    end: new Date(y, m, 3, 14, 0),
                     phone: "89160172086",
                     comments:'Поинтересоваться намерениями клиента по поводу суммы закупки товара',
 					allDay: true,
@@ -172,7 +170,7 @@ console.dir(item);
 					_id: 2,
 					title: 'Отпр. email',
                     type: 'sendmail',
-					start: new Date(y, m, d - 26, 11, 30),
+					start: new Date(y, m, 4, 11, 30),
                     email: "index@resumekraft.ru",
 					allDay: false,
                     color: '4',
@@ -182,7 +180,7 @@ console.dir(item);
 					_id: 3,
 					title: 'Отпр. email',
                     type: 'sendmail',
-					start: new Date(y, m, d - 26, 12, 30),
+					start: new Date(y, m, 4, 12, 30),
 					allDay: false,
                     color: '3',
 					className: 'fc-event-color3'
@@ -191,7 +189,7 @@ console.dir(item);
 					_id: 4,
 					title: 'Позвонить',
                     type: 'sendmail',
-					start: new Date(y, m, d - 25, 14, 00),
+					start: new Date(y, m, 5, 14, 00),
 					allDay: false,
                     color: '4',
 					className: 'fc-event-color4'
@@ -200,7 +198,7 @@ console.dir(item);
 					_id: 5,
 					title: 'Позвонить',
                     type: 'sendmail',
-					start: new Date(y, m, d - 24, 12, 00),
+					start: new Date(y, m, 6, 12, 00),
 					allDay: false,
                     color: '5',
 					className: 'fc-event-color5'

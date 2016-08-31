@@ -209,7 +209,7 @@
 .daterangepicker .next i:after {
     content:"";
     display:block;
-    transform:translate3d(0, 4px, 0);
+    transform:translate3d(9px, 6px, 0);
 }
 .daterangepicker .prev i:after {
     @include ui-icon(arrowLeft, 18px, 18px);

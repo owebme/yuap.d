@@ -1,0 +1,51 @@
+<event-title class="event__header__title">
+
+    <input onKeyDown={ onKeyDown } class="event__header__input form__control form__control--hovered" type="text" value="{ opts.value }" placeholder="Название события" autocomplete="off">
+
+    <div dgClick={ onSelect } class="event__header__title__select"></div>
+
+<script>
+
+    var $ = this,
+    tags = [
+    {
+        _id: 1,
+        title: "Позвонить",
+        color: 1
+    },
+    {
+        _id: 2,
+        title: "Отпр. email",
+        color: 3
+    },
+    {
+        _id: 3,
+        title: "Встреча",
+        color: 4
+    }];
+
+    $.onKeyDown = function(e){
+        var value = _.trim(e.target.value);
+        $.parent.item.title = value ? value : null;
+        return true;
+    };
+
+    $.onSelect = function(e){
+        $DropMenu.show({
+            id: $.parent.item._id,
+            align: "center",
+            elem: $$(e.currentTarget),
+            data: tags,
+            callback: function(value){
+                var item = _.findWhere(tags, {_id: value});
+                $.parent.item.title = item.title;
+                $.opts.value = item.title;
+                $.parent.tags["event-color"].onChange(item.color);
+                $.update();
+            }
+        });
+    };
+
+</script>
+
+</event-title>

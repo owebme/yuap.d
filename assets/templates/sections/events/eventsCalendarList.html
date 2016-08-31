@@ -2,57 +2,28 @@
 
     <div if={ editable } class="event__editable">
         <div class="event__header">
-            <div class="event__header__title">
-                <input class="event__header__input form__control form__control--hovered" type="text" value="{ item.title }" placeholder="Название события" autocomplete="off">
-            </div>
-            <div class="event__header__color">
-                <div class="event__header__color__item fc-event-color-bg{ item.color }"></div>
-            </div>
+            <event-title value={ item.title }></event-title>
+            <event-color value={ item.color }></event-color>
             <div class="event__header__important">
                 <div onClick={ set.onImportant } class="event__header__important__item { active : item.fire }"></div>
             </div>
         </div>
-        <!-- <div class="event__tags">
-            <div class="event__tags__item">Позвонить</div>
-            <div class="event__tags__item">Отпр. email</div>
-            <div class="event__tags__item">Встреча</div>
-        </div> -->
         <div class="event__date">
-            <div class="event__date__item event__date__value">01/09 - 03/09</div>
-            <div onClick={ set.offAllDay } class="event__date__item event__date__time { active : !item.allDay }">10:00</div>
+            <div class="event__date__item event__date__value">{ get.date(item.start, item.end) }</div>
+            <div onClick={ set.offAllDay } class="event__date__item event__date__time { active : !item.allDay }">
+                <input type="text" value="{ get.time(item.start) }" class="event__date__time__input" autocomplete="off" readonly="">
+            </div>
             <div><input onClick={ set.swAllDay } type="checkbox" class="switcher small" checked="{ item.allDay }"></div>
             <div onClick={ set.onAllDay } class="event__date__item event__date__allday { active : item.allDay }">весь день</div>
         </div>
-        <div class="event__attach">
-            <div class="event__attach__icon event__attach__icon--email"></div>
-            <div if={ item.email } class="input__group">
-                <input class="form__control form__control--hovered sm" type="text" value="{ item.email }" autocomplete="off">
-            </div>
-            <div if={ !item.email } class="event__attach__button"><span class="event__attach__button__plus">+</span>Добавить</div>
-        </div>
-        <div class="event__attach">
-            <div class="event__attach__icon event__attach__icon--phone"></div>
-            <div if={ item.phone } class="input__group">
-                <input class="form__control form__control--hovered sm" type="text" value="{ item.phone }" autocomplete="off">
-            </div>
-            <div if={ !item.phone } class="event__attach__button"><span class="event__attach__button__plus">+</span>Добавить</div>
-        </div>
-        <!-- <div class="event__attach">
-            <div class="event__attach__icon event__attach__icon--location"></div>
-            <div class="event__attach__button"><span class="event__attach__button__plus">+</span>Местоположение</div>
-        </div> -->
-        <div class="event__attach">
-            <div class="event__attach__icon event__attach__icon--comments"></div>
-            <div if={ item.comments } class="input__group">
-                <textarea class="form__control sm form__control--hovered textarea-xxs">{ item.comments }</textarea>
-            </div>
-            <div if={ !item.comments } class="event__attach__button"><span class="event__attach__button__plus">+</span>Комментарий</div>
-        </div>
+        <event-attach type="email" value="{ item.email }"></event-attach>
+        <event-attach type="phone" value="{ item.phone }"></event-attach>
+        <event-attach type="comments" value="{ item.comments }"></event-attach>
         <div class="event__buttons">
             <div class="btn-group">
-                <div class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
+                <div onClick={ onRemove } class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
                 <div onClick={ onHide } class="btn btn-hover-fill btn-md">Отменить</div>
-                <div class="btn btn-hover-fill btn-md">Сохранить</div>
+                <div dgClick={ onSave } id="events-calendar-list-save" class="btn btn-hover-fill btn-md">Сохранить</div>
             </div>
         </div>
     </div>
@@ -60,7 +31,7 @@
         <div class="event__list__timeline"></div>
         <div class="event__list__item">
             <div if={ item.fire } class="event__list__item__important"></div>
-            <div class="event__list__item__time { event__list__item__time--allday : item.allDay }">{ item.allDay ? 'Весь день' : get.time(item.start._d) }</div>
+            <div class="event__list__item__time { event__list__item__time--allday : item.allDay }">{ item.allDay ? 'Весь день' : get.time(item.start) }</div>
             <div class="event__list__item__color">
                 <div class="event__list__item__color__item fc-event-color-border{ item.color }"></div>
             </div>
@@ -75,7 +46,9 @@
 
 <script>
 
-    var $ = this;
+    var $ = this,
+    $scope = $$($.root);
+
     $.top = 0;
     $.left = 0;
     $.align = "down-right";
@@ -105,20 +78,68 @@
 
     $.onShow = function(item, cords){
         $.item = item;
-        $.top = cords.pageY - cords.offsetY;
+        $.top = cords.pageY - cords.offsetY + app.$dom.scroll[0].scrollTop;
         $.left = $$(cords.currentTarget).offset().left + cords.currentTarget.clientWidth;
         $.active = true;
         $.update();
+        if ($.editable) {
+            $.init.clockpicker();
+            $.init.daterange();
+        }
     };
 
-    $.onSave = function(){
-        $.callback($.item);
-        $.hide();
+    $.init = {
+        clockpicker: function(){
+            if (!$.clockpicker){
+                $.clockpicker = $scope.find(".event__date__time").clockpicker({
+                    parentEl: '.screen__main__inner',
+                    donetext: 'Применить',
+                    align: 'left'
+                });
+                $.clockinput = $.clockpicker.find("input");
+                $.clockinput.on("change", function(e){
+                    var value = this.value;
+                });
+            }
+        },
+        daterange: function(){
+            if (!$.daterange){
+                $.daterange = $scope.find(".event__date__value");
+                $.daterange.daterangepicker({
+                    buttonClasses: ['btn btn-hover-fill', 'btn-sm'],
+                    parentEl: '.screen__main__inner',
+                    opens: 'right',
+                    singleDatePicker: $.item.end ? false : true,
+                    showDropdowns: false,
+                    startDate: $.item.start && $.item.start._d ? $.item.start._d : moment(),
+                    endDate: $.item.end && $.item.end._d ? $.item.end._d : $.item.start._d,
+                    autoApply: true,
+                    locale: {
+                        format: 'DD/MM/YYYY',
+                        applyLabel: 'OK',
+                        cancelLabel: 'Отменить',
+                        daysOfWeek: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                        firstDay: 1
+                    }
+                }, function (start, end) {
+                    $.daterange.text(moment(start).format('D MMMM'));
+                });
+            }
+        }
     };
 
     $.get = {
         time: function(date){
-            if (date) return moment(date).format('h:mm');
+            if (date) return moment(date._d).format('h:mm');
+        },
+        date: function(start, end){
+            if (start && end) {
+                return moment(start._d).format('D/MM') + " - " + moment(end._d).format('D/MM');
+            }
+            else if (start && !end) {
+                return moment(start._d).format('D MMMM');
+            }
         }
     };
 
@@ -137,6 +158,14 @@
         }
     };
 
+    $.onSave = function(){
+
+    };
+
+    $.onRemove = function(){
+
+    };
+
     $.hide = function(){
         if ($.editable) return;
         $.onHide();
@@ -147,7 +176,21 @@
         $.editable = false;
         $.active = false;
         $.callback = null;
+
+        _.each($.tags["event-attach"], function(tag){
+            tag.onHide();
+        });
     };
+
+    this.on("unmount", function(){
+        if ($.clockpicker) {
+            $.clockinput.off("change");
+            $.clockpicker.clockpicker('remove');
+        }
+        if ($.daterange) {
+            $.daterange.data('daterangepicker').remove();
+        }
+    });
 
 </script>
 

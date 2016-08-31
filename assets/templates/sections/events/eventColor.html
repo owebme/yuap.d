@@ -1,0 +1,43 @@
+<event-color class="event__header__color">
+
+    <div onClick={ onShow } class="event__header__color__item fc-event-color-bg{ value ? value : opts.value }">
+    <div class="dropmenu { dropmenu--active : active }" data-align="bottom">
+        <div class="dropmenu__wrapper dropmenu__palette__wrapper">
+            <div onClick={ onSelect } each={ item in _.range(7) } no-reorder class="dropmenu__palette__item { selected : item == value } fc-event-color-bg{ item }"></div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    $.active = false;
+    $.value = null;
+
+    $.onShow = function(){
+        $.value = $.opts.value;
+        if (!$.active){
+            $.active = true;
+            setTimeout(function(){
+                app.$dom.body.on(EV.click + ".event-color", function(e){
+                    app.$dom.body.off(EV.click + ".event-color");
+                    $.active = false;
+                    $.update();
+                });
+            }, 100);
+        }
+    };
+
+    $.onSelect = function(){
+        $.onChange(this.item);
+    };
+
+    $.onChange = function(value){
+        $.value = value;
+        $.parent.item.color = value;
+        $.update();
+    };
+
+</script>
+
+</event-color>
