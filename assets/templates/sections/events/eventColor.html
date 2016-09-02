@@ -14,6 +14,11 @@
     $.active = false;
     $.value = null;
 
+    $.init = function(){
+        $.value = $.parent.item.color;
+        $.update();
+    };
+
     $.onShow = function(){
         $.value = $.opts.value;
         if (!$.active){

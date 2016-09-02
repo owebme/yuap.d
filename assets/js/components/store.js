@@ -65,3 +65,5 @@ $store.tags = _.extend(new Baobab(), {
         });
     }
 });
+
+$store.events = new Baobab();

@@ -2,8 +2,8 @@
 
     <div class="event__attach__icon event__attach__icon--{ opts.type }"></div>
     <div if={ opts.value || editable } class="input__group">
-        <input if={ opts.type !== "comments" } onKeyUp={ onKeyUp } onBlur={ onBlur } class="form__control form__control--hovered sm" type="text" value="{ opts.value }" autocomplete="off">
-        <textarea if={ opts.type === "comments" } onKeyUp={ onKeyUp } onBlur={ onBlur } class="form__control sm form__control--hovered textarea-xxs">{ opts.value }</textarea>
+        <input if={ opts.type !== "comments" } onInput={ onInput } onBlur={ onBlur } class="form__control form__control--hovered sm" type="text" value="{ opts.value }" autocomplete="off" spellcheck="false">
+        <textarea if={ opts.type === "comments" } onInput={ onInput } onBlur={ onBlur } class="form__control sm form__control--hovered textarea-xxs">{ opts.value }</textarea>
     </div>
     <div if={ !opts.value && !editable } onClick={ onEdit } class="event__attach__button"><span class="event__attach__button__plus">+</span>{ opts.type === "comments" ? 'Комментарий' : 'Добавить' }</div>
 
@@ -21,7 +21,7 @@
         }, 20);
     };
 
-    $.onKeyUp = function(e){
+    $.onInput = function(e){
         var value = _.trim(e.target.value);
         $.parent.item[$.opts.type] = value ? value : null;
         return true;
@@ -30,9 +30,6 @@
     $.onBlur = function(e){
         if (!_.trim(e.target.value).length){
             $.onHide();
-        }
-        else {
-            $.parent.item[$.opts.type] = _.trim(e.target.value);
         }
     };
 

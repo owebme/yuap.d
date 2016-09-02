@@ -66,9 +66,9 @@
 	if (window.store) window.locStore = window.store;
 
 	/* --- Tempus (lib date) --- */
-	tempus.lang('ru');
-
-	app.tempus = tempus;
+	// tempus.lang('ru');
+	//
+	// app.tempus = tempus;
 
 	/* --- Moment locale (lib date) --- */
 

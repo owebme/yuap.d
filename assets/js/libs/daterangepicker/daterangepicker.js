@@ -1114,7 +1114,8 @@
             this.previousRightTime = this.endDate.clone();
 
             this.updateView();
-            this.container.show();
+            // this.container.show();
+            this.container.addClass("daterangepicker-show");
             this.move();
             this.element.trigger('show.daterangepicker', this);
             this.isShowing = true;
@@ -1138,7 +1139,8 @@
 
             $(document).off('.daterangepicker');
             $(window).off('.daterangepicker');
-            this.container.hide();
+            // this.container.hide();
+            this.container.removeClass("daterangepicker-show");
             this.element.trigger('hide.daterangepicker', this);
             this.isShowing = false;
         },

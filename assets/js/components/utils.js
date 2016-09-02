@@ -143,6 +143,11 @@
 		return (text || '').replace(/^\s+|\s+$/g, '');
 	};
 
+	utils.clearField = function(field, def) {
+		field = utils.trim(field);
+		return field ? field : (def ? def : null);
+	};
+
 	utils.copyArray = function(arr) {
 	  var newObj = !utils.isObject(arr) ? [] : {};
 	  for (var i in arr) {

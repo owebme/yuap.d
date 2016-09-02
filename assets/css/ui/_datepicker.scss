@@ -12,9 +12,9 @@
     position:absolute;
     top: 100%;
     left: 20px;
-    display: none;
+    // display: none;
     float: left;
-    margin: 6px 0 0;
+    margin: 6px -50px 0 0;
     font-family:$nimbus;
     color:$gray;
     font-size: 14px;
@@ -26,11 +26,26 @@
     border-radius:10px;
     box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
     padding: 7px 10px 15px 10px;
+    visibility:hidden;
+	opacity:0.001;
+	margin-left:999em;
+	will-change:opacity, transform;
+    @include accelerate();
+    transition:opacity 0.2s $cubic215, transform 0.2s $cubic215, margin-left 0s 0.2s, visibility 0s 0.2s;
+	transform-origin:50% 0%;
+    transform:translate3d(0, 0, 0) scale(1.18);
     z-index: 3000;
 
     .d-no-macOS & {
 		font-family:$default;
 	}
+    &-show {
+        visibility:visible;
+		opacity:1;
+        margin-left:0;
+        transition:opacity 0.2s $cubic215, transform 0.2s $cubic215, margin-left 0s, visibility 0s;
+        transform:translate3d(0, 0, 0) scale(1);
+    }
 }
 
 .daterangepicker.opensleft:before {

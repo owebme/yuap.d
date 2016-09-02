@@ -21,9 +21,9 @@
         <event-attach type="comments" value="{ item.comments }"></event-attach>
         <div class="event__buttons">
             <div class="btn-group">
-                <div onClick={ onRemove } class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
+                <div if={ !created } onClick={ onRemove } class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
                 <div onClick={ onHide } class="btn btn-hover-fill btn-md">Отменить</div>
-                <div dgClick={ onSave } id="events-calendar-list-save" class="btn btn-hover-fill btn-md">Сохранить</div>
+                <div onClick={ onSave } class="btn btn-hover-fill btn-md">{ created ? 'Создать событие' : 'Сохранить' }</div>
             </div>
         </div>
     </div>
@@ -37,8 +37,8 @@
             </div>
             <div class="event__list__item__container">
                 <div class="event__list__item__title">{ item.title }</div>
-                <div if={ item.type === "callphone" } class="event__list__item__strong">{ item.phone }</div>
-                <a if={ item.type === "sendmail" } href="mailto:{ item.email }" class="event__list__item__link">{ item.email }</a>
+                <div if={ item.phone } class="event__list__item__strong">{ item.phone }</div>
+                <a if={ item.email } href="mailto:{ item.email }" class="event__list__item__link">{ item.email }</a>
                 <div if={ item.comments } class="event__list__item__text">{ item.comments }</div>
             </div>
         </div>
@@ -47,15 +47,28 @@
 <script>
 
     var $ = this,
-    $scope = $$($.root);
+    $scope = $$($.root),
+    defaultTime = "10:00";
+    defaultColor = 3;
 
     $.top = 0;
     $.left = 0;
     $.align = "down-right";
     $.item = null;
+    $._item = null;
+    $.created = false;
     $.editable = false;
     $.callback = null;
     $.active = false;
+
+    $.create = function(start, end, cords, callback){
+        if (start && callback){
+            $.callback = callback;
+            $.created = true;
+            $.editable = true;
+            $.onShow($.normalize.create(start, end), cords);
+        }
+    };
 
     $.edit = function(item, cords, callback){
         if (item && callback){
@@ -77,42 +90,69 @@
     };
 
     $.onShow = function(item, cords){
-        $.item = item;
+        $._item = item;
+        if ($.editable && !$.created) $.item = $.normalize.get(item);
+        else $.item = item;
+
+        var offsetX = $$(cords.currentTarget).offset();
+
+        if (offsetX) $.left = offsetX.left + cords.currentTarget.clientWidth;
+        else $.left = cords.pageX;
+
         $.top = cords.pageY - cords.offsetY + app.$dom.scroll[0].scrollTop;
-        $.left = $$(cords.currentTarget).offset().left + cords.currentTarget.clientWidth;
         $.active = true;
+
         $.update();
+
         if ($.editable) {
             $.init.clockpicker();
             $.init.daterange();
+            $.tags["event-color"].init();
         }
     };
 
     $.init = {
         clockpicker: function(){
             if (!$.clockpicker){
-                $.clockpicker = $scope.find(".event__date__time").clockpicker({
+                $.clockpicker = $scope.find(".event__date__time");
+                $.clockInput = $.clockpicker.find("input");
+                $.clockpicker.clockpicker({
                     parentEl: '.screen__main__inner',
                     donetext: 'Применить',
-                    align: 'left'
-                });
-                $.clockinput = $.clockpicker.find("input");
-                $.clockinput.on("change", function(e){
-                    var value = this.value;
+                    align: 'left',
+                    afterDone: function(){
+                        $.set.time($.clockInput.val());
+                    }
                 });
             }
         },
         daterange: function(){
-            if (!$.daterange){
+            var end_ = $.item.end ? moment($.item.end.format()) : null;
+            if (end_) end_.subtract(1, 'days');
+
+            if ($.daterange){
+                $.daterange.data('daterangepicker')
+                .setStartDate($.item.start.format("DD/MM/YYYY"));
+
+                if ($.item.end){
+                    $.daterange.data('daterangepicker')
+                    .setEndDate(end_.format("DD/MM/YYYY"));
+                }
+                else {
+                    $.daterange.data('daterangepicker')
+                    .setEndDate($.item.start.format("DD/MM/YYYY"));
+                }
+            }
+            else {
                 $.daterange = $scope.find(".event__date__value");
                 $.daterange.daterangepicker({
                     buttonClasses: ['btn btn-hover-fill', 'btn-sm'],
                     parentEl: '.screen__main__inner',
                     opens: 'right',
-                    singleDatePicker: $.item.end ? false : true,
+                    singleDatePicker: true,
                     showDropdowns: false,
-                    startDate: $.item.start && $.item.start._d ? $.item.start._d : moment(),
-                    endDate: $.item.end && $.item.end._d ? $.item.end._d : $.item.start._d,
+                    startDate: $.item.start.format("DD/MM/YYYY"),
+                    endDate: end_ ? end_.format("DD/MM/YYYY") : $.item.start.format("DD/MM/YYYY"),
                     autoApply: true,
                     locale: {
                         format: 'DD/MM/YYYY',
@@ -123,23 +163,80 @@
                         firstDay: 1
                     }
                 }, function (start, end) {
-                    $.daterange.text(moment(start).format('D MMMM'));
+                    $.set.date(start, end);
+                    $.update();
                 });
             }
         }
     };
 
-    $.get = {
-        time: function(date){
-            if (date) return moment(date._d).format('h:mm');
+    $.normalize = {
+        create: function(start, end){
+            var start_ = moment(start.format());
+            $.set.time(defaultTime, start_);
+
+            var end_ = moment(end.format());
+            $.set.time("0:00", end_);
+
+            return {
+                _id: moment().unix(),
+                title: null,
+                start: start_,
+                end: end_,
+                email: null,
+                phone: null,
+                comments: null,
+                fire: false,
+                allDay: true,
+                color: defaultColor
+            }
         },
+        get: function(item){
+            var start = moment(item.start.format());
+            if ($._item.allDay) $.set.time(defaultTime, start);
+
+            return {
+                _id: item._id,
+                title: item.title,
+                start: start,
+                end: item.end ? moment(item.end.format()) : null,
+                email: item.email ? item.email : null,
+                phone: item.phone ? item.phone : null,
+                comments: item.comments ? item.comments : null,
+                fire: item.fire ? true : false,
+                allDay: item.allDay ? true : false,
+                color: item.color
+            }
+        },
+        set: function(item){
+            if ($._item && item){
+                $._item.title = _.clearField(item.title, 'Новое событие');
+                $._item.start = item.start;
+                $._item.end = item.end;
+                $._item.email = _.clearField(item.email);
+                $._item.phone = _.clearField(item.phone);
+                $._item.comments = _.clearField(item.comments);
+                $._item.allDay = item.allDay;
+                $._item.fire = item.fire;
+                $._item.color = item.color;
+                return $._item;
+            }
+        }
+    };
+
+    $.get = {
         date: function(start, end){
-            if (start && end) {
-                return moment(start._d).format('D/MM') + " - " + moment(end._d).format('D/MM');
+            var end_ = end ? moment(end.format()) : null;
+            if (end_) end_.subtract(1, 'days');
+            if (start && end_ && start.format('D/MM') != end_.format('D/MM')) {
+                return start.format('D/MM') + " - " + end_.format('D/MM');
             }
-            else if (start && !end) {
-                return moment(start._d).format('D MMMM');
+            else if (start) {
+                return start.format('D MMMM');
             }
+        },
+        time: function(date){
+            if (date) return date.format('HH:mm');
         }
     };
 
@@ -155,15 +252,36 @@
         },
         offAllDay: function(e){
             $.item.allDay = false;
+        },
+        date: function(start, end){
+            if (start) $.item.start = start;
+            if (end && end.diff(start, 'days') > 0) $.item.end = end;
+            else $.item.end = null;
+            $.set.time($.clockInput.val());
+        },
+        time: function(time, data){
+            if (time){
+                var h = time.match(/(\d+):\d+/)[1],
+                    m = time.match(/\d+:(\d+)/)[1];
+
+                if (data){
+                    data.set({'hour': h, 'minute': m});
+                }
+                else {
+                    $.item.start.set({'hour': h, 'minute': m});
+                }
+            }
         }
     };
 
     $.onSave = function(){
-
+        $.callback($.normalize.set($.item));
+        $.onHide();
     };
 
     $.onRemove = function(){
-
+        $Events.calendar.el.fullCalendar('removeEvents', $.item._id);
+        $.onHide();
     };
 
     $.hide = function(){
@@ -174,6 +292,7 @@
 
     $.onHide = function(){
         $.editable = false;
+        $.created = false;
         $.active = false;
         $.callback = null;
 
@@ -184,7 +303,6 @@
 
     this.on("unmount", function(){
         if ($.clockpicker) {
-            $.clockinput.off("change");
             $.clockpicker.clockpicker('remove');
         }
         if ($.daterange) {

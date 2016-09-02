@@ -54,7 +54,11 @@
 
 			&:after {
 				content:"";
-				@include abs();
+				position:absolute;
+				top:0px;
+				left:1px;
+				width:calc(100% - 2px);
+				height:calc(100% - 1px);
 				@include accelerate();
 				border:1px solid rgba($blue,.7);
 				border-radius:3px;
@@ -89,7 +93,7 @@
 	display:block;
 	font-size:15px;
 	border-radius:3px;
-	border:1px solid;
+	border:1px solid transparent;
 	font-weight:normal;
 }
 .fc-important {
@@ -490,19 +494,36 @@ temporary rendered events).
 
 .fc-event .fc-content {
 	position:relative;
+	@include textEllipsis(100%);
 	z-index:2;
 }
 
 /* resizer (cursor AND touch devices) */
 
-.fc-event .fc-resizer {
+.fc-resizer {
 	position:absolute;
+	top:0;
+	right:-1px;
+	width:20px;
+	height:100%;
+	cursor:e-resize;
 	z-index:4;
+
+	&:before {
+		content:"";
+		position:absolute;
+		top:50%;
+		left:50%;
+		width:40px;
+		height:40px;
+		margin-left:-20px;
+		margin-top:-20px;
+	}
 }
 
 /* resizer (touch devices) */
 
-.fc-event .fc-resizer {
+.fc-resizer {
 	display:none;
 }
 
@@ -511,22 +532,6 @@ temporary rendered events).
 	/* only show when hovering or selected (with touch) */
 	display:block;
 }
-
-/* hit area */
-
-.fc-event.fc-selected .fc-resizer:before {
-	/* 40x40 touch area */
-	content:"";
-	position:absolute;
-	z-index:9999; /* user of this util can scope within a lower z-index */
-	top:50%;
-	left:50%;
-	width:40px;
-	height:40px;
-	margin-left:-20px;
-	margin-top:-20px;
-}
-
 
 /* Event Selection (only for touch devices)
 --------------------------------------------------------------------------------------------------*/
