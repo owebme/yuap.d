@@ -21,6 +21,15 @@ module.exports = function(app) {
 					app.errHandler(res, err, data, callback);
 				});
 			},
+
+			function(callback){
+				app.db.collection('events').find({
+					"accountID": req.session.user.accountID
+				})
+				.toArray(function(err, data){
+					app.errHandler(res, err, data, callback);
+				});
+			},
 		],
 
 		function(err, data){
@@ -28,7 +37,8 @@ module.exports = function(app) {
 				data = {
 					account: data[0],
 					user: req.session.user,
-					list: data[1]
+					list: data[1],
+					events: data[2]
 				}
 			}
 			app.errHandler(res, err, data);

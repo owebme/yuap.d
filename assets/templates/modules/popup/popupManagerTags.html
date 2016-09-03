@@ -69,14 +69,14 @@
 
     $.onAdd = function(e){
         var $input = $$(e.currentTarget).prev(),
-            value = $input.val();
+            value = _.clean($input.val());
 
         if (value.length) $.addItem($input, value);
     };
 
     $.onKeydownAdd = function(e){
         var $input = $$(e.currentTarget),
-            value = $input.val();
+            value = _.clean($input.val());
 
         if (e.which === KEY.ENTER && value.length){
             e.preventDefault();
@@ -90,12 +90,12 @@
     };
 
     $.onApply = function(e){
-        var value = $$(e.currentTarget).prev().val();
+        var value = _.clean($$(e.currentTarget).prev().val());
         if (value.length) $.setItem(this.item, value);
     };
 
     $.onKeydownApply = function(e){
-        var value = $$(e.currentTarget).val();
+        var value = _.clean($$(e.currentTarget).val());
 
         if (e.which === KEY.ENTER && value.length){
             e.preventDefault();

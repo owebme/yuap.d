@@ -44,9 +44,11 @@ MongoClient.connect(config.get('mongodb:uri'), function(err, db) {
 		}
 	}
 	db.collection('accounts').insert(accounts);
-	db.collection('data').insert(data);
+	db.collection('events').insert(events);
+	db.collection('events').ensureIndex({accountID: 1});
 
-	db.collection('data').ensureIndex({siteID: 1});
+	db.collection('data').insert(data);
+	db.collection('data').ensureIndex({accountID: 1});
 	db.collection('data').ensureIndex({siteID: 1, clientID: 1}, {unique: true});
 });
 
@@ -194,6 +196,8 @@ var table = {
 		return item;
 	}
 }
+
+var events = [];
 
 var accounts = [
 	{

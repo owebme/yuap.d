@@ -110,7 +110,7 @@
     };
 
     $.onKeydown = function(e){
-        var value = $.input[0].value,
+        var value = _.clean($.input[0].value),
             length = value.length;
 
         if (e.which === KEY.ENTER && length){

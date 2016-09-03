@@ -56,6 +56,8 @@ module.exports = function(app, checkAuth, url){
 
 	route.delete('/remove', function(req, res) {
 
+		var ids = req.body.ids;
+
 		app.db.collection('data').remove({
 			"_id": {
 				$in: ids.map(app.ObjectId)

@@ -1,7 +1,7 @@
 .event__calendar__list {
     position:absolute;
-    top:188px;
-    left:726px;
+    top:0;
+    left:0;
     width:375px;
     min-height:60px;
     font-family:$helvetica;
@@ -43,30 +43,56 @@
         transform:translate3d(0, 0, 0);
         transition:transform 0s, visibility 0s 0.1s;
     }
-    &[data-align="right"]{
+    &[data-align-x="right"]{
         &:before {
             left:-17px;
-            top:50%;
-            transform:translate3d(0, -50%, 0) rotate(-90deg);
+            top:0;
+            transform:translate3d(0, 25px, 0) rotate(-90deg);
         }
         &:after {
             left:-16px;
-            top:50%;
-            transform:translate3d(0, -50%, 0) rotate(-90deg);
+            top:0;
+            transform:translate3d(0, 25px, 0) rotate(-90deg);
         }
     }
-    &[data-align="down-right"]{
-        transform:translate3d(5px, -21px, 0);
-
+    &[data-align-x="left"]{
         &:before {
-            left:-17px;
+            left:auto;
+            right:-17px;
             top:0;
-            transform:translate3d(0, 25px, 0) rotate(-90deg);
+            transform:translate3d(0, 25px, 0) rotate(90deg);
         }
         &:after {
-            left:-16px;
+            left:auto;
+            right:-16px;
             top:0;
-            transform:translate3d(0, 25px, 0) rotate(-90deg);
+            transform:translate3d(0, 25px, 0) rotate(90deg);
+        }
+    }
+    &[data-align-y="down"][data-align-x="right"]{
+        transform:translate3d(5px, -21px, 0);
+    }
+    &[data-align-y="up"][data-align-x="right"]{
+        transform:translate3d(5px, -221px, 0);
+
+        &:before {
+            transform:translate3d(0, 225px, 0) rotate(-90deg);
+        }
+        &:after {
+            transform:translate3d(0, 225px, 0) rotate(-90deg);
+        }
+    }
+    &[data-align-y="down"][data-align-x="left"]{
+        transform:translate3d(-5px, -21px, 0);
+    }
+    &[data-align-y="up"][data-align-x="left"]{
+        transform:translate3d(-5px, -221px, 0);
+
+        &:before {
+            transform:translate3d(0, 225px, 0) rotate(90deg);
+        }
+        &:after {
+            transform:translate3d(0, 225px, 0) rotate(90deg);
         }
     }
 }

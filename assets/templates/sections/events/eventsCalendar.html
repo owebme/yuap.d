@@ -5,64 +5,9 @@
     var $ = this;
     $.el = $$($.root);
 
-    this.on("mount", function(){
-        var today = new Date(),
-            y = today.getFullYear(),
-            m = today.getMonth(),
-            d = today.getDate();
+    $.init = function(data){
 
-        $.el.fullCalendar({
-            customButtons: {
-                titleHelp: {
-                    text: 'Нажмите на день для доб. события'
-                }
-            },
-			header: {
-				left: 'titleHelp',
-				center: 'title',
-				right: 'prev,next,today'
-			},
-			defaultDate: today,
-            timeFormat: 'H:mm',
-			selectable: true,
-			selectHelper: true,
-            editable: true,
-			// eventLimit: true,
-			titleFormat: {
-                month: 'MMMM YYYY / D', // September 2015
-                week: "MMMM D YYYY", // September 2015
-                day: 'D MMM, YYYY'  // Tuesday, Sep 8, 2015
-            },
-            eventAfterAllRender: function(){
-                $.calendarHeader = $.el.find(".fc-head-container");
-            },
-            eventRender: function(item, element) {
-                if (item.fire){
-                    element.append('<div class="fc-important"></div>');
-                }
-                if (item.color !== undefined){
-                    element[0].setAttribute('data-color', item.color);
-                }
-            },
-            eventMouseover: function(item, jsEvent, view) {
-                $Events.list.show(item, jsEvent);
-            },
-            eventMouseout: function(item, jsEvent, view) {
-                $Events.list.hide();
-            },
-			select: function(start, end, jsEvent, view) {
-                $Events.list.create(start, end, jsEvent, function(item){
-                    $.el.fullCalendar('renderEvent', item);
-                });
-
-			},
-            eventClick: function(item, jsEvent, view) {
-                $Events.list.edit(item, jsEvent, function(item){
-                    $.el.fullCalendar('updateEvent', item);
-                });
-            },
-            events: $store.events.get()
-		});
+        $.el.fullCalendar($Events.config($, data));
 
         $.el.on("mouseenter mouseleave", ".fc-day", function(e){
             var $elem = $$(this),
@@ -129,7 +74,55 @@
                 $weekday.removeClass("fc-day-header-hover");
             }
         });
-    });
+    };
+
+    $.insert = function(item, event){
+        app.request('addEvents', event).then(function(data){
+            $store.events.push(event);
+            $.el.fullCalendar('renderEvent', item);
+        });
+    };
+
+    $.set = {
+        event: function(item, event){
+            app.request('setEvents', {
+                id: event._id,
+                data: event
+            })
+            .then(function(data){
+                $store.events.select({"_id": event._id}).set(event);
+                $.el.fullCalendar('updateEvent', item);
+            });
+        },
+        date: function(event, revertFunc){
+            var startDate = event.start.format(),
+                endDate = event.end ? event.end.format() : null;
+
+            app.request('setEventsDate', {
+                id: event._id,
+                start: startDate,
+                end: endDate
+            })
+            .then(function(data){
+                var item = $store.events.select({"_id": event._id});
+                item.set("start", startDate);
+                item.set("end", endDate);
+            },
+            function(){
+                revertFunc();
+            });
+        }
+    };
+
+    $.delete = function(id){
+        app.request('delEvents', {
+            id: id
+        })
+        .then(function(data){
+            $store.events.select({"_id": id}).unset();
+            $.el.fullCalendar('removeEvents', id);
+        });
+    };
 
     this.on("unmount", function(){
         $.el.off();

@@ -1,4 +1,4 @@
-<section-events-calendar-list class="event__calendar__list" data-align="{ align }" data-active="{ active }" style="top: { top }px; left: { left }px;">
+<section-events-calendar-list class="event__calendar__list" data-align-x="{ alignX }" data-align-y="{ alignY }" data-active="{ active }" data-tooltip="{ !editable }" style="top: { top }px; left: { left }px;">
 
     <div if={ editable } class="event__editable">
         <div class="event__header">
@@ -53,12 +53,14 @@
 
     $.top = 0;
     $.left = 0;
-    $.align = "down-right";
+    $.alignX = "right";
+    $.alignY = "down";
     $.item = null;
     $._item = null;
     $.created = false;
     $.editable = false;
     $.callback = null;
+    $.hovered = false;
     $.active = false;
 
     $.create = function(start, end, cords, callback){
@@ -78,6 +80,7 @@
             }
             else {
                 $.callback = callback;
+                $.created = false;
                 $.editable = true;
                 $.onShow(item, cords);
             }
@@ -94,12 +97,31 @@
         if ($.editable && !$.created) $.item = $.normalize.get(item);
         else $.item = item;
 
+        $.top = cords.pageY - cords.offsetY + app.$dom.scroll[0].scrollTop;
+
         var offsetX = $$(cords.currentTarget).offset();
 
-        if (offsetX) $.left = offsetX.left + cords.currentTarget.clientWidth;
-        else $.left = cords.pageX;
+        if (!offsetX) {
+            offsetX = $$(cords.target).offset();
+            $.left = offsetX.left + cords.target.clientWidth;
+        }
+        else {
+            $.left = offsetX.left + cords.currentTarget.clientWidth;
+        }
+        if ($.left + $scope[0].clientWidth > app.sizes.width - 80){
+            $.left = offsetX.left - $scope[0].clientWidth;
+            $.alignX = "left";
+        }
+        else {
+            $.alignX = "right";
+        }
+        if ($.editable && app.$dom.scroll[0].scrollTop > 40 && ($.top + 380 > app.$dom.scroll[0].scrollTop + app.sizes.height - 40)){
+            $.alignY = "up";
+        }
+        else {
+            $.alignY = "down";
+        }
 
-        $.top = cords.pageY - cords.offsetY + app.$dom.scroll[0].scrollTop;
         $.active = true;
 
         $.update();
@@ -127,16 +149,16 @@
             }
         },
         daterange: function(){
-            var end_ = $.item.end ? moment($.item.end.format()) : null;
-            if (end_) end_.subtract(1, 'days');
+            var endDate = $.item.end ? moment($.item.end.format()) : null;
+            if (endDate) endDate.subtract(1, 'days');
 
             if ($.daterange){
                 $.daterange.data('daterangepicker')
                 .setStartDate($.item.start.format("DD/MM/YYYY"));
 
-                if ($.item.end){
+                if (endDate){
                     $.daterange.data('daterangepicker')
-                    .setEndDate(end_.format("DD/MM/YYYY"));
+                    .setEndDate(endDate.format("DD/MM/YYYY"));
                 }
                 else {
                     $.daterange.data('daterangepicker')
@@ -152,7 +174,7 @@
                     singleDatePicker: true,
                     showDropdowns: false,
                     startDate: $.item.start.format("DD/MM/YYYY"),
-                    endDate: end_ ? end_.format("DD/MM/YYYY") : $.item.start.format("DD/MM/YYYY"),
+                    endDate: null,
                     autoApply: true,
                     locale: {
                         format: 'DD/MM/YYYY',
@@ -166,23 +188,27 @@
                     $.set.date(start, end);
                     $.update();
                 });
+                if (endDate){
+                    $.daterange.data('daterangepicker')
+                    .setEndDate(endDate.format("DD/MM/YYYY"));
+                }
             }
         }
     };
 
     $.normalize = {
         create: function(start, end){
-            var start_ = moment(start.format());
-            $.set.time(defaultTime, start_);
+            var startDate = moment(start.format());
+            $.set.time(defaultTime, startDate);
 
-            var end_ = moment(end.format());
-            $.set.time("0:00", end_);
+            var endDate = moment(end.format());
+            $.set.time("0:00", endDate);
 
             return {
                 _id: moment().unix(),
                 title: null,
-                start: start_,
-                end: end_,
+                start: startDate,
+                end: endDate,
                 email: null,
                 phone: null,
                 comments: null,
@@ -192,13 +218,13 @@
             }
         },
         get: function(item){
-            var start = moment(item.start.format());
-            if ($._item.allDay) $.set.time(defaultTime, start);
+            var startDate = moment(item.start.format());
+            if ($._item.allDay) $.set.time(defaultTime, startDate);
 
             return {
                 _id: item._id,
                 title: item.title,
-                start: start,
+                start: startDate,
                 end: item.end ? moment(item.end.format()) : null,
                 email: item.email ? item.email : null,
                 phone: item.phone ? item.phone : null,
@@ -210,26 +236,36 @@
         },
         set: function(item){
             if ($._item && item){
-                $._item.title = _.clearField(item.title, 'Новое событие');
+                item.title = _.clean(item.title, 'Новое событие');
+                item.email = _.clean(item.email);
+                item.phone = _.clean(item.phone);
+                item.comments = _.clean(item.comments);
+
+                $._item.title = item.title;
                 $._item.start = item.start;
                 $._item.end = item.end;
-                $._item.email = _.clearField(item.email);
-                $._item.phone = _.clearField(item.phone);
-                $._item.comments = _.clearField(item.comments);
+                $._item.email = item.email;
+                $._item.phone = item.phone;
+                $._item.comments = item.comments;
                 $._item.allDay = item.allDay;
                 $._item.fire = item.fire;
                 $._item.color = item.color;
-                return $._item;
+
+                var event = item;
+                event.start = event.start.format();
+                if (event.end) event.end = event.end.format();
+
+                return [$._item, event];
             }
         }
     };
 
     $.get = {
         date: function(start, end){
-            var end_ = end ? moment(end.format()) : null;
-            if (end_) end_.subtract(1, 'days');
-            if (start && end_ && start.format('D/MM') != end_.format('D/MM')) {
-                return start.format('D/MM') + " - " + end_.format('D/MM');
+            var endDate = end ? moment(end.format()) : null;
+            if (endDate) endDate.subtract(1, 'days');
+            if (start && endDate && start.format('D/MM') != endDate.format('D/MM')) {
+                return start.format('D/MM') + " - " + endDate.format('D/MM');
             }
             else if (start) {
                 return start.format('D MMMM');
@@ -275,17 +311,18 @@
     };
 
     $.onSave = function(){
-        $.callback($.normalize.set($.item));
+        var result = $.normalize.set($.item);
+        $.callback(result[0], result[1]);
         $.onHide();
     };
 
     $.onRemove = function(){
-        $Events.calendar.el.fullCalendar('removeEvents', $.item._id);
+        $Events.calendar.delete($.item._id);
         $.onHide();
     };
 
     $.hide = function(){
-        if ($.editable) return;
+        if ($.editable || $.hovered) return;
         $.onHide();
         $.update();
     };
@@ -301,6 +338,19 @@
         });
     };
 
+    app.$dom.scroll.on("mouseenter mouseleave", ".event__calendar__list[data-tooltip=true]", function(e){
+        if (e.type === "mouseenter"){
+            $.hovered = true;
+        }
+        else {
+            $.hovered = false;
+            var rel = e.relatedTarget || e.toElement;
+            if (rel && rel.className && !rel.className.match(/fc-content/)){
+                $.hide();
+            }
+        }
+    });
+
     this.on("unmount", function(){
         if ($.clockpicker) {
             $.clockpicker.clockpicker('remove');
@@ -308,6 +358,7 @@
         if ($.daterange) {
             $.daterange.data('daterangepicker').remove();
         }
+        app.$dom.scroll.off("mouseenter mouseleave", ".event__calendar__list[data-tooltip=true]");
     });
 
 </script>

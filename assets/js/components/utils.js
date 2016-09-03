@@ -135,16 +135,16 @@
 		};
 	};
 
-	utils.cleanString = function(string) {
-		return string.replace(/<\/?[^>]+>/g,'');
-	};
-
 	utils.trim = function(text) {
 		return (text || '').replace(/^\s+|\s+$/g, '');
 	};
 
-	utils.clearField = function(field, def) {
-		field = utils.trim(field);
+	utils.underscored = function(str) {
+		return utils.trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
+	};
+
+	utils.clean = function(field, def) {
+		field = _.escape(utils.trim(field));
 		return field ? field : (def ? def : null);
 	};
 
@@ -223,6 +223,6 @@
 	if (window._) _.extend(_, utils);
 	else window._ = utils;
 
-	if (window.s) _.mixin(s.exports());
+	// if (window.s) _.mixin(s.exports());
 
 })(app.utils, app.$dom);

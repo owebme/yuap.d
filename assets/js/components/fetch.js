@@ -53,12 +53,14 @@ app.fetch.API.getDataInit = function(){
                 item.active = true;
             });
 
-            $store.data.set(data.list ? data.list : {});
+            $store.data.set(data.list ? data.list : []);
+            $store.events.set(data.events ? data.events : []);
             $store.chanels.set(chanels);
-            $store.status.set(data.account && data.account.status ? data.account.status : {});
-            $store.tags.set(data.account && data.account.tags ? data.account.tags : {});
 
             if (data.account) {
+                $store.status.set(data.account.status ? data.account.status : []);
+                $store.tags.set(data.account.tags ? data.account.tags : []);
+
                 app.const("account", data.account);
                 if (data.user) app.const("user", data.user);
             }

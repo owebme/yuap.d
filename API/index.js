@@ -14,6 +14,9 @@ module.exports = function(app){
 	// Tags
 	require('./data/dataTags')(app, checkAuth, '/api/data/tags');
 
+	// Events
+	require('./events/events')(app, checkAuth, '/api/events');
+
 	// Messenger
 	require('./messenger')(app);
 

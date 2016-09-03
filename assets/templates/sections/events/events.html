@@ -16,11 +16,77 @@
 
     var $ = this;
 
+    this.on("mount", function(){
+        $Events.calendar.init($store.events.get());
+    });
+
     $Events = {
         tag: $,
         el: $$($.root),
         calendar: $.tags["section-events-calendar"],
-        list: $.tags["section-events-calendar-list"]
+        list: $.tags["section-events-calendar-list"],
+        config: function($, data){
+        return {
+            customButtons: {
+                titleHelp: {
+                    text: 'Нажмите на день для доб. события'
+                }
+            },
+            header: {
+                left: 'titleHelp',
+                center: 'title',
+                right: 'prev,next,today'
+            },
+            defaultDate: new Date(),
+            timeFormat: 'H:mm',
+            selectable: true,
+            selectHelper: true,
+            editable: true,
+            // eventLimit: true,
+            titleFormat: {
+                month: 'MMMM YYYY / D', // September 2015
+                week: "MMMM D YYYY", // September 2015
+                day: 'D MMM, YYYY'  // Tuesday, Sep 8, 2015
+            },
+            eventAfterAllRender: function(){
+                $.calendarHeader = $.el.find(".fc-head-container");
+            },
+            eventRender: function(item, element) {
+                if (item.fire){
+                    element.append('<div class="fc-important"></div>');
+                }
+                if (item.color !== undefined){
+                    element[0].setAttribute('data-color', item.color);
+                }
+            },
+            eventMouseover: function(item, jsEvent, view) {
+                setTimeout(function(){
+                    $Events.list.show(item, jsEvent);
+                }, 5);
+            },
+            eventMouseout: function(item, jsEvent, view) {
+                setTimeout(function(){
+                    $Events.list.hide();
+                }, 5);
+            },
+            select: function(start, end, jsEvent, view) {
+                $Events.list.create(start, end, jsEvent, function(item, event){
+                    $Events.calendar.insert(item, event);
+                });
+            },
+            eventClick: function(item, jsEvent, view) {
+                $Events.list.edit(item, jsEvent, function(item, event){
+                    $Events.calendar.set.event(item, event);
+                });
+            },
+            eventDrop: function(event, delta, revertFunc) {
+                $Events.calendar.set.date(event, revertFunc);
+            },
+            eventResize: function(event, delta, revertFunc) {
+                $Events.calendar.set.date(event, revertFunc);
+            },
+            events: data
+        }}
     };
 
 </script>
