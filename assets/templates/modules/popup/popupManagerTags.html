@@ -50,12 +50,9 @@
 
 <script>
 
-    var $ = this,
-    $scope = $$($.root);
+    var $ = this;
 
-    $.active = false;
     $.saving = false;
-    $.name = "manager-tags";
     $.items = [];
 
     this.on("mount", function(){

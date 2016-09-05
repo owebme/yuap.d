@@ -105,7 +105,7 @@ gulp.watch([
 	'../index.html',
 	'templates/*.html',
 	'templates/**/*.html',
-	'views/index.hbs',
+	'../views/index.hbs',
 	'js/*.js',
 	'js/**/*.js'
 ]).on('change', reload);

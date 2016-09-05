@@ -1,0 +1,53 @@
+<popup-contacts-export-settings class="popup__wrapper">
+
+    <div class="popup__container">
+        <div dgClick={ hide } class="popup__close"></div>
+        <h3 class="popup__title text-left">
+            Экспорт контактов
+            <p class="subtitle">Отфильтровано контактов для выгрузки: <strong class="text-primary">124</strong></p>
+        </h3>
+        <div class="row">
+            <div class="popup__export__container">
+                <div class="popup__tag__list tag__list">
+                    <div class="tag__list__control">
+                        <div class="tag">Все поля<span class="tag__remove"></span></div>
+                        <input type="text" placeholder="Имя, компания, телефон..." autocomplete="off" class="tag__list__input">
+                    </div>
+                </div>
+                <div class="popup__tag__list tag__list">
+                    <div class="tag__list__control">
+                        <div class="tag">Все статусы<span class="tag__remove"></span></div>
+                        <input type="text" placeholder="Имя статуса" autocomplete="off" class="tag__list__input">
+                    </div>
+                </div>
+                <div class="popup__tag__list tag__list">
+                    <div class="tag__list__control">
+                        <div class="tag">Все тэги<span class="tag__remove"></span></div>
+                        <input type="text" placeholder="Имя тэга" autocomplete="off" class="tag__list__input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row popup__footer text-right">
+            <span dgClick={ hide } id="popup-contacts-export-settings-onCancel" class="btn btn-md btn-upper btn-hover-fill">Отменить</span>
+            <span dgClick={ hide } id="popup-contacts-export-settings-onExport" class="btn btn-md btn-upper btn-hover-fill">Экспортировать</span>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    $.format = "csv";
+
+    $.export = function(e){
+        $Popup.hide();
+    };
+
+    $.hide = function(e){
+        $Popup.hide();
+    };
+
+</script>
+
+</popup-contacts-export-settings>

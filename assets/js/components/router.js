@@ -19,12 +19,23 @@
                 Router.routes.contacts();
             });
 
-            var routeContact = riot.route.create()
-            routeContact('/contact/*', function(id){
-                $Contact.show(id);
+            riot.route('/contacts/export', function(){
+                $Popup.show("contacts-export");
+                Router.routes.contacts();
             });
 
-            var routeContactTags = riot.route.create()
+            riot.route('/contacts/export/settings', function(){
+                $Popup.show("contacts-export-settings");
+                Router.routes.contacts();
+            });
+
+            var routeContact = riot.route.create();
+            routeContact('/contact/*', function(id){
+                $Contact.show(id);
+                Router.routes.contacts();
+            });
+
+            var routeContactTags = riot.route.create();
             routeContactTags('/contact/*/tags', function(id){
                 $Popup.show("contact-tags", $store.data.get({"_id": id}));
             });

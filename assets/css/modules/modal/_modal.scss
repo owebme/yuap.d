@@ -9,6 +9,7 @@
     transition:opacity 0.25s $cubic57, visibility 0s 0.25s;
     padding-top:30px;
     overflow-y:scroll;
+    pointer-events:none;
     z-index:100;
 
     &__wrapper {
@@ -71,7 +72,7 @@
             @extend .modal__button;
         }
         &__alarm {
-            @include ui-icon(alarm_fill, 28px, 28px);
+            @include ui-icon(events, 30px, 30px);
             @extend .modal__button;
         }
         &__print {
@@ -91,7 +92,7 @@
         &__remove {
             @include ui-icon(remove, 31px, 31px);
             @extend .modal__button;
-            margin:-10px 0;
+            margin:-8px 0;
         }
     }
     &__title {
@@ -193,6 +194,7 @@
     &[data-open="true"]{
         opacity:1;
         visibility:visible;
+        pointer-events:all;
         transition:opacity 0.25s $cubic2501, visibility 0s;
 
         .modal__wrapper {

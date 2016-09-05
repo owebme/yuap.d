@@ -3,7 +3,7 @@
         display:block;
         position:absolute;
         top:-5px;
-        right:45px;
+        right:32px;
         font-size:0;
         cursor:pointer;
         white-space:nowrap;
@@ -31,5 +31,16 @@
         left:50%;
         transform:translate3d(35px, 60px, 0);
         z-index:1;
+    }
+}
+.block__contact__history {
+    height:180px;
+    padding:12px 20px;
+    border:1px solid $blue;
+    border-radius:6px;
+    opacity:0.8;
+
+    &__title {
+        color:$blue;
     }
 }

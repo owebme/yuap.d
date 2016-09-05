@@ -1,0 +1,60 @@
+<popup-contacts-export class="popup__wrapper">
+
+    <div class="popup__container popup__container__indent-sm">
+        <div dgClick={ hide } class="popup__close"></div>
+        <h3 class="popup__title text-left">
+            Экспорт контактов
+            <p class="subtitle">Выберите формат для выгрузки контактов</p>
+        </h3>
+        <div class="row">
+            <div class="popup__block">
+                <div class="popup__block__icon popup__block__icon--csv"></div>
+                <div class="popup__block__content">
+                    <div class="popup__block__text">Выгрузить все контакты в <strong class="text-primary">CSV</strong> формате</div>
+                    <span onClick={ export.csv } class="popup__block__button btn btn-md btn-hover-fill">Экспортировать</span>
+                </div>
+            </div>
+            <div class="popup__block">
+                <div class="popup__block__icon popup__block__icon--json"></div>
+                <div class="popup__block__content">
+                    <div class="popup__block__text">Выгрузить все контакты в <strong class="text-primary">JSON</strong> формате</div>
+                    <span onClick={ export.json } class="popup__block__button btn btn-md btn-hover-fill">Экспортировать</span>
+                </div>
+            </div>
+            <div class="popup__block">
+                <div class="popup__block__icon popup__block__icon--settings"></div>
+                <div class="popup__block__content">
+                    <div class="popup__block__text">Выгрузить только нужные поля и данные</div>
+                    <span onClick={ export.settings } class="popup__block__button btn btn-md btn-hover-fill">Настроить выгрузку</span>
+                </div>
+            </div>
+        </div>
+        <div class="row popup__footer text-right">
+            <span dgClick={ hide } id="popup-contacts-export-settings-onCancel" class="btn btn-md btn-upper btn-hover-fill">Отменить</span>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.export = {
+        csv: function(){
+
+        },
+        json: function(){
+
+        },
+        settings: function(){
+            $Router.nav("/contacts/export/settings");
+        }
+    };
+
+    $.hide = function(e){
+        $Popup.hide();
+    };
+
+</script>
+
+</popup-contacts-export>

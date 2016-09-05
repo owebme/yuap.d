@@ -7,6 +7,7 @@
     text-align:center;
     will-change:opacity;
     transition:opacity 0.15s $cubic57, visibility 0s 0.15s;
+    pointer-events:none;
     z-index:101;
 
     &__title {
@@ -51,7 +52,7 @@
     &__container {
         opacity:0.001;
         position:relative;
-        padding:40px 50px;
+        padding:35px 50px 40px;
         background-color:#fff;
         border-radius:9px;
         min-width:540px;
@@ -76,7 +77,8 @@
     &[data-open="true"]{
         opacity:1;
         visibility:visible;
-        transition:opacity 0.25s $cubic2501, visibility 0s;
+        pointer-events:all;
+        transition:opacity 0.15s $cubic2501, visibility 0s;
 
         .popup__wrapper[data-active="true"] {
             z-index:1;

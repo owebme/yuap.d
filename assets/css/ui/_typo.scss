@@ -53,13 +53,13 @@ blockquote {
 blockquote small {
     display: block;
     line-height: 1.428571429;
-    color: #999999;
+    color: $gray;
 }
 small, .small {
     font-size: 85%;
 }
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
-    color: #999999;
+    color: $gray;
     font-weight: 300;
     line-height: 1;
 }
@@ -72,9 +72,10 @@ h3 .subtitle {
     display: block;
     margin: 12px 0 35px;
 }
-.text-primary, .text-primary:hover {
-    color: #1D62F0;
+.text-primary,
+.text-primary:hover {
+    color:$blue;
 }
 .text-muted {
-    color: #999999;
+    color:$gray_lighten;
 }

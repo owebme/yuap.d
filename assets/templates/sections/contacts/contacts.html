@@ -86,23 +86,24 @@
                 },
                 className: "btn-sm btn-hover-fill"
             },
+            // {
+            //     extend: "csvHtml5",
+            //     exportOptions: {
+            //         columns: ':visible:not(:first-child)'
+            //     },
+            //     className: "btn-sm btn-hide btn-hover-fill"
+            // },
             {
-                extend: "csvHtml5",
-                exportOptions: {
-                    columns: ':visible:not(:first-child)'
-                },
-                className: "btn-sm btn-hover-fill"
-            },
-            {
-                text: 'JSON',
+                text: 'Экспорт',
                 className: "btn-sm btn-hover-fill",
                 action: function (e, dt, button, config) {
+                    $Router.nav("/contacts/export");
                     //var data = dt.buttons.exportData();
-                    var data = $store.data.get();
-                    $$.fn.dataTable.fileSave(
-                        new Blob([ JSON.stringify(data) ]),
-                        'CONTACTS.export.json'
-                    );
+                    // var data = $store.data.get();
+                    // $$.fn.dataTable.fileSave(
+                    //     new Blob([ JSON.stringify(data) ]),
+                    //     'CONTACTS.export.json'
+                    // );
                 }
             },
             {

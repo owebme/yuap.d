@@ -16,6 +16,8 @@
 
             $.tags[name] = riot.mount($elem, 'popup-' + name, {data: data})[0];
 
+            $.tags[name].name = $.tags[name].root.tagName.toLowerCase().replace(/popup-/, '');
+
             if (callback && $.tags[name]){
                 $.tags[name].one("updated", function(){
                     $.tags[name].el = $$($.tags[name].root);
@@ -33,10 +35,11 @@
     };
 
     $.show = function(name, data){
-        $.activePopup
         if ($.tags[name]){
             $.hideActive(name);
-            $.tags[name].init(data);
+            if ($.tags[name].init){
+                $.tags[name].init(data);
+            }
             $.inShow(name);
         }
         else {
