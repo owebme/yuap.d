@@ -19,7 +19,7 @@
     &:before {
         top:4px;
         left:3px;
-        background-color:lighten($blue_gray, 20%);
+        background-color:lighten($frozen, 20%);
         transform:translate3d(0, 0, 0) scale(1);
         border-radius:4px;
     }

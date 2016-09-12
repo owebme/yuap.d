@@ -22,7 +22,7 @@
     list-style: none;
     background: #fff;
     background-clip: padding-box;
-    border:1px solid #c9d7df;
+    border:1px solid $smoke_darken;
     border-radius:10px;
     box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
     padding: 7px 10px 15px 10px;
@@ -180,7 +180,7 @@
 }
 
 .daterangepicker .calendar-table {
-  // border: 1px solid #c9d7df;
+  // border: 1px solid $smoke_darken;
   padding: 4px;
   border-radius: 4px;
   background: #fff;
@@ -320,7 +320,7 @@
 /* Text Input Above Each Calendar */
 
 .daterangepicker .input-mini {
-  // border: 1px solid #c9d7df;
+  // border: 1px solid $smoke_darken;
   border:none;
   border-radius: 4px;
   color: $gray;
@@ -337,7 +337,7 @@
 }
 
 .daterangepicker .input-mini.active {
-  // border: 1px solid $blue_gray;
+  // border: 1px solid $frozen;
 }
 
 .daterangepicker .daterangepicker_input i {

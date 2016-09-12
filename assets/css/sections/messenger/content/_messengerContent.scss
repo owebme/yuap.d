@@ -110,7 +110,7 @@
 }
 .messenger__msg__user {
     .messenger__msg__text {
-        color:$black_text;
+        color:$black_soft;
         background-color:#fff;
         border-color:#dadee2;
         // border-color:#d5dee3;
@@ -357,7 +357,7 @@
         top:50%;
         width:33.33%;
         height:1px;
-        background:#E1E4E8;
+        background:$smoke;
     }
     &:before {
         left:20px;

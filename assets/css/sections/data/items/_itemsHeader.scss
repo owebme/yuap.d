@@ -53,7 +53,7 @@
             width:calc(100% + 2px);
             height:calc(100% + 2px);
             border-radius:50%;
-            border:1px solid lighten($blue_gray,7.5%);
+            border:1px solid lighten($frozen,7.5%);
             backface-visibility:hidden;
             z-index:0;
         }
@@ -90,7 +90,7 @@
             &__item {
                 @include abs();
                 border-radius:50%;
-                border:1px solid lighten($blue_gray, 7.5%);
+                border:1px solid lighten($frozen, 7.5%);
 
                 &:after {
                     content:"";

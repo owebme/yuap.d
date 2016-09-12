@@ -49,7 +49,7 @@
         }
     }
     &__number {
-        color:$blue_gray;
+        color:$frozen;
         display:inline-block;
         font-size:14.5px;
         font-weight:bold;
@@ -88,7 +88,7 @@
         }
     }
     &__pigination {
-        color:$blue_gray;
+        color:$frozen;
         font-size:16px;
         margin-left:10px;
         @include flex("row", "flex-end", "center");
@@ -191,7 +191,7 @@
             transform:translate3d(20px, -1px, 0);
 
             &__current {
-                color:$blue_gray;
+                color:$frozen;
                 font-weight:bold;
                 font-size:15px;
             }

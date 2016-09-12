@@ -41,7 +41,7 @@
                 background-color:$emerald;
             }
             &[data-status="offline"]{
-                background-color:rgba($red,.85);
+                background-color:$red;
             }
         }
         &__status {

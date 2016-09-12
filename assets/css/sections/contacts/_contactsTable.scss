@@ -20,10 +20,10 @@
         text-align:left;
     }
     td {
-        color:$black_lighten;
+        color:$black_light;
         font-size:14.5px;
         padding-right:0;
-        border-top:1px solid #dae2e8;
+        border-top:1px solid $smoke_dark;
     }
     th {
         position:relative;
@@ -132,7 +132,7 @@
         background-repeat:no-repeat;
         background-size:cover;
         opacity:0.89;
-        border:1px solid #dae2e8;
+        border:1px solid $smoke_dark;
         transform:translate3d(0, 3px, 0);
     }
     &__status {

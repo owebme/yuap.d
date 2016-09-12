@@ -21,7 +21,7 @@
             display:block;
             @include abs();
             border-radius:50%;
-            background:$blue2; //#7B4CFF
+            background:#158ffe; //#7B4CFF
             @include accelerate();
             transform:translate3d(0, 0, 0) rotate(0deg);
             z-index:0;

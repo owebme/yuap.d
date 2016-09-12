@@ -93,11 +93,11 @@
     input {
         border:none;
         background:none;
-        border-bottom:1px solid #dae2e8;
+        border-bottom:1px solid $smoke_dark;
         width:120px;
         height:28px;
         margin-left:10px;
-        color:$black_text;
+        color:$black_soft;
         font-family:$default;
         font-size:14.5px;
         line-height:20px;
@@ -132,7 +132,7 @@
         appearance:none;
         border:none;
         text-transform:none;
-        color:$blue_gray;
+        color:$frozen;
         font-family:$nimbus;
         font-weight:bold;
         font-size:15px;
@@ -193,7 +193,7 @@
     }
     &_collectionBackground {
     	@include abs(fixed);
-    	background-color:$bg_color;
+    	background-color:$black_dark;
     	z-index:1100;
     }
     &_collection {

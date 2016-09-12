@@ -14,15 +14,15 @@
 .messenger__header,
 .messenger__body {
     .borderTop {
-        border-top:1px solid #E1E4E8;
+        border-top:1px solid $smoke;
     }
     .borderRight {
-        border-right:1px solid #E1E4E8;
+        border-right:1px solid $smoke;
     }
     .borderBottom {
-        border-bottom:1px solid #E1E4E8;
+        border-bottom:1px solid $smoke;
     }
     .borderLeft {
-        border-left:1px solid #E1E4E8;
-    }               
+        border-left:1px solid $smoke;
+    }
 }

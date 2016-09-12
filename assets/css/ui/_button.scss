@@ -119,19 +119,19 @@
         display:none;
     }
     &-danger {
-        color:$red;
-        border:1px solid $red;
+        color:$red_light;
+        border:1px solid $red_light;
 
         &.btn-fill {
             color:#fff;
-            border-color:$red;
-            background-color:$red;
+            border-color:$red_light;
+            background-color:$red_light;
         }
         &.btn-hover-fill {
             &:hover,
             &.active {
-                border-color:$red;
-                background-color:$red;
+                border-color:$red_light;
+                background-color:$red_light;
             }
         }
     }

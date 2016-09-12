@@ -48,7 +48,7 @@
                     opacity:0;
                     content:"";
                     @include abs_50(34, 34);
-                    border:1px solid rgba($blue_gray,.4);
+                    border:1px solid rgba($frozen,.4);
                     border-radius:4px;
                 }
                 &:hover {
@@ -86,7 +86,7 @@
                     opacity:0;
                     content:"";
                     @include abs_50(34, 34);
-                    border:1px solid rgba($blue_gray,.4);
+                    border:1px solid rgba($frozen,.4);
                     border-radius:4px;
                 }
                 &:hover {

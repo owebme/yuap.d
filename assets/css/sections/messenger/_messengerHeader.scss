@@ -1,7 +1,7 @@
 .messenger__header {
     @include flex("row", "flex-start", "stretch");
-    background:#F2F5F7;
-    border-bottom:1px solid #DAE2E8;
+    background:$snow_dark;
+    border-bottom:1px solid $smoke_dark;
     user-select:none;
 
     &__column {
@@ -35,7 +35,7 @@
             margin-right:5px;
 
             &__color {
-                fill:$blue_gray;
+                fill:$frozen;
                 transition:fill 0.12s $cubic645;
             }
         }
@@ -108,7 +108,7 @@
             right:54px;
             width:54px;
             height:100%;
-            border-left:1px solid #C9D7DF;
+            border-left:1px solid $smoke_darken;
             cursor:pointer;
 
             &:before {
@@ -124,7 +124,7 @@
             right:0;
             width:54px;
             height:100%;
-            border-left:1px solid #C9D7DF;
+            border-left:1px solid $smoke_darken;
             opacity:0.85;
             transition:opacity 0.12s $cubic645;
             cursor:pointer;

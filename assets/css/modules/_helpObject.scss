@@ -21,7 +21,7 @@
     }
     &__item {
         position:absolute;
-        box-shadow:0 16px 40px -10px rgba($bg_color,.15);
+        box-shadow:0 16px 40px -10px rgba($black_dark,.15);
     }
     &:after {
         content:"";
@@ -46,7 +46,7 @@
             left:50%;
             width:1px;
             height:$help_ind;
-            background:$blue_gray;
+            background:$frozen;
         }
         &[data-pos^='up']{
             bottom:100%;

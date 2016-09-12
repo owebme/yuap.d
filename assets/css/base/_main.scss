@@ -89,7 +89,7 @@ body {
 	display:block;
 	min-height:calc(100% - #{$header_height});
 	// background:linear-gradient(to bottom, #F4F6FA, #E0E0E8);
-	background:linear-gradient(to bottom, #F0F4F7, darken(#F0F4F7,4%));
+	background:linear-gradient(to bottom, #F0F4F7, $snow_darken);
 	// background:linear-gradient(to bottom, #F0F4F7, #EDF3F8);
 	// background:linear-gradient(to bottom, #F0F4F7, #EEF5F9);
 	overflow:hidden;

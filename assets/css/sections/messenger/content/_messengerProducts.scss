@@ -161,7 +161,7 @@
         left: -7.5%;
         width: 115%;
         height: 1px;
-        background:$red;
+        background:$red_light;
         transform: rotateZ(-6deg);
     }
 }
@@ -214,7 +214,7 @@
     &:before {
         content:"";
         @include abs();
-        background:rgba($bg_color,.87);
+        background:rgba($black_dark,.87);
     }
     &:after {
         content:"";

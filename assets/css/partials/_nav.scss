@@ -149,7 +149,7 @@
         width:72px;
         height:72px;
         will-change:border-color;
-        border:3px solid rgba($bg_color,.13);
+        border:3px solid rgba($black_dark,.13);
         border-radius:50%;
         transition:border-color 0.2s $cubic215;
 
@@ -162,7 +162,7 @@
             opacity:0.95;
         }
         &:hover {
-            border-color:rgba($bg_color,.2);
+            border-color:rgba($black_dark,.2);
         }
     }
     // &__score {

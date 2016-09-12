@@ -3,7 +3,7 @@
     @include abs(fixed);
     @include accelerate();
     visibility:hidden;
-    background:linear-gradient(135deg, rgba($bg_color,.76), rgba(40,47,51,.76));
+    background:linear-gradient(135deg, rgba($black_dark,.76), rgba(40,47,51,.76));
     text-align:center;
     will-change:opacity;
     transition:opacity 0.15s $cubic57, visibility 0s 0.15s;

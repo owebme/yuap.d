@@ -1,15 +1,15 @@
 .messenger__sidebar__left {
     display:block;
     background:#fff;
-    border-right:1px solid #e1e4e8;
+    border-right:1px solid $smoke;
 
     &__tabs {
         height:42px;
-        border-bottom:1px solid #c0cad5;
+        border-bottom:1px solid $smoke_darken;
     }
 }
 .messenger__sidebar__right {
     display:block;
-    background:#fbfbfc;
-    border-left:1px solid #E1E4E8;
+    background:$snow;
+    border-left:1px solid $smoke;
 }

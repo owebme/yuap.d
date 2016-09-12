@@ -75,8 +75,7 @@
         }
     }
     &:not([data-active="true"]):hover {
-        // background-color:#f8fafb;
-        background-color:lighten($bg_select, 4%);
+        background-color:lighten($frozen_lighten,20%);
         cursor:pointer;
     }
     &__counter {
@@ -106,7 +105,7 @@
             border-radius:5px;
         }
         &__title {
-            color:$header;
+            color:$gray;
             font-family:$roboto;
             font-weight:500;
             font-size:16px;
@@ -115,7 +114,7 @@
         }
     }
     &__text {
-        color:$header;
+        color:$gray;
         font-size:13px;
         line-height:17px;
         @include textEllipsis(100%, 34px, 2);

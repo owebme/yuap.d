@@ -20,7 +20,7 @@
         font-size:12px;
         padding:9px 15px;
         text-transform:uppercase;
-        color:$blue_gray;
+        color:$frozen;
         font-weight:bold;
     }
     tr:hover {
@@ -143,7 +143,7 @@
             position:absolute;
             width:30px;
             height:30px;
-            border:1px solid rgba($blue_gray,.4);
+            border:1px solid rgba($frozen,.4);
             border-radius:4px;
         }
         &:hover {

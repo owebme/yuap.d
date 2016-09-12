@@ -3,8 +3,8 @@
 
     &__inner {
         position:relative;
-        background:#F2F5F7;
-        background:linear-gradient(to bottom, #F2F5F7, #F5F8FA);
+        background:$snow_dark;
+        background:linear-gradient(to bottom, $snow_dark, #F5F8FA);
     }
     &__content {
         display:block;

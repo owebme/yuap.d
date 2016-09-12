@@ -2,7 +2,7 @@
     @include abs();
     @include flex("row", "center", "center");
     display:none;
-    background:rgba($bg_color,.8);
+    background:rgba($black_dark,.8);
     z-index:1000;
 
     &__wrapper {

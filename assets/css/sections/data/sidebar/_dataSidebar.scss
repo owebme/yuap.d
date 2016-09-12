@@ -8,7 +8,7 @@
 }
 .sidebar__filter {
     &__item {
-        border-bottom:1px solid #c9d7df;
+        border-bottom:1px solid $smoke_darken;
     }
     &__title {
         position:relative;
