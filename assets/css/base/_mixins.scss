@@ -1,36 +1,48 @@
 @mixin abs($pos: absolute) {
-    position:$pos;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    @if $pos == "absolute" {
+        @extend .pos-abs-full;
+    }
+    @else {
+        @extend .pos-fixed-full;
+    }
 }
 @mixin abs_50($width, $height, $ed: px) {
-    position:absolute;
-    top:50%;
-    left:50%;
+    @extend .pos-abs-half;
     width:#{$width}#{$ed};
     height:#{$height}#{$ed};
     margin:#{-$height/2}#{$ed} 0 0 #{-$width/2}#{$ed};
 }
 @mixin flex($direction, $justify, $align) {
-    display:flex;
-    flex-direction:#{$direction};
-    justify-content:#{$justify};
-    align-items:#{$align};
+    @extend .flex;
+    @if $direction {
+        @extend .flexDirection-#{$direction};
+    }
+    @if $justify {
+        @extend .justifyContent-#{$justify};
+    }
+    @if $align {
+        @extend .alignItems-#{$align};
+    }
+}
+@mixin animation($name, $fn: linear, $duration: .3s, $delay: false) {
+    animation-name:$name;
+    animation-timing-function:$fn;
+    animation-duration:$duration;
+    animation-fill-mode:forwards;
+    @if $delay {
+        animation-delay:$delay;
+    }
 }
 @mixin accelerate($transition: false) {
-    // transform-style:preserve-3d;
-    transform-style:flat;
-    backface-visibility:hidden;
+    @extend .accelerate;
     @if $transition {
         transform:translate3d(0, 0, 0);
         transform:translateZ(0);
     }
 }
 @mixin textEllipsis($width: false, $height: false, $column: false) {
-    overflow:hidden;
-    text-overflow:ellipsis;
+    @extend .overflow-hidden;
+    @extend .text-ellipsis;
     @if $width {
         max-width:#{$width};
     }
@@ -41,10 +53,14 @@
         max-height:#{$height};
     }
     @else {
-        white-space:nowrap;
+        @extend .nowrap;
     }
 }
-@keyframes spinner {
-	0% {transform:rotate(0)}
-	100% {transform:rotate(360deg)}
+@mixin responsive($media) {
+    @if $media == max-xs-width {
+        @media screen and (max-width: $w767) { @content; }
+    }
+    @else if $media == max-md-width {
+        @media screen and (max-width: $w1024) { @content; }
+    }
 }

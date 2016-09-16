@@ -113,7 +113,8 @@
         $.dateRangeCancel = $.dateRange.find('.data__menu__dateRange__cancel');
 
         $.dateRangePicker = $.dateRangeButton.daterangepicker({
-            buttonClasses: ['btn btn-hover-fill', 'btn-sm'],
+            applyClass: 'btn btn-s btn-primary-hover',
+            cancelClass: 'btn btn-s btn-primary-hover',
             parentEl: '.screen__main__inner',
             opens: 'center',
             ranges: {

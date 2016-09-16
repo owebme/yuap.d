@@ -5,7 +5,7 @@
 .dashboard__item {
     position:relative;
     border-radius:4px;
-    border:dashed 2px lighten($smoke_darken,2%);
+    border:dashed 2px lighten($smokeDarken,2%);
     min-height:314px;
     padding:17px 22px 0 22px;
     margin-bottom:25px;
@@ -13,16 +13,16 @@
     transition:border-color 0.25s $cubic25;
 
     &:hover {
-        border-color:darken($smoke_darken,15%);
+        border-color:darken($smokeDarken,15%);
     }
     &--active,
     &--active:hover {
         border-style:solid;
-        border-color:lighten($smoke_darken,2%);
+        border-color:lighten($smokeDarken,2%);
         cursor:default;
     }
     &__title {
-        font-family:$default;
+        font-family:$helvetica;
         text-transform:uppercase;
     }
 }

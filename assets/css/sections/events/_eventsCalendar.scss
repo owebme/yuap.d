@@ -10,7 +10,7 @@
 		border-collapse:collapse;
 	}
 	th {
-		color:$gray_lighten;
+		color:$grayLighten;
 		font-family:$roboto;
 		font-weight:300;
 		font-size:16px;
@@ -19,10 +19,10 @@
 		text-transform:uppercase;
 	}
 	td {
-		color:rgba($black_light,.78);
+		color:rgba($blackLight,.78);
 		font-size:18px;
 		font-weight:300;
-		border-color:$smoke_dark;
+		border-color:$smokeDark;
 	}
 	.fc-day-grid-container {
 		cursor:pointer;
@@ -103,7 +103,7 @@
 	@include ui-icon(fire, 20px, 20px);
 }
 a.fc-more {
-	color:$black_light;
+	color:$blackLight;
 	font-weight:400;
 	margin:1px 3px;
 	font-size:15px;
@@ -131,10 +131,10 @@ a.fc-more:hover {
 	height:44px;
 
 	.fc-titleHelp-button {
-		border:none;
+		box-shadow:none;
 		padding:0;
 		font-family:$helvetica;
-		color:$gray_darken;
+		color:$grayDarken;
 		font-weight:300;
 		font-size:15px;
 		padding-top:5px;
@@ -150,34 +150,6 @@ a.fc-more:hover {
 		@include flex("row", "flex-end", "center");
 		height:44px;
 		z-index:1;
-
-		.fc-button-group {
-			@include flex("row", "flex-end", "center");
-		}
-		.fc-button {
-			height:29px;
-			padding:0 7px;
-			overflow:hidden;
-
-			&:after {
-				width:16px;
-				height:16px;
-			}
-		}
-		.fc-prev-button {
-			&:hover {
-				&:after {
-					@include ui-icon(arrowLeft_white);
-				}
-			}
-		}
-		.fc-next-button {
-			&:hover {
-				&:after {
-					@include ui-icon(arrowRight_white);
-				}
-			}
-		}
 	}
 	.fc-center {
 		position:absolute;
@@ -192,7 +164,7 @@ a.fc-more:hover {
 		font-family:$helvetica;
 		font-size:23.5px;
 		line-height:24px;
-		font-weight:400;
+		letter-spacing:0;
 		margin:0;
 
 		&:first-letter {
@@ -201,19 +173,48 @@ a.fc-more:hover {
 	}
 }
 .fc-button-group {
-	display:inline-block;
 	@extend .btn-group;
 }
 .fc-button {
 	@extend .btn;
-	@extend .btn-sm;
-	@extend .btn-hover-fill;
+	@extend .btn-s;
+	@extend .btn-primary-hover;
+
+	span {
+		display:none;
+	}
+}
+.fc-prev-button,
+.fc-next-button {
+	padding:0;
+
+	&:after {
+		content:"";
+		display:block;
+		width:16px;
+		height:16px;
+		margin:0 auto;
+	}
 }
 .fc-prev-button {
-	@extend .paginate_button.previous;
+	&:after {
+		@include ui-icon(arrowLeft);
+	}
+	&:hover {
+		&:after {
+			@include ui-icon(arrowLeft_white);
+		}
+	}
 }
 .fc-next-button {
-	@extend .paginate_button.next;
+	&:after {
+		@include ui-icon(arrowRight);
+	}
+	&:hover {
+		&:after {
+			@include ui-icon(arrowRight_white);
+		}
+	}
 }
 .fc {
 	direction:ltr;
@@ -464,7 +465,7 @@ temporary rendered events).
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
 .fc-event,
 .ui-widget .fc-event {
-	color:$black_light; /* default TEXT color */
+	color:$blackLight; /* default TEXT color */
 	text-decoration:none; /* if <a> has an href */
 }
 .fc-event:hover {

@@ -1,8 +1,18 @@
 <ui-dropmenu class="dropmenu { dropmenu--active : active }" data-align="{ align }">
 
     <div if={ !type } class="dropmenu__wrapper">
+        <div if={ title } class="dropmenu__item dropmenu__item__title">
+            <span class="c-blackLight">{ title }</span>
+        </div>
+        <div if={ subtitle } class="dropmenu__item dropmenu__item__subtitle">
+            <span class="c-grayLight">{ subtitle }</span>
+        </div>
+        <div if={ link } class="dropmenu__item dropmenu__item__link">
+            <span class="fontSize-s link link-primary">{ link }</span>
+        </div>
+        <div if={ title || subtitle } class="dropmenu__item divider"></div>
         <div onClick={ onSelect } native="true" each={ item in items } no-reorder class="dropmenu__item">
-            { item.title }
+            { item.title ? item.title : item }
         </div>
     </div>
 
@@ -31,6 +41,7 @@
 
     $.show = function(params){
         if (params && params.elem){
+            if (!params.id) params.id = "0";
             if ($._id && $._id === params.id && $.type === params.type){
                 $.hide();
                 return;
@@ -41,6 +52,9 @@
             $.align = params.align ? params.align : "center";
             $.items = params.data;
             $.value = params.value;
+            $.title = params.title;
+            $.link = params.link;
+            $.subtitle = params.subtitle;
             $.callback = params.callback;
             $.active = true;
 
@@ -53,7 +67,7 @@
             else if ($.align === "left" || $.align === "down-left"){
                 marginTop = -(params.elem.outerHeight() / 2);
             }
-            else if ($.align === "right"){
+            else if ($.align === "right" || $.align === "down-right"){
                 marginLeft = params.elem.outerWidth();
                 marginTop = -(params.elem.outerHeight() / 2);
             }
@@ -82,6 +96,9 @@
         $.active = false;
         if ($._id) $._id = null;
         $.update();
+        $.title = null;
+        $.link = null;
+        $.subtitle = null;
     };
 
     $.onSelect = function(){
@@ -90,7 +107,7 @@
         if (this.item && _.isFunction(this.item.callback)) {
             this.item.callback();
         }
-        if ($.callback) $.callback(id);
+        if ($.callback) $.callback(id || this.item);
     };
 
 </script>

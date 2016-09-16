@@ -1,15 +1,14 @@
 .auth {
     @include abs();
     @include flex("row", "center", "center");
-    display:none;
-    background:rgba($black_dark,.8);
+    @extend .display-none;
+    background:rgba($blackDark,.8);
     z-index:1000;
 
     &__wrapper {
         @include flex("column", "center", "center");
         width:528px;
         color:#f0f0f0;
-        font-family:$graphik;
         text-align:center;
     }
     &__title {
@@ -28,17 +27,17 @@
         height:60px;
         font-size:30px;
         line-height:60px;
-        color:$blue_light;
+        color:$blueLight;
         text-align:center;
     }
     &__button {
-        color:$blue_light;
+        color:$blueLight;
         margin-top:32px;
         width:172px;
         height:54px;
         font-size:22px;
         line-height:54px;
-        border:1px solid $blue_light;
+        border:1px solid $blueLight;
         border-radius:6px;
         cursor:pointer;
         user-select:none;
@@ -46,7 +45,7 @@
 
         &:hover {
             color:#f0f0f0;
-            background-color:$blue_light;
+            background-color:$blueLight;
         }
         &:active {
             transform:translate3d(0, 1px, 0) scale(0.8);

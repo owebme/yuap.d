@@ -1,0 +1,48 @@
+.pos-rel {
+    position:relative;
+}
+.pos-abs {
+    position:absolute;
+}
+.pos-fixed {
+    position:fixed;
+}
+.pos-abs-full {
+    @extend .pos-abs;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+.pos-abs-half {
+    @extend .pos-abs;
+    top:50%;
+    left:50%;
+}
+.pos-fixed-full {
+    @extend .pos-fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+.pos-tl {
+    @extend .pos-abs;
+    top:0;
+    left:0;
+}
+.pos-tr {
+    @extend .pos-abs;
+    top:0;
+    right:0;
+}
+.pos-bl {
+    @extend .pos-abs;
+    bottom:0;
+    left:0;
+}
+.pos-br {
+    @extend .pos-abs;
+    bottom:0;
+    right:0;
+}

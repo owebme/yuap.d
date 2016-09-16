@@ -1,25 +1,76 @@
-.no-scroll {
-    overflow:hidden !important;
-}
 .disable__hover * {
 	pointer-events:none !important;
 }
-.is-hidden {
-    display:none !important;
-}
-.no-transition {
+.transition-none {
     transition:none !important;
 }
-.no-transitionAll,
-.no-transitionAll * {
+.transitionAll-none,
+.transitionAll-none * {
     transition:none !important;
 }
-.pos-rel {
-    position:relative;
+.transition-default {
+	transition-timing-function:linear;
+    transition-duration:80ms;
+    transition-property:all;
 }
-.pos-abs {
-    position:absolute;
+.nativeScroll {
+	-webkit-overflow-scrolling:touch;
 }
-.pos-fixed {
-    position:fixed;
+.accelerate {
+    // transform-style:preserve-3d;
+    transform-style:flat;
+    backface-visibility:hidden;
+}
+.content-empty {
+	content:"";
+}
+.centered {
+	float:none;
+    margin-left:auto;
+    margin-right:auto;
+}
+.cursor-pointer {
+    cursor:pointer;
+}
+.cursor-default {
+    cursor:default;
+}
+.userSelect-none {
+    user-select:none;
+}
+.userSelect-text {
+    user-select:text;
+}
+.outline-none {
+    outline:none;
+	outline-style:none;
+}
+.pointerEvents-none {
+	pointer-events:none;
+}
+.pointerEvents-all {
+	pointer-events:all;
+}
+.bg-none {
+	background:none;
+}
+.bg-cover {
+	background-position:top center;
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.float-left {
+	float:left;
+}
+.float-right {
+	float:right;
+}
+.float-none {
+	float:none;
+}
+.clear:before,
+.clear:after {
+	clear:both;
+	display:table;
+	content:" ";
 }

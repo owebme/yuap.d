@@ -1,32 +1,42 @@
 // base
+@import 'base/normalize';
 @import 'base/reset';
-@import 'base/fonts';
 @import 'base/base';
+@import 'base/fonts';
 @import 'base/keyframes';
 @import 'base/mixins';
 @import 'base/responsive';
 @import 'base/main';
 
 // UI elements
+// @import 'ui/highlight';
 @import 'ui/icons';
-@import 'ui/badge';
+@import 'ui/caret';
 @import 'ui/button';
-@import 'ui/checkbox';
-@import 'ui/switcher';
+@import 'ui/form';
 @import 'ui/input';
-@import 'ui/tags';
-@import 'ui/dropmenu';
+@import 'ui/textarea';
 @import 'ui/select';
+@import 'ui/selectMenu';
+@import 'ui/checkbox';
+@import 'ui/checkboxFilter';
+@import 'ui/switcher';
+@import 'ui/tabs';
+@import 'ui/table';
+@import 'ui/tags';
+@import 'ui/tagsList';
+@import 'ui/list';
 @import 'ui/datepicker';
 @import 'ui/clockpicker';
-@import 'ui/filter';
 @import 'ui/pagination';
+@import 'ui/badge';
+@import 'ui/dropmenu';
+@import 'ui/filter';
 @import 'ui/balloon';
 @import 'ui/balloonError';
-@import 'ui/typo';
-@import 'ui/form';
 
 // partials
+@import 'partials/auth';
 @import 'partials/nav';
 @import 'partials/menu';
 @import 'partials/content';
@@ -80,10 +90,11 @@
 @import 'partials/screens';
 
 // modules
+@import 'modules/sidebar/sidebar';
+@import 'modules/sidebar/sidebarCustom';
 @import 'modules/modal/modal';
 @import 'modules/modal/modalContact';
 @import 'modules/popup/popup';
-@import 'modules/popup/popupTable';
 @import 'modules/popup/popupCustom';
 @import 'modules/alert';
 @import 'modules/loader';
@@ -94,8 +105,28 @@
 
 // states
 @import 'states/states';
+@import 'states/flexbox';
+@import 'states/display';
+@import 'states/pageWrap';
+@import 'states/position';
+@import 'states/overflow';
 @import 'states/color';
+@import 'states/links';
 @import 'states/sizes';
+@import 'states/image';
 @import 'states/text';
 @import 'states/padding';
 @import 'states/margin';
+@import 'states/fontSize';
+@import 'states/lineHeight';
+@import 'states/fontWeight';
+@import 'states/letterSpacing';
+@import 'states/border';
+@import 'states/boxShadow';
+@import 'states/opacity';
+@import 'states/typography';
+
+// states responsive
+@import 'states/responsive/border';
+@import 'states/responsive/margin';
+@import 'states/responsive/padding';

@@ -10305,7 +10305,7 @@ function hasOwnProperty(obj, prop) {
 
       return child;
     }
-    var lib$es6$promise$then$$default = lib$es6$promise$then$$then;
+    var lib$es6$promise$then$$helvetica = lib$es6$promise$then$$then;
     function lib$es6$promise$promise$resolve$$resolve(object) {
       /*jshint validthis:true */
       var Constructor = this;
@@ -10318,7 +10318,7 @@ function hasOwnProperty(obj, prop) {
       lib$es6$promise$$internal$$resolve(promise, object);
       return promise;
     }
-    var lib$es6$promise$promise$resolve$$default = lib$es6$promise$promise$resolve$$resolve;
+    var lib$es6$promise$promise$resolve$$helvetica = lib$es6$promise$promise$resolve$$resolve;
     var lib$es6$promise$$internal$$PROMISE_ID = Math.random().toString(36).substring(16);
 
     function lib$es6$promise$$internal$$noop() {}
@@ -10395,8 +10395,8 @@ function hasOwnProperty(obj, prop) {
 
     function lib$es6$promise$$internal$$handleMaybeThenable(promise, maybeThenable, then) {
       if (maybeThenable.constructor === promise.constructor &&
-          then === lib$es6$promise$then$$default &&
-          constructor.resolve === lib$es6$promise$promise$resolve$$default) {
+          then === lib$es6$promise$then$$helvetica &&
+          constructor.resolve === lib$es6$promise$promise$resolve$$helvetica) {
         lib$es6$promise$$internal$$handleOwnThenable(promise, maybeThenable);
       } else {
         if (then === lib$es6$promise$$internal$$GET_THEN_ERROR) {
@@ -10563,9 +10563,9 @@ function hasOwnProperty(obj, prop) {
     }
 
     function lib$es6$promise$promise$all$$all(entries) {
-      return new lib$es6$promise$enumerator$$default(this, entries).promise;
+      return new lib$es6$promise$enumerator$$helvetica(this, entries).promise;
     }
-    var lib$es6$promise$promise$all$$default = lib$es6$promise$promise$all$$all;
+    var lib$es6$promise$promise$all$$helvetica = lib$es6$promise$promise$all$$all;
     function lib$es6$promise$promise$race$$race(entries) {
       /*jshint validthis:true */
       var Constructor = this;
@@ -10583,7 +10583,7 @@ function hasOwnProperty(obj, prop) {
         });
       }
     }
-    var lib$es6$promise$promise$race$$default = lib$es6$promise$promise$race$$race;
+    var lib$es6$promise$promise$race$$helvetica = lib$es6$promise$promise$race$$race;
     function lib$es6$promise$promise$reject$$reject(reason) {
       /*jshint validthis:true */
       var Constructor = this;
@@ -10591,7 +10591,7 @@ function hasOwnProperty(obj, prop) {
       lib$es6$promise$$internal$$reject(promise, reason);
       return promise;
     }
-    var lib$es6$promise$promise$reject$$default = lib$es6$promise$promise$reject$$reject;
+    var lib$es6$promise$promise$reject$$helvetica = lib$es6$promise$promise$reject$$reject;
 
 
     function lib$es6$promise$promise$$needsResolver() {
@@ -10602,7 +10602,7 @@ function hasOwnProperty(obj, prop) {
       throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
     }
 
-    var lib$es6$promise$promise$$default = lib$es6$promise$promise$$Promise;
+    var lib$es6$promise$promise$$helvetica = lib$es6$promise$promise$$Promise;
     /**
       Promise objects represent the eventual result of an asynchronous operation. The
       primary way of interacting with a promise is through its `then` method, which
@@ -10717,10 +10717,10 @@ function hasOwnProperty(obj, prop) {
       }
     }
 
-    lib$es6$promise$promise$$Promise.all = lib$es6$promise$promise$all$$default;
-    lib$es6$promise$promise$$Promise.race = lib$es6$promise$promise$race$$default;
-    lib$es6$promise$promise$$Promise.resolve = lib$es6$promise$promise$resolve$$default;
-    lib$es6$promise$promise$$Promise.reject = lib$es6$promise$promise$reject$$default;
+    lib$es6$promise$promise$$Promise.all = lib$es6$promise$promise$all$$helvetica;
+    lib$es6$promise$promise$$Promise.race = lib$es6$promise$promise$race$$helvetica;
+    lib$es6$promise$promise$$Promise.resolve = lib$es6$promise$promise$resolve$$helvetica;
+    lib$es6$promise$promise$$Promise.reject = lib$es6$promise$promise$reject$$helvetica;
     lib$es6$promise$promise$$Promise._setScheduler = lib$es6$promise$asap$$setScheduler;
     lib$es6$promise$promise$$Promise._setAsap = lib$es6$promise$asap$$setAsap;
     lib$es6$promise$promise$$Promise._asap = lib$es6$promise$asap$$asap;
@@ -10921,7 +10921,7 @@ function hasOwnProperty(obj, prop) {
       Useful for tooling.
       @return {Promise}
     */
-      then: lib$es6$promise$then$$default,
+      then: lib$es6$promise$then$$helvetica,
 
     /**
       `catch` is simply sugar for `then(undefined, onRejection)` which makes it the same
@@ -10954,7 +10954,7 @@ function hasOwnProperty(obj, prop) {
         return this.then(null, onRejection);
       }
     };
-    var lib$es6$promise$enumerator$$default = lib$es6$promise$enumerator$$Enumerator;
+    var lib$es6$promise$enumerator$$helvetica = lib$es6$promise$enumerator$$Enumerator;
     function lib$es6$promise$enumerator$$Enumerator(Constructor, input) {
       this._instanceConstructor = Constructor;
       this.promise = new Constructor(lib$es6$promise$$internal$$noop);
@@ -11001,16 +11001,16 @@ function hasOwnProperty(obj, prop) {
       var c = this._instanceConstructor;
       var resolve = c.resolve;
 
-      if (resolve === lib$es6$promise$promise$resolve$$default) {
+      if (resolve === lib$es6$promise$promise$resolve$$helvetica) {
         var then = lib$es6$promise$$internal$$getThen(entry);
 
-        if (then === lib$es6$promise$then$$default &&
+        if (then === lib$es6$promise$then$$helvetica &&
             entry._state !== lib$es6$promise$$internal$$PENDING) {
           this._settledAt(entry._state, i, entry._result);
         } else if (typeof then !== 'function') {
           this._remaining--;
           this._result[i] = entry;
-        } else if (c === lib$es6$promise$promise$$default) {
+        } else if (c === lib$es6$promise$promise$$helvetica) {
           var promise = new c(lib$es6$promise$$internal$$noop);
           lib$es6$promise$$internal$$handleMaybeThenable(promise, entry, then);
           this._willSettleAt(promise, i);
@@ -11070,13 +11070,13 @@ function hasOwnProperty(obj, prop) {
         return;
       }
 
-      local.Promise = lib$es6$promise$promise$$default;
+      local.Promise = lib$es6$promise$promise$$helvetica;
     }
-    var lib$es6$promise$polyfill$$default = lib$es6$promise$polyfill$$polyfill;
+    var lib$es6$promise$polyfill$$helvetica = lib$es6$promise$polyfill$$polyfill;
 
     var lib$es6$promise$umd$$ES6Promise = {
-      'Promise': lib$es6$promise$promise$$default,
-      'polyfill': lib$es6$promise$polyfill$$default
+      'Promise': lib$es6$promise$promise$$helvetica,
+      'polyfill': lib$es6$promise$polyfill$$helvetica
     };
 
     /* global define:true module:true window: true */
@@ -11088,7 +11088,7 @@ function hasOwnProperty(obj, prop) {
       this['ES6Promise'] = lib$es6$promise$umd$$ES6Promise;
     }
 
-    lib$es6$promise$polyfill$$default();
+    lib$es6$promise$polyfill$$helvetica();
 }).call(this);
 
 //# sourceMappingURL=es6-promise.js.map

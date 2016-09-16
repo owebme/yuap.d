@@ -1,0 +1,74 @@
+<profile-section-main class="{ opts.active ? 'display-block' : 'display-none' }">
+
+    <div class="col-md-10 text-center pr-m inline">
+        <div class="profile__image mb-l">
+            <div class="profile__image__item" style="background-image:url(/assets/images/avatars/7.jpg)"></div>
+        </div>
+        <button class="btn btn-m btn-primary-hover mb-m mr-s" type="button">Изменить</button>
+        <button class="btn btn-m btn-danger-hover mb-m" type="button">Удалить</button>
+        <button onClick={ openCollectionAvatars } class="btn btn-m btn-default-hover-primary" type="button">Выбрать из коллекции</button>
+    </div>
+
+    <div class="col-md-14">
+        <div class="rows fontFamily-roboto c-blackLight fontWeight-3">
+            <div class="row mb-m">
+                <div class="col-md-10 pt-xxs">Имя</div>
+                <div class="col-md-14">
+                    <input type="text" class="input input-light input-m" placeholder="Введите имя">
+                </div>
+            </div>
+            <div class="row mb-m">
+                <div class="col-md-10 pt-xxs">E-Mail</div>
+                <div class="col-md-14">
+                    <input type="text" class="input input-light input-m" placeholder="Введите email" value="resumekraft@gmail.com" readonly="" disabled>
+                </div>
+            </div>
+            <div class="row mb-m">
+                <div class="col-md-10 pt-xxs">Телефон</div>
+                <div class="col-md-14">
+                    <input type="text" class="input input-light input-m" placeholder="Введите email">
+                </div>
+            </div>
+            <div class="row mb-l">
+                <div class="col-md-10 pt-xxs">Language / Язык</div>
+                <div class="col-md-14">
+                    <div class="select select-m">
+                        <select>
+                            <option>Русский</option>
+                            <option disabled>English</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <h4 class="mb-m">Сменить пароль</h4>
+            <div class="row mb-m">
+                <div class="col-md-10 pt-xxs">Новый пароль</div>
+                <div class="col-md-14">
+                    <input type="text" class="input input-light input-m" placeholder="Введите email">
+                </div>
+            </div>
+            <div class="row mb-l">
+                <div class="col-md-10 pt-xxs">Еще раз</div>
+                <div class="col-md-14">
+                    <input type="text" class="input input-light input-m" placeholder="Введите email">
+                </div>
+            </div>
+            <label class="checkbox mb-l">
+                <input type="checkbox" checked>
+                <span class="checkbox-control"></span>
+                <span>Уведомлять о новых задачах</span>
+            </label>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this;
+
+    $.openCollectionAvatars = function(e){
+        $Router.nav("profile/avatars");
+    };
+
+</script>
+
+</profile-section-main>

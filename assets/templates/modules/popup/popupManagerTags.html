@@ -2,32 +2,32 @@
 
     <div class="popup__container">
         <div dgClick={ hide } class="popup__close"></div>
-        <h3 class="popup__title text-left">
+        <h3 class="popup__title">
             Менеджер тэгов
         </h3>
         <div class="row">
-            <div class="popup__table__wrapper">
-                <div class="popup__table__container">
-                    <table class="popup__table">
+            <div class="popup__scroll">
+                <div class="popup__scroll__wrapper">
+                    <table class="table table-s">
                         <thead>
                             <tr>
                                 <th>Название</th>
-                                <th>Видимость</th>
+                                <th class="text-center">Видимость</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="cell__text">
-                                    <input onKeydown={ onKeydownAdd } class="form__control sm" type="text" autocomplete="off" placeholder="Новый тэг"><span onClick={ onAdd } class="button button__add"></span></td>
+                                <td class="cell-text">
+                                    <input onKeydown={ onKeydownAdd } class="input input-light input-s" type="text" autocomplete="off" placeholder="Новый тэг"><span onClick={ onAdd } class="button button__add"></span></td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr class="{ 'visible' : item.visible }" each={ item in items } no-reorder>
-                                <td class="cell__text" if={ item.editable }>
-                                    <input onKeydown={ onKeydownApply } class="form__control sm" type="text" autocomplete="off" value={ item.title }><span onClickUpdate={ onApply } class="button button__apply"></span>
+                            <tr class="{ 'unvisible' : !item.visible }" each={ item in items } no-reorder>
+                                <td class="cell-text" if={ item.editable }>
+                                    <input onKeydown={ onKeydownApply } class="input input-light input-s" type="text" autocomplete="off" value={ item.title }><span onClickUpdate={ onApply } class="button button__apply"></span>
                                 </td>
-                                <td class="cell__text" if={ !item.editable }>
+                                <td class="cell-text" if={ !item.editable }>
                                     <p>{ item.title }</p><span onClickUpdate={ onEdit } class="button button__edit"></span>
                                 </td>
                                 <td>
@@ -43,8 +43,8 @@
             </div>
         </div>
         <div class="row popup__footer text-right">
-            <span dgClick={ onCancel } id="popup-manager-tags-onCancel" class="btn btn-md btn-upper btn-hover-fill">Отменить</span>
-            <span dgClick={ onSave } id="popup-manager-tags-onSave" class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length } { btn-loading : saving }">Сохранить</span>
+            <span dgClick={ onCancel } id="popup-manager-tags-onCancel" class="btn btn-m btn-upper btn-primary-hover">Отменить</span>
+            <span dgClick={ onSave } id="popup-manager-tags-onSave" class="btn btn-m btn-upper btn-primary-hover { btn-disabled : !items.length } { btn-loading : saving }">Сохранить</span>
         </div>
     </div>
 
@@ -68,14 +68,14 @@
         var $input = $$(e.currentTarget).prev(),
             value = _.clean($input.val());
 
-        if (value.length) $.addItem($input, value);
+        if (value && value.length) $.addItem($input, value);
     };
 
     $.onKeydownAdd = function(e){
         var $input = $$(e.currentTarget),
             value = _.clean($input.val());
 
-        if (e.which === KEY.ENTER && value.length){
+        if (e.which === KEY.ENTER && value && value.length){
             e.preventDefault();
             $.addItem($input, value);
         }
@@ -88,13 +88,13 @@
 
     $.onApply = function(e){
         var value = _.clean($$(e.currentTarget).prev().val());
-        if (value.length) $.setItem(this.item, value);
+        if (value && value.length) $.setItem(this.item, value);
     };
 
     $.onKeydownApply = function(e){
         var value = _.clean($$(e.currentTarget).val());
 
-        if (e.which === KEY.ENTER && value.length){
+        if (e.which === KEY.ENTER && value && value.length){
             e.preventDefault();
             $.setItem(this.item, value);
         }
@@ -111,7 +111,28 @@
     };
 
     $.onCancel = function(e){
-        $.hide();
+        if ($.isEditable()){
+            $Alert.show({
+                title: "Вы не сохранили изменения",
+                subtitle: "Продолжить редактирование или выйти без сохранения?",
+                success: {
+                    title: "Продолжить"
+                },
+                cancel: {
+                    title: "Выйти",
+                    callback: function(){
+                        $.hide();
+                    }
+                }
+            });
+        }
+        else {
+            $.hide();
+        }
+    };
+
+    $.isEditable = function(){
+        return _.findWhere($.items, {editable: true});
     };
 
     $.onSave = function(e){

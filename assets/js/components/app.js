@@ -10,6 +10,7 @@
         router: {},
         nav: {},
         screens: {},
+        control: {},
         sizes: {},
 		utils: {},
 		plugins: {},

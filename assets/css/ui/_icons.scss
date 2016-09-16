@@ -3,7 +3,7 @@
     close, close_white, close_strong, close_strong_white,
     edit, edit_muted, edit_white, basket, print, print_white, search,
     calendar, calendarNumber, date_change, date_change_fill, date_from, date_to,
-    important, plus, plus_white, cog, cogs, settings, more_h,
+    important, plus, plus_white, cog, cogs, settings, menu, more_h,
     email, sendEmail, link_source, link_action, visible, unvisible, location, time, time_muted,
     writeEmail, cursor_fill, alarm, alarm_fill, alarm_white, events, fire, fire_muted,
     help_black, help_white, columns, columns_white, csv, json,
@@ -15,7 +15,7 @@
     facebook_white, vkontakte_white, odnoklassniki_white, twitter_white,
     yandex, google, rambler, mailru, yahoo, bing
 ){
-    %ui-#{$icon} {
+    .ui-icon-#{$icon} {
         @if $icon == 'rambler' or $icon == 'mailru' {
             background:url('/assets/images/ui/ui-#{$icon}.png') no-repeat 0 0 / cover;
         }
@@ -31,5 +31,5 @@
     @if $height {
         height:#{$height};
     }
-    @extend %ui-#{$icon};
+    @extend .ui-icon-#{$icon};
 }

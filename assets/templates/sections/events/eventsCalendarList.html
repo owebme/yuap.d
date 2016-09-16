@@ -21,9 +21,9 @@
         <event-attach type="comments" value="{ item.comments }"></event-attach>
         <div class="event__buttons">
             <div class="btn-group">
-                <div if={ !created } onClick={ onRemove } class="btn btn-danger btn-hover-fill btn-md">Удалить</div>
-                <div onClick={ onHide } class="btn btn-hover-fill btn-md">Отменить</div>
-                <div onClick={ onSave } class="btn btn-hover-fill btn-md">{ created ? 'Создать событие' : 'Сохранить' }</div>
+                <div if={ !created } onClick={ onRemove } class="btn btn-m btn-danger-hover">Удалить</div>
+                <div onClick={ onHide } class="btn btn-m btn-primary-hover">Отменить</div>
+                <div onClick={ onSave } class="btn btn-m btn-primary-hover">{ created ? 'Создать событие' : 'Сохранить' }</div>
             </div>
         </div>
     </div>
@@ -168,7 +168,8 @@
             else {
                 $.daterange = $scope.find(".event__date__value");
                 $.daterange.daterangepicker({
-                    buttonClasses: ['btn btn-hover-fill', 'btn-sm'],
+                    applyClass: 'btn btn-s btn-primary-hover',
+                    cancelClass: 'btn btn-s btn-primary-hover',
                     parentEl: '.screen__main__inner',
                     opens: 'right',
                     singleDatePicker: true,

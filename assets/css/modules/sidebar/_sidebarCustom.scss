@@ -1,0 +1,31 @@
+.sidebar {
+    &__profile {
+        width:900px;
+
+        .sidebar__container {
+            padding:25px 35px 88px 20px;
+        }
+        .sidebar__footer {
+            padding-right:18px;
+        }
+    }
+}
+.profile {
+    &__image {
+        display:inline-block;
+        position:relative;
+        width:264px;
+        height:264px;
+        border-radius:50%;
+        overflow:hidden;
+        border:5px solid rgba($blue,.3);
+
+        &__item {
+            @include abs();
+            @include accelerate();
+            @extend .bg-cover;
+            border-radius:50%;
+            overflow:hidden;
+        }
+    }
+}

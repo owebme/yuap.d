@@ -1,0 +1,13 @@
+@each $title, $size, $height in (xxs, 10px, 14px), (xs, 12px, 16px), (s, 14px, 18px), (m, 16px, 22px), (l, 18px, 24px), (xl, 20px, 28px), (xxl, 28px, 34px), (xxxl, 38px, 40px), (xxxxl, 46px, 46px), (xxxxxl, 64px, 64px){
+    .fontSize-#{$title} {
+        font-size:$size;
+        line-height:$height;
+
+        @if $title == "xxxxxl" or $title == "xxxxl" {
+            letter-spacing:-.5px;
+        }
+        @if $title == "xxxl" or $title == "xxl" {
+            letter-spacing:-.2px;
+        }
+    }
+}

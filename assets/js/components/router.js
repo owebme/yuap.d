@@ -6,6 +6,8 @@
 
         start: false,
 
+        url: "/",
+
         init: function(){
 
             Router.history.init();
@@ -15,29 +17,52 @@
                 if (SCREENS.state !== "main") SCREENS.nav("main");
             });
 
-            riot.route('/contacts', function(){
-                Router.routes.contacts();
+            riot.route('/profile', function(){
+                $Sidebar.show("profile");
+                if (!Router.start) Router.routes.index();
+            });
+
+            riot.route('/profile/*', function(section){
+                if (section == "avatars"){
+                    $Popup.show("profile-avatars");
+                }
+                else {
+                    $Sidebar.show("profile", section);
+                }
+                if (!Router.start) {
+                    Router.routes.index();
+                }
+            });
+
+            var routes = riot.route.create();
+            routes(function(section){
+                if (section === "contacts"){
+                    Router.routes.contacts();
+                }
+                if (!Router.start){
+                    if (section === "contact" || section === "control"){
+                        Router.routes.contacts();
+                    }
+                }
             });
 
             riot.route('/contacts/export', function(){
                 $Popup.show("contacts-export");
-                Router.routes.contacts();
             });
 
             riot.route('/contacts/export/settings', function(){
                 $Popup.show("contacts-export-settings");
-                Router.routes.contacts();
             });
 
             var routeContact = riot.route.create();
             routeContact('/contact/*', function(id){
                 $Contact.show(id);
-                Router.routes.contacts();
             });
 
             var routeContactTags = riot.route.create();
             routeContactTags('/contact/*/tags', function(id){
                 $Popup.show("contact-tags", $store.data.get({"_id": id}));
+                $Contact.show(id);
             });
 
             riot.route('/control/status', function(){
@@ -66,18 +91,21 @@
                 if (!window.$Data || !$Data.tag.isMounted){
                     Nav.change("inbox");
                     Router.mount('section-data');
+                    Router.url = "/";
                 }
             },
             contacts: function(){
                 if (!window.$Contacts || !$Contacts.tag.isMounted){
                     Nav.change("contacts");
                     Router.mount('section-contacts');
+                    Router.url = "/contacts";
                 }
             },
             events: function(){
                 if (!window.$Events || !$Events.tag.isMounted){
                     Nav.change("events");
                     Router.mount('section-events');
+                    Router.url = "/events";
                 }
             }
         },
@@ -86,9 +114,13 @@
 
             list: [],
 
+            add: function(){
+                Router.history.list.push("/" + Router.getHash());
+            },
+
             init: function(){
-                $dom.window.on("hashchange", function(){
-                    Router.history.list.push("/" + Router.getHash());
+                $dom.window.on("hashchange", function(e){
+                    Router.history.add();
                 });
             }
         },
@@ -99,6 +131,7 @@
 
         nav: function(url){
             riot.route(url);
+            Router.history.add();
         },
 
         set: function(url, title){
@@ -107,7 +140,18 @@
         },
 
         back: function(){
-            window.history.back();
+            if (Router.history.list.length){
+                window.history.back();
+            }
+            else {
+                var url = Router.getHash();
+                if (url.match(/contact/)){
+                    Router.nav("/contacts");
+                }
+                else {
+                    Router.nav("/");
+                }
+            }
         },
 
         next: function(){
@@ -124,8 +168,16 @@
                 });
             }
             else {
-                riot.mount("section-content", tag)[0];
-                Router.start = true;
+                app.$dom.body.addClass("appLoading");
+                var section = riot.mount("section-content", tag)[0];
+                section.one("updated", function(){
+                    Router.start = true;
+                    setTimeout(function(){
+                        app.$dom.body
+                        .removeClass("appLoading")
+                        .addClass("isLoading");
+                    }, 50);
+                });
             }
         }
     };

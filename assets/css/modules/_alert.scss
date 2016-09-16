@@ -11,7 +11,7 @@
         opacity:0.001;
         @include abs();
         @include accelerate(true);
-        background:rgba($black_dark,.8);
+        background:rgba(darken($grayDark,15%),.7);
         will-change:opacity;
         transition:opacity 0.15s $cubic2501;
     }
@@ -25,6 +25,7 @@
         border-radius:12px;
         overflow:hidden;
         background-color:#fcfcfc;
+        @extend .boxShadow-24;
         will-change:transform, opacity;
         transition:opacity 0.15s $cubic2501;
     }
@@ -35,19 +36,24 @@
         text-align:center;
     }
     &__title {
-        font-size:26px;
-        padding:7px 25px 0 25px;
-        color:$black;
-        font-family:$default;
+        font-family:$helvetica;
+        font-size:27px;
+        line-height:34px;
+        margin:10px 0;
+        padding:0 30px;
     }
     &__subtitle {
-        font-size:21px;
+        color:$grayDark;
+        font-family:$helvetica;
+        font-size:20px;
+        line-height:28px;
+        padding:0 30px;
     }
     &__buttons {
         @include flex("row", "flex-start", "center");
         width:100%;
         height:25.5%;
-        border-top:1px solid $smoke_darken;
+        border-top:1px solid $smokeDarken;
         user-select:none;
         overflow:hidden;
     }
@@ -65,7 +71,10 @@
             transition:none;
         }
         &:first-child {
-            border-right:1px solid $smoke_darken;
+            border-right:1px solid $smokeDarken;
+        }
+        &:hover {
+            background:$snowDarken;
         }
         &:active {
             color:#fff;

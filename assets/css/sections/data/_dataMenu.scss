@@ -15,6 +15,12 @@
         white-space:nowrap;
         height:44px;
         transform:translate3d(0, 1px, 0);
+
+        .select__menu__current {
+            color:$frozen;
+            font-weight:bold;
+            font-size:15px;
+        }               
     }
     &__nav__item {
         transition:color 0.2s $cubic215;
@@ -119,6 +125,7 @@
             font-weight:bold;
             margin-left:0;
             font-size:18px;
+            transform:translate3d(0, 1px, 0);
         }
     }
     &__search {
@@ -144,12 +151,12 @@
         }
         &__value {
             display:none;
-            color:$blue_light;
+            color:$blueLight;
             height:24px;
             font-size:14px;
             line-height:22px;
             margin-left:10px;
-            border:1px solid $blue_light;
+            border:1px solid $blueLight;
             padding:0 8px;
             border-radius:4px;
             vertical-align:middle;
@@ -221,7 +228,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .data__menu__basket {
         margin-left:7px;
     }

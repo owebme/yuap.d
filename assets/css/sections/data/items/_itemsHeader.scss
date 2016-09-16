@@ -17,7 +17,7 @@
         }
     }
     &__num {
-        color:$gray_lighten;
+        color:$grayLighten;
         font-size:22px;
     }
     &__user__icon {
@@ -194,7 +194,7 @@
         height:54px;
         border-radius:50%;
         font-size:24px;
-        background-color:$gray_lighten;
+        background-color:$grayLighten;
         text-transform:uppercase;
         overflow:hidden;
 
@@ -205,8 +205,8 @@
             text-indent:999em;
         }
         .data__item:not([data-new="true"]) &.color__bg0 {
-            border:1px dashed $blue_light;
-            color:$blue_light;
+            border:1px dashed $blueLight;
+            color:$blueLight;
             background:none;
         }
     }
@@ -244,7 +244,7 @@
         left:0;
         width:100%;
         text-align:center;
-        color:$gray_lighten;
+        color:$grayLighten;
         font-size:13px;
         white-space:nowrap;
         user-select:none;
@@ -265,10 +265,10 @@
         min-width:54px;
         max-width:66px;
         text-align:center;
-        color:$gray_lighten;
+        color:$grayLighten;
         background-clip:border-box;
-        border-left:1px dashed rgba($gray_lighten,.85);
-        border-bottom:1px dashed rgba($gray_lighten,.85);
+        border-left:1px dashed rgba($grayLighten,.85);
+        border-bottom:1px dashed rgba($grayLighten,.85);
         cursor:pointer;
         @include textEllipsis();
         transition:color 0.2s $cubic215, border-color 0.2s $cubic215;
@@ -280,7 +280,7 @@
         }
     }
     &__time {
-        color:$gray_light;
+        color:$grayLight;
     }
     &__more__button {
         position:absolute;

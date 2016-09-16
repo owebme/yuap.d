@@ -63,7 +63,7 @@
     border-radius:15px;
     color:#37474F;
     border:1px solid;
-    font-family:$default;
+    font-family:$helvetica;
     font-size:15px;
     line-height:20px;
     word-wrap:break-word;
@@ -110,7 +110,7 @@
 }
 .messenger__msg__user {
     .messenger__msg__text {
-        color:$black_soft;
+        color:$blackSoft;
         background-color:#fff;
         border-color:#dadee2;
         // border-color:#d5dee3;
@@ -378,7 +378,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     // .messenger__msg__text {
     //     font-size:14px;
     //     line-height:18px;

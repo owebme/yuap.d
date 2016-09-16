@@ -2,7 +2,7 @@
 
     <div class="popup__container">
         <div dgClick={ hide } class="popup__close"></div>
-        <h3 class="popup__title text-left">
+        <h3 class="popup__title">
             Тэги
             <p class="subtitle">{ isEmpty ? 'Для создание тэга введите текст в поле ниже и нажмите Enter ' : 'Для добавления тэга вы можете выбрать из списка ниже' }</p>
         </h3>
@@ -10,20 +10,20 @@
             <div class="popup__tag__list tag__list">
                 <div dgClick={ onFocus } class="tag__list__control">
                     <div each={ item in items } no-reorder class="tag">
-                        { item }<span onClickUpdateAll={ removeTag } class="tag__remove"></span>
+                        { item }<span onClickUpdateAll={ removeTag } class="tag-remove"></span>
                     </div>
                     <input onKeydown={ onKeydown } onInput={ search } class="tag__list__input { short : items.length }" type="text" placeholder="{ 'введите название тэга' : !items.length }" autocomplete="off">
                 </div>
                 <div class="tag__list__container">
-                    <div if={ item.active } onClickUpdateAll={ addTag } each={ item in storeItems } no-reorder class="tag tag-sm">
+                    <div if={ item.active } onClickUpdateAll={ addTag } each={ item in storeItems } no-reorder class="tag small">
                         { item.title }
                     </div>
                 </div>
             </div>
         </div>
         <div class="row popup__footer text-right">
-            <span dgClick={ managerTags } id="popup-contact-tags-managerTags" class="btn btn-md btn-upper btn-hover-fill">Менеджер тегов</span>
-            <span dgClick={ onSave } id="popup-contact-tags-onSave" class="btn btn-md btn-upper btn-hover-fill { disabled : !items.length } { btn-loading : saving }">Сохранить</span>
+            <span dgClick={ managerTags } id="popup-contact-tags-managerTags" class="btn btn-m btn-upper btn-primary-hover">Менеджер тегов</span>
+            <span dgClick={ onSave } id="popup-contact-tags-onSave" class="btn btn-m btn-upper btn-primary-hover { btn-disabled : !items.length } { btn-loading : saving }">Сохранить</span>
         </div>
     </div>
 
@@ -34,6 +34,7 @@
 
     $.saving = false;
     $.isEmpty = false;
+    $.items = [];
     $.storeItems = [];
 
     this.on("mount", function(){
@@ -43,6 +44,7 @@
     });
 
     $.init = function(data){
+        var revert = $.items && $.items.length;
         $.item = data ? data : $.item;
         $.items = [];
 
@@ -56,6 +58,7 @@
         $.storeItems = _.copyArray($store.tags.isVisible());
         $.search();
         $.onFocus();
+        if (revert) $.update();
     };
 
     $.refresh = function(){
@@ -105,11 +108,12 @@
         $.items.push(this.item.title);
         $.input.val("");
         $.search();
+        $.onFocus();
     };
 
     $.onKeydown = function(e){
         var value = _.clean($.input[0].value),
-            length = value.length;
+            length = value && value.length;
 
         if (e.which === KEY.ENTER && length){
     		e.preventDefault();
@@ -196,6 +200,7 @@
 
     $.hide = function(){
         if ($.saving) $.saving = false;
+        $.items = [];
         $Popup.hide();
     };
 

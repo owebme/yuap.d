@@ -30,19 +30,13 @@
                 height:44px;
             }
             .paginate_button {
-                height:44px;
-                line-height:44px;
-                width:28px;
-                border-radius:0px;
-                border-left:1px solid transparent;
-                border-right:1px solid transparent;
+                @extend .pagination-btn-square;
 
-                &.active {
-                    color:$blue;
-                    font-size:18px;
-                    background:none;
-                    border-left:1px solid #E9EEF2;
-                    border-right:1px solid #E9EEF2;
+                &.previous {
+                    @extend .pagination-btn.prev;
+                }
+                &.next {
+                    @extend .pagination-btn.next;
                 }
             }
         }
@@ -50,6 +44,13 @@
             .pagination {
                 width:350px;
                 margin:-10px auto 0;
+            }
+            .paginate_button {
+                @extend .pagination-btn;
+
+                &.previous {
+                    @extend .pagination-btn.prev;
+                }
             }
         }
     }
@@ -70,7 +71,7 @@
             top:100%;
             text-transform:none;
             margin:4px 0 0 8px;
-            font-family:$default;
+            font-family:$helvetica;
 
             &.active {
                 @extend .dropmenu--active;
@@ -93,12 +94,12 @@
     input {
         border:none;
         background:none;
-        border-bottom:1px solid $smoke_dark;
+        border-bottom:1px solid $smokeDark;
         width:120px;
         height:28px;
         margin-left:10px;
-        color:$black_soft;
-        font-family:$default;
+        color:$blackSoft;
+        font-family:$helvetica;
         font-size:14.5px;
         line-height:20px;
         transition:border-color 0.2s $cubic645;
@@ -174,26 +175,30 @@
     &_Button {
         @include flex("row", "center", "center");
         @extend .btn;
-        @extend .btn-sm;
-        @extend .btn-hover-fill;
-        width:29px;
-        height:29px;
-        padding:0;
-        transform:translate3d(0, -1px, 0);
+        @extend .btn-xs;
+        @extend .btn-primary-hover;
+        max-width:31px;
+        min-width:31px;
+        @extend .p0;
+        transform:translate3d(1px, -1px, 0);
 
         &:after {
             content:"";
             display:block;
+            @extend .centered;
             @include ui-icon(columns, 19px, 19px);
         }
         &:hover:after,
         &.active:after {
             @include ui-icon(columns_white);
         }
+        &.active {
+            @extend .bg-blue;
+        }
     }
     &_collectionBackground {
     	@include abs(fixed);
-    	background-color:$black_dark;
+    	background-color:$blackDark;
     	z-index:1100;
     }
     &_collection {
@@ -203,7 +208,7 @@
         padding:0;
         margin:0;
         border-radius:10px;
-        box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
+        @extend .boxShadow-default;
         overflow:hidden;
         font-size:0;
         white-space:nowrap;

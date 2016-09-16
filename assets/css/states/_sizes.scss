@@ -1,135 +1,104 @@
-.w5p {
-    width:5%;
+@for $i from 1 through 20 {
+    .w#{$i * 5} {
+        width:$i * 5px;
+    }
+    .w#{$i * 5}p {
+        width:$i * 5%;
+    }
+    .h#{$i * 5} {
+        height:$i * 5px;
+    }
+    .h#{$i * 5}p {
+        height:$i * 5%;
+    }
 }
-.w10p {
-    width:10%;
+@for $i from 1 through 20 {
+    .vw#{$i * 5} {
+        width:$i * 5vw;
+    }
+    .vh#{$i * 5} {
+        height:$i * 5vh;
+    }
 }
-.w15p {
-    width:15%;
+.w-auto {
+    width:auto;
 }
 .w16p {
     width:16.33%;
 }
-.w20p {
-    width:20%;
-}
-.w25p {
-    width:25%;
-}
-.w30p {
-    width:30%;
-}
 .w33p {
     width:33.33%;
-}
-.w35p {
-    width:35%;
-}
-.w40p {
-    width:40%;
-}
-.w45p {
-    width:45%;
-}
-.w50p {
-    width:50%;
-}
-.w55p {
-    width:55%;
-}
-.w60p {
-    width:60%;
-}
-.w65p {
-    width:65%;
 }
 .w66p {
     width:66.66%;
 }
-.w70p {
-    width:70%;
-}
-.w75p {
-    width:75%;
-}
-.w80p {
-    width:80%;
-}
-.w85p {
-    width:85%;
-}
-.w90p {
-    width:90%;
-}
-.w95p {
-    width:95%;
-}
-.w100p {
-    width:100%;
-}
-.h5p {
-    height:5%;
-}
-.h10p {
-    height:10%;
-}
-.h15p {
-    height:15%;
-}
-.h20p {
-    height:20%;
-}
-.h25p {
-    height:25%;
-}
-.h30p {
-    height:30%;
+.h16p {
+    height:16.33%;
 }
 .h33p {
     height:33.33%;
 }
-.h35p {
-    height:35%;
-}
-.h40p {
-    height:40%;
-}
-.h45p {
-    height:45%;
-}
-.h50p {
-    height:50%;
-}
-.h55p {
-    height:55%;
-}
-.h60p {
-    height:60%;
-}
-.h65p {
-    height:65%;
-}
 .h66p {
     height:66.66%;
 }
-.h70p {
-    height:70%;
+.vw16 {
+    width:16.33vw;
 }
-.h75p {
-    height:75%;
+.vw33 {
+    width:33.33vw;
 }
-.h80p {
-    height:80%;
+.vw66 {
+    width:66.66vw;
 }
-.h85p {
-    height:85%;
+.vh16 {
+    height:16.33vh;
 }
-.h90p {
-    height:90%;
+.vh33 {
+    height:33.33vh;
 }
-.h95p {
-    height:95%;
+.vh66 {
+    height:66.66vh;
 }
-.h100p {
-    height:100%;
+.aspectRatio {
+    @extend .pos-rel;
+
+    &-content {
+        @extend .pos-abs-full;
+    }
+    &-100 {
+        @extend .aspectRatio;
+
+        &:before {
+            @extend .content-empty;
+            @extend .display-block;
+            padding-top:100%;
+        }
+    }
+    &-75 {
+        @extend .aspectRatio;
+
+        &:before {
+            @extend .content-empty;
+            @extend .display-block;
+            padding-top:75%;
+        }
+    }
+    &-60 {
+        @extend .aspectRatio;
+
+        &:before {
+            @extend .content-empty;
+            @extend .display-block;
+            padding-top:60%;
+        }
+    }
+    &-169 {
+        @extend .aspectRatio;
+
+        &:before {
+            @extend .content-empty;
+            @extend .display-block;
+            padding-top:56.25%;
+        }
+    }
 }

@@ -1,0 +1,71 @@
+<sidebar-profile class="sidebar__profile sidebar__wrapper" data-align="left">
+
+    <div dgClick={ hide } class="sidebar__close"></div>
+    <div class="sidebar__container">
+        <div class="rows w100p">
+            <div class="col-md-offset-7 col-md-17 text-center">
+                <div class="row fontFamily-nimbus fontWeight-normal mb-l">
+                    <div class="col-md-6">
+                        <a href="#/profile" class="tab tab-m { 'tab-active' : section == 'main' }">Профиль</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#/profile/billing" class="tab tab-m { 'tab-active' : section == 'billing' }">Оплата</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#/profile/plans" class="tab tab-m { 'tab-active' : section == 'plans' }">Тариф</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#/profile/integrations" class="tab tab-m { 'tab-active' : section == 'integrations' }">Интеграции</a>
+                    </div>
+                </div>
+            </div>
+            <profile-section-main active={ section == 'main' }></profile-section-main>
+            <profile-section-billing active={ section == 'billing' }></profile-section-billing>
+            <profile-section-plans active={ section == 'plans' }></profile-section-plans>
+            <profile-section-integrations active={ section == 'integrations' }></profile-section-integrations>
+        </div>
+    </div>
+    <div class="sidebar__footer { 'display-none' : section != 'main' }">
+        <div class="sidebar__footer__wrapper">
+            <div class="col-md-offset-10 col-md-14">
+                <button dgClick={ onSave } id="sidebar-profile-onSave" class="btn btn-m btn-upper btn-primary" type="button">Сохранить</button>
+                <button dgClick={ onCancel } id="sidebar-profile-onCancel" class="btn btn-m btn-upper btn-primary-hover" type="button">Отменить</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var $ = this,
+    $scope = $$($.root);
+
+    $.section = null;
+
+    this.on("mount", function(){
+        $.section = $.opts.data || "main";
+    });
+
+    $.init = function(section){
+        section = section || "main";
+        if ($.section != section){
+            $.update({
+                section: section
+            });
+        }
+    };
+
+    $.onCancel = function(e){
+        $.hide();
+    };
+
+    $.onSave = function(e){
+        $.hide();
+    };
+
+    $.hide = function(){
+        $Sidebar.hide(true);
+    };
+
+</script>
+
+</sidebar-profile>

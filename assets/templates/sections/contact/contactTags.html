@@ -1,13 +1,15 @@
 <section-contact-tags onClick={ onEdit }>
 
-    <div if={ !item.tags.length } class="tag add">Добавить тэг...</div>
+    <div if={ !item.tags.length } class="tag">
+        <span class="tag-text">Добавить тэг...</span>
+    </div>
 
     <virtual if={ item.tags.length }>
         <div class="tag">
-            <span class="tag__text">{ $store.tags.getTitle(item.tags[0]) }</span>
+            <span class="tag-text">{ $store.tags.getTitle(item.tags[0]) }</span>
         </div>
-        <div if={ item.tags.length == 1 } class="tag add icon"></div>
-        <div if={ item.tags.length > 1 } class="tag edit icon"><span class="tag__count">{ item.tags.length }</span></div>
+        <div if={ item.tags.length == 1 } class="tag add"></div>
+        <div if={ item.tags.length > 1 } class="tag edit"><span class="tag-count">{ item.tags.length }</span></div>
     </virtual>
 
 <script>

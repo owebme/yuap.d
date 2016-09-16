@@ -4,7 +4,7 @@
   'use strict';
 var riot = { version: 'v2.5.0', settings: {}, touchClick: "click",
     debug: {
-        delegate: true,
+        delegate: false,
         update: false
     }
  },

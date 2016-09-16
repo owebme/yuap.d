@@ -21,7 +21,7 @@
     }
     &__item {
         position:absolute;
-        box-shadow:0 16px 40px -10px rgba($black_dark,.15);
+        box-shadow:0 16px 40px -10px rgba($blackDark,.15);
     }
     &:after {
         content:"";
@@ -156,7 +156,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .object__help__tooltip {
         font-size:12px;
         line-height:17px;

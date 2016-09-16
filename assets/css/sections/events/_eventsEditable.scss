@@ -127,7 +127,7 @@
             opacity:0.7;
 
             &__input {
-                color:$gray_lighten;
+                color:$grayLighten;
                 font-size:15px;
                 line-height:20px;
                 border:none;
@@ -157,7 +157,7 @@
             }
         }
         &__allday {
-            color:$gray_lighten;
+            color:$grayLighten;
             font-size:13px;
             padding-left:5px;
             opacity:0.7;
@@ -213,10 +213,8 @@
             }
         }
         .input__group {
+            position:relative;
             width:62%;
-        }
-        .form__control {
-            border-radius:4px;
         }
         &__button {
             position:relative;

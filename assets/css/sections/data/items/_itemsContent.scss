@@ -46,7 +46,7 @@
             text-overflow:ellipsis;
         }
         &__gray {
-            color:$gray_lighten;
+            color:$grayLighten;
         }
         &__link {
             display:inline-block;
@@ -69,7 +69,7 @@
         width:14px;
         height:14px;
         border-radius:50%;
-        background-color:$blue_light;
+        background-color:$blueLight;
         color:#fff;
         font-family:$roboto;
         font-size:14px;

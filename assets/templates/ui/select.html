@@ -1,9 +1,9 @@
-<ui-select class="select { 'active' : active }" data-align="{ opts.align }">
+<ui-select class="select__menu { 'active' : active }" data-align="{ opts.align }">
 
-    <span onClick={ onShow } class="select__current">{ current }</span>
-    <span class="select__wrapper">
-        <span class="select__items">
-            <span onClick={ onSelect } native="true" each={ item in opts.items.get() } no-reorder class="select__item { 'selected' : item.value == value }">{ item.title }</span>
+    <span onClick={ onShow } class="select__menu__current">{ current }</span>
+    <span class="select__menu__wrapper">
+        <span class="select__menu__items">
+            <span onClick={ onSelect } native="true" each={ item in opts.items.get() } no-reorder class="select__menu__item { 'selected' : item.value == value }">{ item.title }</span>
         </span>
     </span>
 

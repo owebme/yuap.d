@@ -1,7 +1,7 @@
-<root-main id="page">
+<root-main id="app">
 
     <div class="screen screen__main" data-marquee="main">
-        <div class="screen__main__inner">
+        <div class="screen__main__inner screen__slideLeft">
             <section-nav></section-nav>
             <section-content id="content"></section-content>
             <ui-dropmenu></ui-dropmenu>
@@ -12,12 +12,13 @@
         <section-messenger class="screen__messenger__inner"></section-messenger>
     </div>
 
+    <section-sidebar></section-sidebar>
     <section-contact></section-contact>
     <section-popup></section-popup>
     <section-alert></section-alert>
     <section-loader></section-loader>
     <section-launcher></section-launcher>
-    <section-auth></section-auth>
+    <!-- <section-auth></section-auth> -->
     <!-- <div class="tutorial">
         <div class="tutorial__shape"></div>
     </div> -->
@@ -34,7 +35,8 @@
         app.$dom.content = app.$dom.scroll.find("#content");
 
         $Contact = $root.tags["section-contact"];
-        $Popup = $root.tags["section-popup"];
+        $Sidebar = new app.control("sidebar");
+        $Popup = new app.control("popup");
         $Alert = $root.tags["section-alert"];
         $DropMenu = $root.tags["ui-dropmenu"];
         $Loader = $root.tags["section-loader"];

@@ -60,7 +60,7 @@
     }
     &[data-online="true"] {
         &:before {
-            background:$green_light;
+            background:$greenLight;
         }
         .messenger__item__header__title {
             color:#37474f;
@@ -75,7 +75,7 @@
         }
     }
     &:not([data-active="true"]):hover {
-        background-color:lighten($frozen_lighten,20%);
+        background-color:lighten($frozenLighten,20%);
         cursor:pointer;
     }
     &__counter {
@@ -142,7 +142,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .messenger__list__filters {
         .select__current {
             font-size:11px;

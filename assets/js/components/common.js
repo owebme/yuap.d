@@ -14,7 +14,7 @@
 
 	/* --- Root blocks --- */
 	app.$dom = {
-		root: $('#page'),
+		root: $('#app'),
 		html: $('html'),
 		body: $('body'),
 		document: $(document),

@@ -1,15 +1,11 @@
 .popup__tag__list {
-    margin:-10px 0;
     width:502px;
-}
-.popup__container__indent-sm {
-    padding:30px 40px;
 }
 .popup__block {
     @include flex("row", "flex-start", "flex-start");
     width:542px;
     padding:20px 0;
-    border-top:1px solid #e9eef2;
+    border-top:1px solid $snowDarken;
 
     &__icon {
         @include flex("row", "center", "center");
@@ -35,7 +31,6 @@
         text-align:left;
     }
     &__text {
-        font-size:16px;
         margin-bottom:20px;
     }
     &__button {
@@ -50,14 +45,9 @@
     }
 }
 .popup__export {
-    &__title {
-        color:$blue;
-        padding:0 0 3px 0;
-    }
     &__container {
         width:522px;
         text-align:left;
-        margin:-10px 0;
 
         .popup__tag__list {
             width:522px;
@@ -67,14 +57,14 @@
             border-radius:25px;
         }
         .tag {
-            color:$gray_dark;
+            color:$grayDark;
             padding-left:15px;
 
             &:before {
                 display:none;
             }
             &:hover {
-                color:$gray_dark;
+                color:$grayDark;
             }
         }
     }

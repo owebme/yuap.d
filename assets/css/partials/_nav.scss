@@ -57,6 +57,7 @@
 
         &__item {
             @include flex("row", "center", "center");
+            font-size:18px;
             height:$header_height;
             position:relative;
             cursor:pointer;
@@ -149,7 +150,7 @@
         width:72px;
         height:72px;
         will-change:border-color;
-        border:3px solid rgba($black_dark,.13);
+        border:3px solid rgba($blackDark,.13);
         border-radius:50%;
         transition:border-color 0.2s $cubic215;
 
@@ -162,7 +163,7 @@
             opacity:0.95;
         }
         &:hover {
-            border-color:rgba($black_dark,.2);
+            border-color:rgba($blackDark,.2);
         }
     }
     // &__score {
@@ -179,7 +180,7 @@
     //         text-align:right;
     //         padding-right:7px;
     //         color:#fff;
-    //         font-family:$default;
+    //         font-family:$helvetica;
     //         font-size:14px;
     //         line-height:14px;
     //         font-weight:bold;
@@ -209,7 +210,7 @@
     //         width:28px;
     //         height:28px;
     //         color:#fff;
-    //         font-family:$default;
+    //         font-family:$helvetica;
     //         font-size:14px;
     //         line-height:14px;
     //         font-weight:bold;
@@ -232,7 +233,7 @@
     // }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .profile__panel {
         transform:translate3d(-11px, 0, 0);
     }

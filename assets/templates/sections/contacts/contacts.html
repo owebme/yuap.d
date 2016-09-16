@@ -67,7 +67,7 @@
             buttons: [
             // {
             //     text: 'Выгрузить данные',
-            //     className: "btn-sm btn-hover-fill",
+            //     className: "btn-xs",
             //     action: function (e, dt, button, config) {
             //         $.table.buttons('.btn-print').trigger();
             //     }
@@ -77,14 +77,14 @@
                 exportOptions: {
                     columns: ':visible:not(:first-child)'
                 },
-                className: "btn-sm btn-hover-fill"
+                className: "btn-xs"
             },
             {
                 extend: "excelHtml5",
                 exportOptions: {
                     columns: ':visible:not(:first-child)'
                 },
-                className: "btn-sm btn-hover-fill"
+                className: "btn-xs"
             },
             // {
             //     extend: "csvHtml5",
@@ -95,7 +95,7 @@
             // },
             {
                 text: 'Экспорт',
-                className: "btn-sm btn-hover-fill",
+                className: "btn-xs",
                 action: function (e, dt, button, config) {
                     $Router.nav("/contacts/export");
                     //var data = dt.buttons.exportData();
@@ -113,7 +113,7 @@
                     columns: ':visible:not(:first-child)'
                 },
                 autoPrint: false,
-                className: "btn-sm btn-print btn-hover-fill",
+                className: "btn-xs btn-print",
                 customize: function(win){
                      $$(win.document.body).addClass("dataTable--print");
                 }
@@ -264,7 +264,7 @@
             language: {
                 "sProcessing":   "Подождите...",
                 "sLengthMenu":   "На странице: _MENU_",
-                "sZeroRecords":  '<div class="data__list__empty text-center"><h3>Нет подходящих результатов</h3><p class="mb20">попробуйте смягчить условия поиска</p><span class="data__list__reset btn btn-hover-fill">Сбросить фильтры</span></div>',
+                "sZeroRecords":  '<div class="data__list__empty text-center"><h3 class="c-gray mb-xs">Нет подходящих результатов</h3><p class="mb20">попробуйте смягчить условия поиска</p><span class="data__list__reset btn btn-l btn-primary-hover">Сбросить фильтры</span></div>',
                 "sInfo":         '<span class="filter__label">Контактов: <span class="filter__label__number">_TOTAL_</span></span>',
                 "sInfoEmpty":    '<span class="filter__label">Контактов: <span class="filter__label__number">0</span></span>',
                 "sInfoFiltered": "",

@@ -1,8 +1,8 @@
 .dropmenu {
+    @extend .pos-abs;
     opacity:0.001;
-    position:absolute;
     top:0;
-    left:999em;
+    left:-999em;
     will-change:opacity, transform;
     @include accelerate();
     transition:opacity 0.2s $cubic215, transform 0.25s $bounceSoft, left 0s 0.25s;
@@ -10,33 +10,35 @@
     z-index:100;
 
     &__wrapper {
-        position:absolute;
+        @extend .pos-abs;
+        @extend .borderRadius-xl;
+        @extend .bg-white;
+        @extend .borderWidth-1;
+        @extend .borderStyle-solid;
+        @extend .borderColor-smokeDarken;
+        @extend .boxShadow-15;
         top:0;
         left:50%;
-        border-radius:10px;
-        box-shadow:0 1px 15px 0 rgba(0,0,0,.1);
-        // box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
-        border:1px solid $smoke_darken;
-        background-color:#fff;
         background-clip:padding-box;
         font-size:0;
         margin-top:4px;
         min-width:160px;
         transform:translate3d(-50%, 0, 0);
 
-        .modal & {
-            margin-top:10px;
-        }
+        .modal &,
         .popup & {
-            margin-top:10px;
+            @extend .mt-xs;
+        }
+        &:before,
+        &:after {
+            @extend .content-empty;
+            @extend .display-inlineBlock;
+            @extend .pos-abs;
         }
         &:before {
             border-bottom: 11px solid rgba(0, 0, 0, 0.2);
             border-left: 11px solid rgba(0, 0, 0, 0);
             border-right: 11px solid rgba(0, 0, 0, 0);
-            content: "";
-            display: inline-block;
-            position: absolute;
             left: 50%;
             top: -11px;
             transform:translate3d(-50%, 0, 0);
@@ -45,70 +47,85 @@
             border-bottom: 11px solid #FFFFFF;
             border-left: 11px solid rgba(0, 0, 0, 0);
             border-right: 11px solid rgba(0, 0, 0, 0);
-            content: "";
-            display: inline-block;
-            position: absolute;
             left: 50%;
             top: -10px;
             transform:translate3d(-50%, 0, 0);
         }
     }
     &__item {
-        position:relative;
-        text-align:left;
-        display:list-item;
+        @extend .pos-rel;
+        @extend .text-left;
+        @extend .display-listItem;
+        @extend .text-ellipsis;
+        @extend .overflow-hidden;
+        @extend .nowrap;
+        @extend .c-gray;
+        @extend .fontWeight-normal;
+        @extend .cursor-pointer;
         padding:8px 38px 8px 20px;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
         max-width:100%;
-        color:$gray;
-        font-weight:400;
         font-size:16px;
         line-height:20px;
-        cursor:pointer;
 
         &:hover {
-            color:$black;
-            background-color:#E9EEF2;
+            @extend .c-black;
+            @extend .bg-snowDark;
         }
         &:after {
-            content:"";
-            display:none;
-            position:absolute;
+            @extend .content-empty;
+            @extend .display-none;
+            @extend .pos-abs;
             top:50%;
             right:10px;
             margin-top:-11px;
             @include ui-icon(check, 23px, 23px);
         }
+        &__title:hover,
+        &__subtitle:hover,
+        &__link:hover {
+            cursor:default;
+            background:none !important;
+        }
+        &__link {
+            @extend .text-truncate;
+            max-width:200px;
+            padding-right:30px;
+        }
+        &__link,
+        &__subtitle {
+            padding-top:0;
+            padding-bottom:0;
+            margin-top:-5px;
+            margin-bottom:10px;
+        }
         &.selected {
-            color:$black;
+            @extend .c-black;
 
             &:after {
-                display:block;
+                @extend .display-block;
             }
         }
         &.divider {
+            @extend .overflow-hidden;
             height:1px;
             margin:1px 0;
             padding:0;
-            overflow:hidden;
             background-color:#e5e5e5;
         }
         &:first-child {
+            @extend .borderRadiusTop-xl;
             padding-top:10px;
-            border-radius:10px 10px 0 0;
         }
         &:last-child {
+            @extend .borderRadiusBottom-xl;
             padding-bottom:11px;
-            border-radius:0 0 10px 10px;
         }
         .dropmenu[data-type="radio"] & {
-            padding-left:50px;
-            padding-right:20px;
+            @extend .pl50;
+            @extend .pr20;
 
             &:after {
-                display:block;
+                @extend .display-block;
                 right:auto;
                 left:15px;
                 @include ui-icon(check_muted);
@@ -121,22 +138,22 @@
             }
         }
         &__color {
-            display:inline-block;
-            vertical-align:middle;
-            width:15px;
-            height:15px;
-            border-radius:50%;
+            @extend .display-inlineBlock;
+            @extend .vAlign-middle;
+            @extend .w15;
+            @extend .h15;
+            @extend .borderRadius-circle;
+            @extend .opacity-85;
             transform:translate3d(-3px, -1px, 0);
             margin-right:9px;
-            opacity:0.85;
         }
         &__button {
-            color:$blue_light !important;
+            @extend .c-blueLight;
 
             &.edit:before {
-                display:inline-block;
-                vertical-align:middle;
-                content:"";
+                @extend .content-empty;
+                @extend .display-inlineBlock;
+                @extend .vAlign-middle;
                 transform:translate3d(-3px, -2px, 0);
                 margin-right:6px;
                 @include ui-icon(edit, 18px, 18px);
@@ -144,41 +161,43 @@
         }
     }
     &__palette__wrapper {
+        @extend .text-left;
         width:288px;
         font-size:0;
         padding:10px 15px;
-        text-align:left;
-        box-shadow:0 6px 22px -6px rgba(0,0,0,.25);
+        @extend .boxShadow-default;
     }
     &__palette__item {
-        position:relative;
-        display:inline-block;
+        @extend .pos-rel;
+        @extend .display-inlineBlock;
+        @extend .borderRadius-m;
+        @extend .cursor-pointer;
         width:22px;
         height:22px;
-        border-radius:4px;
         margin:6px 5px;
-        cursor:pointer;
 
         &:after {
             opacity:0;
-            content:"";
-            position:absolute;
+            @extend .content-empty;
+            @extend .pos-abs;
+            @extend .borderRadius-l;
+            @extend .borderWidth-1;
+            @extend .borderStyle-solid;
+            @extend .borderColor-azureDark;
             top:-4px;
             left:-4px;
             width:calc(100% + 8px);
             height:calc(100% + 8px);
-            border:1px solid rgba($blue,.8);
-            border-radius:6px;
         }
         &:hover:after {
-            opacity:1;
+            @extend .opacity-100;
         }
         &.selected {
-            cursor:default;
+            @extend .cursor-default;
 
             &:after {
-                opacity:1;
-                border-color:$gray_lighten;
+                @extend .opacity-100;
+                @extend .borderColor-grayLighten;
             }
         }
     }
@@ -248,6 +267,26 @@
             }
         }
     }
+    &[data-align="down-right"]{
+        .dropmenu__wrapper {
+            top:0;
+            left:100%;
+            margin-top:0;
+            margin-left:13px;
+            transform:translate3d(0, -30px, 0);
+
+            &:before {
+                left:-17px;
+                top:0;
+                transform:translate3d(0, 25px, 0) rotate(-90deg);
+            }
+            &:after {
+                left:-16px;
+                top:0;
+                transform:translate3d(0, 25px, 0) rotate(-90deg);
+            }
+        }
+    }
     &[data-align="up"]{
         .dropmenu__wrapper {
             top:auto;
@@ -269,7 +308,7 @@
         }
     }
     &--active {
-        opacity:1;
+        @extend .opacity-100;
         left:0;
         transition:opacity 0.2s $cubic215, transform 0.25s $bounceSoft, left 0s;
         transform:translate3d(0, 0, 0) scale(1);

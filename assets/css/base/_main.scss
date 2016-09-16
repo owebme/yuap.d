@@ -19,9 +19,8 @@ body {
 	font-synthesis:none;
 	direction:ltr;
 	text-align:left;
-	// color:#3c3d41;
 	color:$gray;
-	font-size:18px;
+	font-size:16px;
 	line-height:1.42857;
 	font-weight:400;
 	font-family:$nimbus;
@@ -32,27 +31,14 @@ body {
 	overflow:hidden;
 
 	.d-no-macOS & {
-		font-family:$default;
-	}
-	&:before {
-		content:"";
-		@include abs_50(245, 287);
-		transform:scale(0.52);
-		background:url(/assets/images/logotype.svg) no-repeat 0 0 / cover;
+		font-family:$helvetica;
 	}
 }
-#page {
+#app {
 	display:block;
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
+	@include abs();
 	@include accelerate(true);
-	// background-color:#F0F4F7;
 	background-color:$black;
-    // transform-origin:0% 50%;
-    // perspective:500px;
 	overflow:hidden;
 }
 #nav {
@@ -89,7 +75,7 @@ body {
 	display:block;
 	min-height:calc(100% - #{$header_height});
 	// background:linear-gradient(to bottom, #F4F6FA, #E0E0E8);
-	background:linear-gradient(to bottom, #F0F4F7, $snow_darken);
+	background:linear-gradient(to bottom, #F0F4F7, $snowDarken);
 	// background:linear-gradient(to bottom, #F0F4F7, #EDF3F8);
 	// background:linear-gradient(to bottom, #F0F4F7, #EEF5F9);
 	overflow:hidden;

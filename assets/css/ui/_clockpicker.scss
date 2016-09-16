@@ -7,7 +7,7 @@
 .clockpicker-popover {
 	visibility:hidden;
 	opacity:0.001;
-	margin-left:999em;
+	margin-left:-999em;
 	will-change:opacity, transform;
     @include accelerate();
     transition:opacity 0.2s $cubic215, transform 0.2s $cubic215, margin-left 0s 0.2s, visibility 0s 0.2s;
@@ -36,8 +36,8 @@
 	background-clip: padding-box;
 	border-radius:10px;
 	font-family:$helvetica;
-	box-shadow:0 1px 15px 0 rgba(0,0,0,.1);
-	border:1px solid $smoke_darken;
+	@extend .boxShadow-default;
+	border:1px solid $smokeDarken;
 	white-space: normal;
 }
 .clockpicker .input-group-addon {
@@ -113,7 +113,7 @@
 }
 .clockpicker-plate {
 	background-color: #fff;
-	border: 1px solid $smoke_darken;
+	border: 1px solid #c9d7df;
 	border-radius: 50%;
 	width: 200px;
 	height: 200px;
@@ -153,19 +153,9 @@
 	background-color:rgba($blue,.1);
 }
 .clockpicker-button {
-	color:$blue;
-	border:none;
-	width:100%;
-	padding:12px 0;
-	font-size:15px;
-	border-radius:0 0 6px 6px;
-}
-.clockpicker-button:hover {
-	color:#fff;
-	background-color:$blue;
-}
-.clockpicker-button:focus {
-	outline: none;
+	@extend .w100p;
+	border-radius:0 0 10px 10px;
+	box-shadow:none !important;
 }
 .clockpicker-dial {
 	font-size:13px;

@@ -16,7 +16,7 @@
   transform-origin: top;
 }
 [data-balloon]:after {
-  background: rgba($black, 0.9);
+  background: rgba($blackSoft, 0.88);
   border-radius: 6px;
   color: #fff;
   content: attr(data-balloon);

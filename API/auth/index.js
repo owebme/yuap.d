@@ -8,6 +8,11 @@ module.exports = function(app) {
 
 		if (!username || !password) return res.sendStatus(401);
 
+		var unAuth = function(logined){
+			if (logined) res.sendStatus(401);
+			else res.send({status: 'error', error: 'Не верный логин и/или пароль'});
+		};
+
 		app.db.collection('accounts').find({
 			"users": {
 				$elemMatch: { "username": username }
@@ -22,25 +27,22 @@ module.exports = function(app) {
 					var user = app.utils.findWhere(data[0].users, { "username": username });
 					user.accountID = data[0]._id;
 
-					if (logined === "false" && user.password !== app.utils.cryptoPass(password) || logined === "true" && user.password !== password){
-						res.send('<script language="Javascript" type="text/javascript">' +
-							'window.parent.postMessage({error: \'Не верный пароль\'}, "*");' +
-						'</script>');
+					if (user.password !== app.utils.cryptoPass(password)){
+						unAuth(logined);
 					}
 					else {
-						var _user = JSON.stringify(user);
-						req.session.user = user;
-						req.session.user.hash = app.utils.cryptoHash(user.username, user.password, user.accountID);
-						res.redirect('/');
-						//res.send('<script language="Javascript" type="text/javascript">' +
-						//	'window.parent.postMessage({result: \'OK\', user: ' + _user + '}, "*");' +
-						//'</script>');
+						if (logined){
+							req.session.user = user;
+							req.session.user.hash = app.utils.cryptoHash(user.username, user.password, user.accountID);
+							res.redirect('/');
+						}
+						else {
+							res.send({status: 'OK'});
+						}
 					}
 				}
 				else {
-					res.send('<script language="Javascript" type="text/javascript">' +
-						'window.parent.postMessage({error: \'Не верный логин и/или пароль\'}, "*");' +
-					'</script>');
+					unAuth(logined);
 				}
 			}
 		});

@@ -73,7 +73,10 @@
                 cl = item.getAttribute("class");
 
             if (cl && !cl.match(/status/) && !cl.match(/checkbox/) && !cl.match(/link/)){
-                $Router.nav("/contact/" + $.get.id(this));
+                var id = $.get.id(this);
+                if (id){
+                    $Router.nav("/contact/" + $.get.id(this));
+                }
             }
         });
 
@@ -118,7 +121,8 @@
             return this.row(cursor).data();
         },
         id: function(cursor){
-            return this.row(cursor).data()._id;
+            var item = this.item(cursor);
+            return item && item._id;
         },
         date: function(date){
             return moment(date).format('D/MM');
@@ -135,7 +139,7 @@
                     color = 0;
             }
             if ((color || color == 0) && title){
-                return '<span class="dataTable__status text-ellipsis color__bg'+ color +'">'+ title +'</span>';
+                return '<span class="dataTable__status text-truncate color__bg'+ color +'">'+ title +'</span>';
             }
             else {
                 return null;

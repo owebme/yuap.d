@@ -155,7 +155,7 @@
     &__string {
         position:relative;
         @include flex("row", "flex-start", "center");
-        font-family:$default;
+        font-family:$helvetica;
         font-size:11px;
         line-height:12px;
         height:18px;
@@ -212,7 +212,7 @@
         }
         &__item {
             @include flex("row", "flex-start", "center");
-            font-family:$default;
+            font-family:$helvetica;
             color:$blue;
             height:26px;
             font-size:11px;
@@ -281,7 +281,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .messenger__metrika {
         padding-right:10px;
 

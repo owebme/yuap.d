@@ -1,48 +1,58 @@
 .pagination {
-    @include flex("row", "center", "center");
+    @extend .flex-centered;
+    @extend .inline;
+    @extend .userSelect-none;
 }
-.paginate_button {
-    position:relative;
-    display:block;
-    color:$frozen;
+.pagination-btn {
+    @extend .pos-rel;
+    @extend .display-inlineBlock;
+    @extend .c-frozen;
+    @extend .outline-none;
+    @extend .cursor-pointer;
+    @extend .text-center;
+    @extend .borderRadius-circle;
+    @extend .w35;
+    @extend .h35;
     font-size:15px;
-    width:35px;
-    height:35px;
     line-height:35px;
-    outline:none;
-    cursor:pointer;
-    text-align:center;
-    border-radius:50%;
     margin:0 2px;
 
-    &.previous,
+    &.prev,
     &.next {
-        @include flex("row", "center", "center");
-        opacity:0.8;
+        @extend .flex-centered;
+        @extend .opacity-80;
+
         transition:transform 0.2s $cubic215, opacity 0.2s $cubic215;
 
         &:active:not(.disabled) {
             transform:translate3d(0, 1px, 0) scale(0.8);
         }
         &:hover {
-            opacity:1;
+            @extend .opacity-100;
         }
         a {
-            display:none;
+            @extend .display-none;
         }
-        &.disabled {
-            opacity:0.6;
+        &.disabled,
+        &.disabled:hover {
+            @extend .opacity-60;
         }
     }
-    &.previous:after,
+    &.prev {
+        margin-right:2px;
+    }
+    &.next {
+        margin-left:2px;
+    }
+    &.prev:after,
     &.next:after {
-        content:"";
-        display:block;
+        @extend .content-empty;
+        @extend .display-block;
         width:24px;
         height:24px;
         margin-top:1px;
     }
-    &.previous:after {
+    &.prev:after {
         @include ui-icon(arrowLeft);
 
         &.disabled {
@@ -57,15 +67,43 @@
         }
     }
     &.active {
-        color:#fff;
-        font-size:16px;
-        background-color:$blue_light;
+        @extend .c-white;
+        @extend .fontSize-m;
+        @extend .lineHeight-xl;
+        @extend .bg-blueLight;
     }
     &.disabled {
-        cursor:default;
+        @extend .cursor-default;
     }
     &:hover:not(.disabled, .active) {
-        color:$blue;
-        font-weight:bold;
+        @extend .c-blue;
+        @extend .fontWeight-bold;
+    }
+    &-square {
+        @extend .pos-rel;
+        @extend .display-inlineBlock;
+        @extend .c-frozen;
+        @extend .outline-none;
+        @extend .cursor-pointer;
+        @extend .text-center;
+        height:44px;
+        font-size:15px;
+        line-height:44px;
+        width:32px;
+        border-left:1px solid transparent;
+        border-right:1px solid transparent;
+
+        &.active {
+            @extend .c-blue;
+            @extend .bg-none;
+            font-size:18px;
+            border-left:1px solid #E9EEF2;
+            border-right:1px solid #E9EEF2;
+        }
+        &:hover {
+            @extend .c-blue;
+            @extend .fontWeight-bold;
+            line-height:46px;
+        }
     }
 }

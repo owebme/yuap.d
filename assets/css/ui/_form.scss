@@ -1,4 +1,8 @@
 .form {
+    &-group {
+        padding-top:22px;
+        margin-bottom:15px;
+    }
     fieldset {
         padding:20px;
         border-radius:6px;
@@ -12,8 +16,8 @@
         padding:0 10px;
     }
     &__header {
+        font-family:$roboto;
         color:$black;
-        margin:2px 0 10px;
         font-size:20px;
         font-weight:300;
     }

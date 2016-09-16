@@ -46,7 +46,7 @@
                             <p>Представитель компании или физ. лицо</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <input type="text" class="form__control" placeholder="Введите имя" value="{ item.name }" autocomplete="off" spellcheck="off">
+                                    <input type="text" class="input input-m input-light" placeholder="Введите имя" value="{ item.name }" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon"></span>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                             <p>Название компании контакта</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <input type="text" class="form__control" placeholder="Введите название компании" value="{ item.company }" autocomplete="off" spellcheck="off">
+                                    <input type="text" class="input input-m input-light" placeholder="Введите название компании" value="{ item.company }" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon"></span>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                             <p>Укажите email для связи с клиентом</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <input type="text" class="form__control" placeholder="Введите email контакта" value="{ item.email }" autocomplete="off" spellcheck="off">
+                                    <input type="text" class="input input-m input-light" placeholder="Введите email контакта" value="{ item.email }" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon">
                                         <a href="mailto:{ item.email }" class="input__group__addon__icon input__group__addon__icon__writeEmail"></a>
                                     </span>
@@ -86,7 +86,7 @@
                             <p>Укажите один или несколько телефонов</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <input type="text" class="form__control" placeholder="Введите телефон" value="{ item.phone }" autocomplete="off" spellcheck="off">
+                                    <input type="text" class="input input-m input-light" placeholder="Введите телефон" value="{ item.phone }" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon"></span>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                             <p>Укажите город контакта</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <input type="text" class="form__control" placeholder="Введите город" value="{ item.city }" autocomplete="off" spellcheck="off">
+                                    <input type="text" class="input input-m input-light" placeholder="Введите город" value="{ item.city }" autocomplete="off" spellcheck="off">
                                     <span class="input__group__addon"></span>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                             <p>Оставьте комментарий к контакту</p>
                             <div class="form__group">
                                 <div class="input__group">
-                                    <textarea class="form__control textarea-md"></textarea>
+                                    <textarea class="textarea textarea-m textarea-light"></textarea>
                                 </div>
                             </div>
                         </fieldset>
@@ -128,8 +128,8 @@
 
     <div class="modal__footer">
         <div class="modal__footer__wrapper">
-            <span dgClick={ onSave } id="section-contact-onSave" class="btn btn-md btn-upper btn-hover-fill">Сохранить</span>
-            <span dgClick={ onCancel } id="section-contact-onCancel" class="btn btn-md btn-upper btn-simple">Отменить</span>
+            <span dgClick={ onSave } id="section-contact-onSave" class="btn btn-m btn-upper btn-primary-hover">Сохранить</span>
+            <span dgClick={ onCancel } id="section-contact-onCancel" class="btn btn-m btn-upper btn-primary-hover">Отменить</span>
         </div>
     </div>
 
@@ -158,7 +158,7 @@
 
         if (!app.device.isMobile){
             app.$dom.document.on("keydown.closeModal", function(e){
-                if (e.which == KEY.ESC && !$Popup.active) $.hide();
+                if (e.which == KEY.ESC && !$Popup.tag.active) $.hide();
             });
         }
     };

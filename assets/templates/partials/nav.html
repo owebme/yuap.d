@@ -3,17 +3,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                <div class="profile__panel">
+                <div onClick={ profileMenu } class="profile__panel">
                     <div class="profile__panel__avatar">
                         <div class="profile__panel__avatar__image" style="background-image:url(https://randomuser.me/api/portraits/men/{ state.photo }.jpg)"></div>
-                        <!-- <div class="profile__panel__score__left">24</div>
-                        <div class="profile__panel__score">
-                            <div class="profile__panel__score__item">36</div>
-                            <div class="profile__panel__score__item">22</div>
-                            <div class="profile__panel__score__item">25</div>
-                        </div> -->
                     </div>
-                    <!-- <div class="profile__panel__title">Александр</div> -->
                 </div>
             </div>
             <div class="col-md-20 col-lg-22 nav__menu">
@@ -55,6 +48,21 @@
 
 
     });
+
+    $.profileMenu = function(e){
+        $DropMenu.show({
+            align: "down-right",
+            title: "Александр",
+            link: "resumekraft@gmail.com",
+            elem: $$(e.currentTarget),
+            data: ['Редактировать', 'Статистика', 'Выйти'],
+            callback: function(item){
+                if (item === "Редактировать"){
+                    $Router.nav("/profile");
+                }
+            }
+        });
+    };
 
 </script>
 

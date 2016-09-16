@@ -8,12 +8,13 @@
 }
 .sidebar__filter {
     &__item {
-        border-bottom:1px solid $smoke_darken;
+        border-bottom:1px solid $smokeDarken;
     }
     &__title {
         position:relative;
-        font-weight:bold;
-        font-size:15px;
+        font-weight:500;
+        font-family:$helvetica;
+        font-size:15.5px;
         text-transform:uppercase;
         white-space:nowrap;
         overflow:hidden;
@@ -21,18 +22,18 @@
         text-overflow:ellipsis;
         padding:17px 20px 17px 15px;
         cursor:pointer;
-        transition:color 0.2s $cubic215;
+        transition:color 0.08s linear;
 
         &:after {
             content:"";
             position:absolute;
             top:50%;
             right:10px;
-            border-top:5px solid $blue_lighten;
+            border-top:5px solid $blueLighten;
             border-right:5px solid transparent;
             border-bottom:none;
             border-left:5px solid transparent;
-            margin-top:-1px;
+            margin-top:-4px;
             transition:transform 0.15s linear;
 
             .sidebar__filter__item.open & {
@@ -40,7 +41,7 @@
             }
         }
         &:hover {
-            color:$gray_light;
+            color:$grayLight;
         }
     }
     &__container {
@@ -67,7 +68,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .data__sidebar {
         left:-15px;
         width:18.5%;

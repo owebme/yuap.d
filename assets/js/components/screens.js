@@ -60,7 +60,7 @@
                 if (WD.index !== WD.marquee.index){
                     WD.state = WD.marquee.section;
                     if (WD.state === "main") $Router.back();
-                    else if (WD.state === "messenger") $Router.set("/messenger");
+                    else if (WD.state === "messenger") $Router.nav("/messenger");
                 }
             });
 

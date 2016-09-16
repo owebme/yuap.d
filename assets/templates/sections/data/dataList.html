@@ -1,9 +1,9 @@
 <section-data-list class="data__list col-md-15 col-md-offset-1 col-lg-offset-0 col-lg-13">
 
     <div if={ !get.isActive().length } class="data__list__empty text-center">
-        <h3>Нет подходящих результатов</h3>
+        <h3 class="c-gray mb-xs">Нет подходящих результатов</h3>
         <p class="mb20">попробуйте смягчить условия поиска</p>
-        <span onClick={ search.reset } class="data__list__reset btn btn-hover-fill">Сбросить фильтры</span>
+        <span onClick={ search.reset } class="data__list__reset btn btn-l btn-primary-hover">Сбросить фильтры</span>
     </div>
     <div each={ item in get.data() } no-reorder class="data__item" data-num="{ item.num }" data-new="{ item.new }" data-checked="{ item.checked }" data-show="{ item.show }" data-status="{ $store.status.getColor(item.status) }">
         <div if={ item.important } class="data__item__important"></div>

@@ -1,25 +1,40 @@
 .text-center {
-    text-align:center !important;
+    text-align:center;
 }
 .text-left {
-    text-align:left !important;
+    text-align:left;
 }
 .text-right {
-    text-align:right !important;
+    text-align:right;
+}
+.text-lowercase {
+    text-transform:lowercase;
+}
+.text-uppercase {
+    text-transform:uppercase;
+}
+.text-capitalize {
+    text-transform:capitalize;
 }
 .text-ellipsis {
-    display:inline-block;
-    white-space:nowrap;
-    overflow:hidden;
     text-overflow:ellipsis;
-    max-width:100%;
-    vertical-align:middle;
 }
 .nowrap {
-    display:inline-block;
-    text-decoration:inherit;
     white-space:nowrap;
 }
-.textAnliasedAuto {
+.text-truncate {
+    @extend .overflow-hidden;
+    @extend .text-ellipsis;
+    @extend .nowrap;
+}
+.textAnliased-auto {
     -webkit-font-smoothing:auto;
+}
+.inline {
+    font-size:0;
+    @extend .clear;
+
+    > div {
+        @extend .display-inlineBlock;
+    }
 }

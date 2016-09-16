@@ -9,6 +9,7 @@
     }
     &__balance {
         @include flex("row", "flex-start", "center");
+        font-size:18px;
         padding-left:40px;
         height:$panel_height;
 
@@ -25,6 +26,7 @@
     }
     &__item {
         @include flex("row", "center", "center");
+        font-size:18px;
         height:$panel_height;
         position:relative;
         white-space:nowrap;

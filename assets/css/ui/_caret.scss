@@ -1,0 +1,45 @@
+%caret {
+    &:after {
+        content:"";
+        display:inline-block;
+        vertical-align:middle;
+        margin-left:10px;
+        border-top:5px solid $azureDark;
+        border-right:5px solid transparent;
+        border-bottom:none;
+        backface-visibility:hidden;
+        border-left:5px solid transparent;
+        transition:transform 0.15s linear;
+
+        .active & {
+            transform:rotate(180deg);
+        }
+    }
+}
+.caret {
+    &-arrow {
+        content:"";
+        display:inline-block;
+        vertical-align:middle;
+        margin-top:-3px;
+        border-top:6px solid $azure;
+        border-right:6px solid transparent;
+        border-bottom:none;
+        backface-visibility:hidden;
+        border-left:6px solid transparent;
+    }
+    &-right {
+        &:after {
+            @extend .caret-arrow;
+            transform:rotate(-90deg);
+            margin-left:6px;
+        }
+    }
+    &-left {
+        &:before {
+            @extend .caret-arrow;
+            transform:rotate(90deg);
+            margin-right:6px;
+        }
+    }
+}

@@ -12,11 +12,11 @@
 
     &__item {
         height:32px;
-        border:1px solid $smoke_darken;
+        border:1px solid $smokeDarken;
         border-radius:20px;
         margin-right:10px;
         background-color:#fff;
-        font-family:$default;
+        font-family:$helvetica;
         font-size:13.5px;
         line-height:30px;
         padding:0 10px 0 11px;
@@ -26,7 +26,7 @@
         @include textEllipsis(27.5%);
 
         &:hover {
-            color:$black_soft;
+            color:$blackSoft;
             border-color:#c7dce7;
             background-color:#edf9ff;
         }

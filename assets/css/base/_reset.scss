@@ -19,3 +19,17 @@ input:focus::-moz-placeholder {
 input:focus:-ms-input-placeholder {
     color: transparent !important;
 }
+
+a, a:hover, input, textarea, button, select {
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-touch-callout:none;
+	appearance:none;
+	outline:none;
+	outline-style:none;
+}
+div, a, p, span, strong, th, td {
+	color:inherit;
+	font-size:inherit;
+	line-height:inherit;
+	font-family:inherit;
+}

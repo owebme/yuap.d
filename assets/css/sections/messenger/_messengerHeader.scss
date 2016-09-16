@@ -1,7 +1,7 @@
 .messenger__header {
     @include flex("row", "flex-start", "stretch");
-    background:$snow_dark;
-    border-bottom:1px solid $smoke_dark;
+    background:$snowDark;
+    border-bottom:1px solid $smokeDark;
     user-select:none;
 
     &__column {
@@ -108,7 +108,7 @@
             right:54px;
             width:54px;
             height:100%;
-            border-left:1px solid $smoke_darken;
+            border-left:1px solid $smokeDarken;
             cursor:pointer;
 
             &:before {
@@ -124,7 +124,7 @@
             right:0;
             width:54px;
             height:100%;
-            border-left:1px solid $smoke_darken;
+            border-left:1px solid $smokeDarken;
             opacity:0.85;
             transition:opacity 0.12s $cubic645;
             cursor:pointer;
@@ -152,7 +152,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .messenger__header__status__operator {
         font-size:12.5px;
         transform:translate3d(-18px, 0, 0);

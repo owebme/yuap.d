@@ -59,7 +59,7 @@
         }
         &__close {
             opacity:0.6;
-            @include ui-icon(close, 29px, 29px);
+            @include ui-icon(close, 28px, 28px);
             @extend .modal__button;
             margin-bottom:5px;
 
@@ -97,9 +97,11 @@
     }
     &__title {
         font-family:$roboto;
+        font-size:36px;
         font-weight:300;
-        margin-bottom:35px;
-        color:lighten($black_light, 50%);
+        margin-bottom:46px;
+        letter-spacing:-0.6px;
+        color:lighten($blackLight, 50%);
 
         &__inner {
             position:relative;
@@ -158,7 +160,7 @@
         }
         &__wrapper {
             text-align:center;
-            padding-top:30px;
+            padding-top:25px;
 
             .btn {
                 margin:0 13px;
@@ -179,12 +181,12 @@
         position:fixed;
         top:10px;
         left:30px;
-        color:$gray_lighten;
+        color:$grayLighten;
         font-family:$roboto;
         font-size:13.5px;
 
         &__strong {
-            color:$blue_light;
+            color:$blueLight;
             text-transform:uppercase;
         }
         .d-touch & {
@@ -214,7 +216,7 @@
     }
 }
 
-@media screen and (max-width:$md-width){
+@media screen and (max-width:$w1024){
     .modal__panel__right {
         margin-left:433px;
     }

@@ -5,7 +5,7 @@
         left:30%;
         width:1px;
         height:100%;
-        background:linear-gradient(to bottom, rgba($gray_lighten,.5), rgba($gray_lighten,.1));
+        background:linear-gradient(to bottom, rgba($grayLighten,.5), rgba($grayLighten,.1));
     }
     &__item {
         position:relative;
@@ -20,7 +20,7 @@
             @include ui-icon(fire, 24px, 24px);
         }
         &__time {
-            color:$gray_darken;
+            color:$grayDarken;
             width:30%;
             font-size:18px;
             text-align:center;
@@ -54,7 +54,7 @@
             padding:0 15px 0 10px;
         }
         &__strong {
-            color:$gray_darken;
+            color:$grayDarken;
             font-weight:bold;
         }
         &__link {
